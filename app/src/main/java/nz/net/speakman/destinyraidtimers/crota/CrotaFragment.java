@@ -131,7 +131,6 @@ public class CrotaFragment extends BaseRaidFragment {
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
         if (timerRunning) {
-            timeElapsedContainer.setVisibility(View.VISIBLE);
             timeElapsedContainer.setTranslationY(0);
         }
         return rootView;
@@ -258,7 +257,6 @@ public class CrotaFragment extends BaseRaidFragment {
     }
 
     private void showTimeElapsedContainer() {
-        timeElapsedContainer.setVisibility(View.VISIBLE);
         ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
                 timeElapsedContainer.getMeasuredHeight(), 0f)
                 .setDuration(500).start();

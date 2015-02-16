@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:background="@color/primary_dark"
         android:layout_height="?attr/actionBarSize"
-        android:visibility="invisible">
+        android:translationY="?attr/actionBarSize">
         <TextView
             android:layout_marginLeft="16dp"
             style="@style/DRT.TextAppearance.Crota.ElapsedTime"

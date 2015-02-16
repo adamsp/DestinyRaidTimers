@@ -50,7 +50,7 @@
                     android:layout_height="?attr/actionBarSize"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentBottom="true"
-                    android:visibility="invisible">
+                    android:translationY="?attr/actionBarSize">
                     <TextView
                         style="@style/DRT.TextAppearance.Crota.ElapsedTime"
                         android:layout_marginLeft="16dp"
