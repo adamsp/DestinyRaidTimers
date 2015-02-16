@@ -52,18 +52,25 @@
 
         <include layout="@layout/fragment_crota_progress_layout"
                  android:id="@+id/fragment_crota_progress_container"
+                 android:foreground="?android:windowContentOverlay"
                  android:layout_weight="0.65"
                  android:layout_width="match_parent"
                  android:layout_height="0dp"/>
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/fragment_crota_time_elapsed"
-        android:freezesText="true"
+    <FrameLayout
+        android:id="@+id/fragment_crota_time_elapsed_container"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
+        android:background="@color/primary_dark"
         android:layout_height="?attr/actionBarSize"
-        android:visibility="invisible"/>
+        android:visibility="invisible">
+        <TextView
+            android:id="@+id/fragment_crota_time_elapsed"
+            android:freezesText="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </FrameLayout>
 
 </FrameLayout>

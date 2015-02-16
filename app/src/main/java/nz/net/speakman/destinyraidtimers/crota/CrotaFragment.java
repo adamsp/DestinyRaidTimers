@@ -39,6 +39,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 import nz.net.speakman.destinyraidtimers.BaseRaidFragment;
 import nz.net.speakman.destinyraidtimers.R;
 
@@ -81,6 +82,10 @@ public class CrotaFragment extends BaseRaidFragment {
 
     @InjectView(R.id.fragment_crota_time_elapsed)
     TextView timeElapsed;
+
+    @Optional
+    @InjectView(R.id.fragment_crota_time_elapsed_container)
+    View timeElapsedContainer;
 
     @InjectView(R.id.fragment_crota_time_to_move)
     TextView timeToMove;
@@ -127,6 +132,10 @@ public class CrotaFragment extends BaseRaidFragment {
         progressView.setImageDrawable(progressDrawable);
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
+        if (timeElapsedContainer != null && timerRunning) {
+            timeElapsedContainer.setVisibility(View.VISIBLE);
+            timeElapsedContainer.setTranslationY(0);
+        }
         return rootView;
     }
 
@@ -183,10 +192,12 @@ public class CrotaFragment extends BaseRaidFragment {
         if (timerRunning) {
             timer.cancel();
             resetProgressBar();
+            hideTimeElapsedContainer();
             showPosition(POSITION_CENTER_L);
             resetLabels();
         } else {
             timer.start();
+            showTimeElapsedContainer();
         }
         timerRunning = !timerRunning;
     }
@@ -247,4 +258,22 @@ public class CrotaFragment extends BaseRaidFragment {
         }
         resetAnimator.start();
     }
+
+    private void showTimeElapsedContainer() {
+        if (timeElapsedContainer != null) {
+            timeElapsedContainer.setVisibility(View.VISIBLE);
+            ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
+                    timeElapsedContainer.getMeasuredHeight(), 0f)
+                    .setDuration(500).start();
+        }
+    }
+
+    private void hideTimeElapsedContainer() {
+        if (timeElapsedContainer != null) {
+            ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
+                    0, timeElapsedContainer.getMeasuredHeight())
+                    .setDuration(500).start();
+        }
+    }
+
 }
