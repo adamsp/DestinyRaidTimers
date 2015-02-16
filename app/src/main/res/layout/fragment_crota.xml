@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2015 Adam Speakman
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/fragment_crota_label_enrage"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:text="@string/crota_timer_label_enrage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/fragment_crota_time_to_enrage"
+        android:layout_toRightOf="@id/fragment_crota_label_enrage"
+        android:layout_toLeftOf="@+id/fragment_crota_position"
+        android:freezesText="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@id/fragment_crota_position"
+        android:scaleType="centerInside"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@id/fragment_crota_time_to_enrage"
+        android:layout_width="wrap_content"
+        android:src="@drawable/crota_position_center"
+        android:layout_height="wrap_content"/>
+
+    <include layout="@layout/fragment_crota_progress_layout"
+             android:id="@+id/fragment_crota_progress_container"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_below="@id/fragment_crota_position"
+        android:layout_above="@+id/fragment_crota_label_elapsed"/>
+
+    <TextView
+        android:id="@id/fragment_crota_label_elapsed"
+        android:text="@string/crota_timer_label_elapsed"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/fragment_crota_time_elapsed"
+        android:layout_toRightOf="@id/fragment_crota_label_elapsed"
+        android:layout_below="@id/fragment_crota_progress_container"
+        android:layout_alignParentBottom="true"
+        android:freezesText="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/label_licences"
+        android:text="@string/label_licenses"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:freezesText="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+</RelativeLayout>
