@@ -49,13 +49,20 @@
                 android:src="@drawable/crota_position_center" />
 
         </FrameLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.65">
 
-        <include layout="@layout/fragment_crota_progress_layout"
-                 android:id="@+id/fragment_crota_progress_container"
-                 android:foreground="?android:windowContentOverlay"
-                 android:layout_weight="0.65"
-                 android:layout_width="match_parent"
-                 android:layout_height="0dp"/>
+            <include layout="@layout/fragment_crota_progress_layout"
+                     android:id="@+id/fragment_crota_progress_container"
+                     android:layout_width="match_parent"
+                     android:layout_height="match_parent"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@drawable/toolbar_dropshadow" />
+        </FrameLayout>
 
     </LinearLayout>
 
