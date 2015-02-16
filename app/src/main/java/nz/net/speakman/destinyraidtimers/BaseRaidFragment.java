@@ -17,7 +17,7 @@
 package nz.net.speakman.destinyraidtimers;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 
 import com.squareup.otto.Bus;
 

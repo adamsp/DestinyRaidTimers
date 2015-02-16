@@ -20,6 +20,8 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +40,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.BaseRaidFragment;
-import nz.net.speakman.destinyraidtimers.LicensesFragment;
 import nz.net.speakman.destinyraidtimers.R;
 
 /**
@@ -81,9 +82,6 @@ public class CrotaFragment extends BaseRaidFragment {
     @InjectView(R.id.fragment_crota_time_elapsed)
     TextView timeElapsed;
 
-    @InjectView(R.id.fragment_crota_time_to_enrage)
-    TextView timeToEnrage;
-
     @InjectView(R.id.fragment_crota_time_to_move)
     TextView timeToMove;
 
@@ -92,6 +90,9 @@ public class CrotaFragment extends BaseRaidFragment {
 
     @InjectView(R.id.fragment_crota_position)
     ImageView positionImage;
+
+    @InjectView(R.id.fragment_crota_toolbar)
+    Toolbar toolbar;
 
     private ObjectAnimator animator;
     private CircularProgressDrawable progressDrawable;
@@ -112,7 +113,7 @@ public class CrotaFragment extends BaseRaidFragment {
         ButterKnife.inject(this, rootView);
         Resources resources = getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
-                .setRingColor(resources.getColor(android.R.color.holo_blue_dark))
+                .setRingColor(resources.getColor(R.color.accent))
                 .setRingWidth(resources.getDimensionPixelSize(R.dimen.fragment_crota_progress_width))
                 .create();
         if (savedInstanceState == null) {
@@ -124,6 +125,8 @@ public class CrotaFragment extends BaseRaidFragment {
             showPosition(savedInstanceState.getInt(KEY_CURRENT_POSITION, POSITION_CENTER_L));
         }
         progressView.setImageDrawable(progressDrawable);
+        ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
+        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
         return rootView;
     }
 
@@ -150,12 +153,10 @@ public class CrotaFragment extends BaseRaidFragment {
             return;
         }
         long timeElapsedMs = CrotaTimer.TIME_TO_ENRAGE_MS - event.millisUntilFinished;
-        long timeToEnrageMs = event.millisUntilFinished;
         // Can't just do timeRemaining % movement_period because what if enrage isn't a multiple of 60?
         long timeToMoveMs = CrotaTimer.MOVEMENT_PERIOD_MS - timeElapsedMs % CrotaTimer.MOVEMENT_PERIOD_MS;
 
         timeToMove.setText(String.valueOf((timeToMoveMs + 999) / 1000));
-        timeToEnrage.setText(formatMinutesFromMillis(timeToEnrageMs));
         timeElapsed.setText(formatMinutesFromMillis(timeElapsedMs));
 
         if (animator == null) {
@@ -188,11 +189,6 @@ public class CrotaFragment extends BaseRaidFragment {
             timer.start();
         }
         timerRunning = !timerRunning;
-    }
-
-    @OnClick(R.id.label_licences)
-    public void onLicensesClick() {
-        LicensesFragment.displayLicensesFragment(getFragmentManager());
     }
 
     private void onEnrage() {
@@ -233,7 +229,6 @@ public class CrotaFragment extends BaseRaidFragment {
 
     private void resetLabels() {
         timeToMove.setText(R.string.crota_timer_action_start);
-        timeToEnrage.setText(formatMinutesFromMillis(CrotaTimer.TIME_TO_ENRAGE_MS));
         timeElapsed.setText(formatMinutesFromMillis(0));
     }
 

@@ -16,13 +16,15 @@
 
 package nz.net.speakman.destinyraidtimers;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import nz.net.speakman.destinyraidtimers.crota.CrotaFragment;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends ActionBarActivity {
 
     private static final String FRAGMENT_TAG = "nz.net.speakman.destinyraidtimers.FRAGMENT_TAG";
 
@@ -31,10 +33,27 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (savedInstanceState == null) {
-            getFragmentManager()
+            getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, CrotaFragment.newInstance(), FRAGMENT_TAG)
                     .commit();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_licenses) {
+            LicensesFragment.displayLicensesFragment(getSupportFragmentManager());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

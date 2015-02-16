@@ -2,11 +2,8 @@
 <resources>
 
     <string name="app_name">Destiny Raid Timers</string>
-
     <string name="crota_timer_action_start">Start</string>
     <string name="crota_timer_action_enraged">Enraged!</string>
-    <string name="crota_timer_label_elapsed">Elapsed time:</string>
-    <string name="crota_timer_label_enrage">Enrage:</string>
     <string name="label_licenses">Licenses</string>
 
 </resources>
