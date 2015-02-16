@@ -15,71 +15,63 @@
   ~ limitations under the License.
   -->
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent">
-
-    <LinearLayout
-        android:id="@+id/fragment_crota_top_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingBottom="?attr/actionBarSize"
-        android:background="@color/primary_light"
-        android:weightSum="1">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.35">
-
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/fragment_crota_toolbar"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                app:theme="@style/DRT.Widget.Toolbar.Crota"/>
-
-            <ImageView
-                android:layout_gravity="center"
-                android:id="@+id/fragment_crota_position"
-                android:scaleType="fitCenter"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/crota_position_center" />
-
-        </FrameLayout>
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.65">
-
-            <include layout="@layout/fragment_crota_progress_layout"
-                     android:id="@+id/fragment_crota_progress_container"
-                     android:layout_width="match_parent"
-                     android:layout_height="match_parent"/>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="@drawable/toolbar_dropshadow" />
-        </FrameLayout>
-
-    </LinearLayout>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_crota_top_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/primary_light"
+    android:weightSum="1">
 
     <FrameLayout
-        android:id="@+id/fragment_crota_time_elapsed_container"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
-        android:background="@color/primary_dark"
-        android:layout_height="?attr/actionBarSize"
-        android:translationY="?attr/actionBarSize">
-        <TextView
-            android:layout_marginLeft="16dp"
-            style="@style/DRT.TextAppearance.Crota.ElapsedTime"
-            android:layout_gravity="center_vertical"
-            android:id="@+id/fragment_crota_time_elapsed"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </FrameLayout>
+        android:layout_height="0dp"
+        android:layout_weight="0.35">
 
-</FrameLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fragment_crota_toolbar"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            app:theme="@style/DRT.Widget.Toolbar.Crota"/>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/fragment_crota_position"
+            android:scaleType="fitCenter"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/crota_position_center" />
+
+    </FrameLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.65">
+
+        <include layout="@layout/fragment_crota_progress_layout"
+                 android:id="@+id/fragment_crota_progress_container"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@drawable/toolbar_dropshadow" />
+
+        <FrameLayout
+            android:id="@+id/fragment_crota_time_elapsed_container"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:translationY="?attr/actionBarSize">
+            <TextView
+                android:layout_marginLeft="16dp"
+                style="@style/DRT.TextAppearance.Crota.ElapsedTime"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/fragment_crota_time_elapsed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </FrameLayout>
+    </FrameLayout>
+</LinearLayout>
