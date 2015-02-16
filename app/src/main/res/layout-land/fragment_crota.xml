@@ -37,26 +37,38 @@
         android:background="@color/primary_light"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_weight="0.3"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/fragment_crota_time_elapsed"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:freezesText="true"/>
+            <FrameLayout
+                android:id="@+id/fragment_crota_time_elapsed_container"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:visibility="invisible">
+                <TextView
+                    android:layout_marginLeft="16dp"
+                    style="@style/DRT.TextAppearance.Crota.ElapsedTime"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/fragment_crota_time_elapsed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </FrameLayout>
 
             <ImageView
                 android:id="@+id/fragment_crota_position"
                 android:scaleType="centerInside"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_above="@id/fragment_crota_time_elapsed_container"
                 android:layout_width="match_parent"
                 android:src="@drawable/crota_position_center"
                 android:layout_height="150dp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <include layout="@layout/fragment_crota_progress_layout"
                  android:layout_weight="0.7"

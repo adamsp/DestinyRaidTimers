@@ -39,7 +39,6 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.Optional;
 import nz.net.speakman.destinyraidtimers.BaseRaidFragment;
 import nz.net.speakman.destinyraidtimers.R;
 
@@ -83,7 +82,6 @@ public class CrotaFragment extends BaseRaidFragment {
     @InjectView(R.id.fragment_crota_time_elapsed)
     TextView timeElapsed;
 
-    @Optional
     @InjectView(R.id.fragment_crota_time_elapsed_container)
     View timeElapsedContainer;
 
@@ -132,7 +130,7 @@ public class CrotaFragment extends BaseRaidFragment {
         progressView.setImageDrawable(progressDrawable);
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
-        if (timeElapsedContainer != null && timerRunning) {
+        if (timerRunning) {
             timeElapsedContainer.setVisibility(View.VISIBLE);
             timeElapsedContainer.setTranslationY(0);
         }
@@ -260,20 +258,16 @@ public class CrotaFragment extends BaseRaidFragment {
     }
 
     private void showTimeElapsedContainer() {
-        if (timeElapsedContainer != null) {
-            timeElapsedContainer.setVisibility(View.VISIBLE);
-            ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
-                    timeElapsedContainer.getMeasuredHeight(), 0f)
-                    .setDuration(500).start();
-        }
+        timeElapsedContainer.setVisibility(View.VISIBLE);
+        ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
+                timeElapsedContainer.getMeasuredHeight(), 0f)
+                .setDuration(500).start();
     }
 
     private void hideTimeElapsedContainer() {
-        if (timeElapsedContainer != null) {
-            ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
-                    0, timeElapsedContainer.getMeasuredHeight())
-                    .setDuration(500).start();
-        }
+        ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
+                0, timeElapsedContainer.getMeasuredHeight())
+                .setDuration(500).start();
     }
 
 }
