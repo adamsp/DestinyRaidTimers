@@ -98,23 +98,23 @@ public class CrotaFragment extends BaseRaidFragment {
     ImageView progressView;
 
     @Optional
-    @InjectView(R.id.fragment_crota_position_current)
+    @InjectView(R.id.crota_position_current)
     ImageView positionImageCurrent;
 
     @Optional
-    @InjectView(R.id.fragment_crota_position_next)
+    @InjectView(R.id.crota_position_next)
     ImageView positionImageNext;
 
     @Optional
-    @InjectView(R.id.fragment_crota_position_left)
+    @InjectView(R.id.crota_position_left)
     ImageView positionImageLeft;
 
     @Optional
-    @InjectView(R.id.fragment_crota_position_center)
+    @InjectView(R.id.crota_position_center)
     ImageView positionImageCenter;
 
     @Optional
-    @InjectView(R.id.fragment_crota_position_right)
+    @InjectView(R.id.crota_position_right)
     ImageView positionImageRight;
 
     @InjectView(R.id.fragment_crota_toolbar)

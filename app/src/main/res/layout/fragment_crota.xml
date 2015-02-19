@@ -29,40 +29,9 @@
         android:layout_height="0dp"
         android:layout_weight="0.35">
 
-        <LinearLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <nz.net.speakman.destinyraidtimers.crota.CrotaPositionView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:weightSum="3">
-
-            <ImageView
-                android:id="@+id/fragment_crota_position_left"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:alpha="0.5"
-                android:src="@drawable/crota_position_left_disabled"/>
-
-            <ImageView
-                android:id="@+id/fragment_crota_position_center"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:alpha="0.5"
-                android:src="@drawable/crota_position_center_disabled"/>
-
-            <ImageView
-                android:id="@+id/fragment_crota_position_right"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:scaleType="fitCenter"
-                android:alpha="0.5"
-                android:src="@drawable/crota_position_right_disabled"/>
-        </LinearLayout>
+            android:layout_height="match_parent"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/fragment_crota_toolbar"

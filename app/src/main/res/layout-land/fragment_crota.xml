@@ -27,48 +27,10 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <LinearLayout
+        <nz.net.speakman.destinyraidtimers.crota.CrotaPositionView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-
-            <ImageView
-                android:id="@+id/fragment_crota_position_current"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.6"
-                android:scaleType="fitCenter"
-                android:alpha="0.5"
-                android:src="@drawable/crota_position_center_disabled"/>
-
-            <ImageView
-                android:id="@+id/fragment_crota_position_next"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="0.4"
-                android:scaleType="fitCenter"
-                android:alpha="0.5"
-                android:src="@drawable/crota_position_right_disabled"/>
-
-            <FrameLayout
-                android:id="@+id/fragment_crota_time_elapsed_container"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_gravity="bottom|left"
-                android:translationY="?attr/actionBarSize">
-
-                <TextView
-                    android:id="@+id/fragment_crota_time_elapsed"
-                    style="@style/DRT.TextAppearance.Crota.ElapsedTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="16dp"/>
-            </FrameLayout>
-        </LinearLayout>
+            android:layout_weight="0.3"/>
 
         <include
             layout="@layout/fragment_crota_progress_layout"
@@ -82,6 +44,22 @@
         android:id="@+id/fragment_crota_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_crota_time_elapsed_container"
+        android:layout_width="wrap_content"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="bottom|left"
+        android:translationY="?attr/actionBarSize">
+
+        <TextView
+            android:id="@+id/fragment_crota_time_elapsed"
+            style="@style/DRT.TextAppearance.Crota.ElapsedTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"/>
+    </FrameLayout>
 
 
 </FrameLayout>
