@@ -25,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +60,8 @@ public class CrotaFragment extends BaseRaidFragment {
     private static final String KEY_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.KEY_TIMER_RUNNING";
     private static final String KEY_PROGRESS = "nz.net.speakman.destinyraidtimers.crota.KEY_PROGRESS";
     private static final String KEY_CURRENT_POSITION = "nz.net.speakman.destinyraidtimers.crota.KEY_CURRENT_POSITION";
+
+    private static final int RESET_ANIMATION_DURATION = 750;
 
     private static final int POSITION_ENRAGED = -1;
     /**
@@ -117,7 +120,9 @@ public class CrotaFragment extends BaseRaidFragment {
         Resources resources = getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
                 .setRingColor(resources.getColor(R.color.accent))
+                .setInnerCircleScale(1f)
                 .setRingWidth(resources.getDimensionPixelSize(R.dimen.fragment_crota_progress_width))
+                .setCenterColor(resources.getColor(R.color.accent))
                 .create();
         if (savedInstanceState == null) {
             // Could do this in XML except we're formatting a long to a timestamp from constants.
@@ -132,6 +137,7 @@ public class CrotaFragment extends BaseRaidFragment {
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
         if (timerRunning) {
             timeElapsedContainer.setTranslationY(0);
+            progressDrawable.setCircleScale(0f);
         }
         return rootView;
     }
@@ -191,10 +197,12 @@ public class CrotaFragment extends BaseRaidFragment {
             resetProgressBar();
             hideTimeElapsedContainer();
             showPosition(POSITION_CENTER_L);
+            blowBubble();
             resetLabels();
         } else {
             timer.start();
             showTimeElapsedContainer();
+            popBubble();
         }
         timerRunning = !timerRunning;
     }
@@ -243,7 +251,7 @@ public class CrotaFragment extends BaseRaidFragment {
     private void resetProgressBar() {
         ObjectAnimator resetAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.PROGRESS_PROPERTY,
                 progressDrawable.getProgress(), 1f);
-        resetAnimator.setDuration(1000);
+        resetAnimator.setDuration(RESET_ANIMATION_DURATION);
         resetAnimator.addListener(new AnimationEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
@@ -254,6 +262,20 @@ public class CrotaFragment extends BaseRaidFragment {
             animator.cancel();
         }
         resetAnimator.start();
+    }
+
+    private void popBubble() {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.CIRCLE_SCALE_PROPERTY,
+                1f, 0f).setDuration(RESET_ANIMATION_DURATION);
+        objectAnimator.setInterpolator(new DecelerateInterpolator());
+        objectAnimator.start();
+    }
+
+    private void blowBubble() {
+        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.CIRCLE_SCALE_PROPERTY,
+                0f, 1f).setDuration(RESET_ANIMATION_DURATION);
+        objectAnimator.setInterpolator(new DecelerateInterpolator());
+        objectAnimator.start();
     }
 
     private void showTimeElapsedContainer() {
