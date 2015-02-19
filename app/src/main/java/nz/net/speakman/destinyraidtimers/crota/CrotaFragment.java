@@ -40,6 +40,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import butterknife.Optional;
 import nz.net.speakman.destinyraidtimers.BaseRaidFragment;
 import nz.net.speakman.destinyraidtimers.R;
 
@@ -63,11 +64,13 @@ public class CrotaFragment extends BaseRaidFragment {
 
     private static final int RESET_ANIMATION_DURATION = 750;
 
+    private static final int POSITION_RESET = -2;
     private static final int POSITION_ENRAGED = -1;
     /**
      * Center, going left.
      */
     private static final int POSITION_CENTER_L = 0;
+    private static final int POSITION_START = POSITION_CENTER_L;
     private static final int POSITION_LEFT = 1;
     /**
      * Center, going right.
@@ -94,8 +97,25 @@ public class CrotaFragment extends BaseRaidFragment {
     @InjectView(R.id.fragment_crota_progress)
     ImageView progressView;
 
-    @InjectView(R.id.fragment_crota_position)
-    ImageView positionImage;
+    @Optional
+    @InjectView(R.id.fragment_crota_position_current)
+    ImageView positionImageCurrent;
+
+    @Optional
+    @InjectView(R.id.fragment_crota_position_next)
+    ImageView positionImageNext;
+
+    @Optional
+    @InjectView(R.id.fragment_crota_position_left)
+    ImageView positionImageLeft;
+
+    @Optional
+    @InjectView(R.id.fragment_crota_position_center)
+    ImageView positionImageCenter;
+
+    @Optional
+    @InjectView(R.id.fragment_crota_position_right)
+    ImageView positionImageRight;
 
     @InjectView(R.id.fragment_crota_toolbar)
     Toolbar toolbar;
@@ -196,12 +216,13 @@ public class CrotaFragment extends BaseRaidFragment {
             timer.cancel();
             resetProgressBar();
             hideTimeElapsedContainer();
-            showPosition(POSITION_CENTER_L);
+            showPosition(POSITION_RESET);
             blowBubble();
             resetLabels();
         } else {
             timer.start();
             showTimeElapsedContainer();
+            showPosition(POSITION_START);
             popBubble();
         }
         timerRunning = !timerRunning;
@@ -222,24 +243,86 @@ public class CrotaFragment extends BaseRaidFragment {
         showPosition((currentPosition + 1) % 4);
     }
 
+    private static final float POSITION_ALPHA_ENABLED = 1f;
+    private static final float POSITION_ALPHA_DISABLED = 0.25f;
+    private static final float POSITION_ALPHA_NEXT = 0.85f;
     private void showPosition(int position) {
-        int imageResource;
-        switch (position) {
-            case POSITION_ENRAGED:
-            case POSITION_CENTER_L:
-            case POSITION_CENTER_R:
-                imageResource = R.drawable.crota_position_center;
-                break;
-            case POSITION_LEFT:
-                imageResource = R.drawable.crota_position_left;
-                break;
-            case POSITION_RIGHT:
-                imageResource = R.drawable.crota_position_right;
-                break;
-            default:
-                throw new IllegalStateException(String.format("Invalid Crota position supplied (%s)", position));
+        // Portrait view
+        if (positionImageCurrent == null) {
+            int leftPositionDrawable = R.drawable.crota_position_left_disabled;
+            int centerPositionDrawable = R.drawable.crota_position_center_disabled;
+            int rightPositionDrawable = R.drawable.crota_position_right_disabled;
+            switch (position) {
+                case POSITION_ENRAGED:
+                case POSITION_CENTER_L:
+                    positionImageLeft.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageRight.setAlpha(POSITION_ALPHA_DISABLED);
+                    centerPositionDrawable = R.drawable.crota_position_center;
+                    break;
+                case POSITION_CENTER_R:
+                    positionImageLeft.setAlpha(POSITION_ALPHA_DISABLED);
+                    positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageRight.setAlpha(POSITION_ALPHA_NEXT);
+                    centerPositionDrawable = R.drawable.crota_position_center;
+                    break;
+                case POSITION_LEFT:
+                    positionImageLeft.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageCenter.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageRight.setAlpha(POSITION_ALPHA_DISABLED);
+                    leftPositionDrawable = R.drawable.crota_position_left;
+                    break;
+                case POSITION_RIGHT:
+                    positionImageLeft.setAlpha(POSITION_ALPHA_DISABLED);
+                    positionImageCenter.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageRight.setAlpha(POSITION_ALPHA_ENABLED);
+                    rightPositionDrawable = R.drawable.crota_position_right;
+                    break;
+                case POSITION_RESET:
+                    positionImageLeft.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageCenter.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageRight.setAlpha(POSITION_ALPHA_NEXT);
+                    break;
+                default:
+                    throw new IllegalStateException(String.format("Invalid Crota position supplied (%s)", position));
+            }
+            positionImageLeft.setImageResource(leftPositionDrawable);
+            positionImageCenter.setImageResource(centerPositionDrawable);
+            positionImageRight.setImageResource(rightPositionDrawable);
+        } else { // Landscape
+            float currentPositionAlpha = POSITION_ALPHA_ENABLED;
+            int currentPositionDrawable;
+            int nextPositionDrawable;
+            switch (position) {
+                case POSITION_ENRAGED:
+                case POSITION_CENTER_L:
+                    currentPositionDrawable = R.drawable.crota_position_center;
+                    nextPositionDrawable = R.drawable.crota_position_left_disabled;
+                    break;
+                case POSITION_CENTER_R:
+                    currentPositionDrawable = R.drawable.crota_position_center;
+                    nextPositionDrawable = R.drawable.crota_position_right_disabled;
+                    break;
+                case POSITION_LEFT:
+                    currentPositionDrawable = R.drawable.crota_position_left;
+                    nextPositionDrawable = R.drawable.crota_position_center_disabled;
+                    break;
+                case POSITION_RIGHT:
+                    currentPositionDrawable = R.drawable.crota_position_right;
+                    nextPositionDrawable = R.drawable.crota_position_center_disabled;
+                    break;
+                case POSITION_RESET:
+                    currentPositionDrawable = R.drawable.crota_position_center_disabled;
+                    nextPositionDrawable = R.drawable.crota_position_left_disabled;
+                    currentPositionAlpha = POSITION_ALPHA_NEXT;
+                    break;
+                default:
+                    throw new IllegalStateException(String.format("Invalid Crota position supplied (%s)", position));
+            }
+            positionImageCenter.setAlpha(currentPositionAlpha);
+            positionImageCurrent.setImageResource(currentPositionDrawable);
+            positionImageNext.setImageResource(nextPositionDrawable);
         }
-        positionImage.setImageResource(imageResource);
         currentPosition = position;
     }
 
