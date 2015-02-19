@@ -42,7 +42,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/crota_position_left"/>
+                android:alpha="0.5"
+                android:src="@drawable/crota_position_left_disabled"/>
 
             <ImageView
                 android:id="@+id/fragment_crota_position_center"
@@ -50,7 +51,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/crota_position_center"/>
+                android:alpha="0.5"
+                android:src="@drawable/crota_position_center_disabled"/>
 
             <ImageView
                 android:id="@+id/fragment_crota_position_right"
@@ -58,7 +60,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:scaleType="fitCenter"
-                android:src="@drawable/crota_position_right"/>
+                android:alpha="0.5"
+                android:src="@drawable/crota_position_right_disabled"/>
         </LinearLayout>
 
         <android.support.v7.widget.Toolbar

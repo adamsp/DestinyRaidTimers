@@ -41,7 +41,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.6"
                 android:scaleType="fitCenter"
-                android:src="@drawable/crota_position_center"/>
+                android:alpha="0.5"
+                android:src="@drawable/crota_position_center_disabled"/>
 
             <ImageView
                 android:id="@+id/fragment_crota_position_next"
@@ -49,7 +50,8 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.4"
                 android:scaleType="fitCenter"
-                android:src="@drawable/crota_position_center"/>
+                android:alpha="0.5"
+                android:src="@drawable/crota_position_right_disabled"/>
 
             <FrameLayout
                 android:id="@+id/fragment_crota_time_elapsed_container"
