@@ -319,7 +319,7 @@ public class CrotaFragment extends BaseRaidFragment {
                 default:
                     throw new IllegalStateException(String.format("Invalid Crota position supplied (%s)", position));
             }
-            positionImageCenter.setAlpha(currentPositionAlpha);
+            positionImageCurrent.setAlpha(currentPositionAlpha);
             positionImageCurrent.setImageResource(currentPositionDrawable);
             positionImageNext.setImageResource(nextPositionDrawable);
         }
