@@ -16,12 +16,12 @@
   -->
 
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_crota_top_container"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/primary_light"
+    android:orientation="vertical"
     android:weightSum="1">
 
     <FrameLayout
@@ -29,43 +29,70 @@
         android:layout_height="0dp"
         android:layout_weight="0.35">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/fragment_crota_toolbar"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"/>
-
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/fragment_crota_position"
-            android:scaleType="fitCenter"
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/crota_position_center" />
+            android:orientation="horizontal"
+            android:weightSum="3">
+
+            <ImageView
+                android:id="@+id/fragment_crota_position_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/crota_position_left"/>
+
+            <ImageView
+                android:id="@+id/fragment_crota_position_center"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/crota_position_center"/>
+
+            <ImageView
+                android:id="@+id/fragment_crota_position_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="fitCenter"
+                android:src="@drawable/crota_position_right"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/fragment_crota_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </FrameLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.65">
 
-        <include layout="@layout/fragment_crota_progress_layout"
-                 android:id="@+id/fragment_crota_progress_container"
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"/>
+        <include
+            android:id="@+id/fragment_crota_progress_container"
+            layout="@layout/fragment_crota_progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <FrameLayout
             android:id="@+id/fragment_crota_time_elapsed_container"
-            android:layout_gravity="bottom"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:layout_gravity="bottom"
             android:translationY="?attr/actionBarSize">
+
             <TextView
-                android:layout_marginLeft="16dp"
-                style="@style/DRT.TextAppearance.Crota.ElapsedTime"
-                android:layout_gravity="center_vertical"
                 android:id="@+id/fragment_crota_time_elapsed"
+                style="@style/DRT.TextAppearance.Crota.ElapsedTime"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="16dp"/>
         </FrameLayout>
     </FrameLayout>
 </LinearLayout>
