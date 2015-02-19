@@ -28,6 +28,7 @@
         android:weightSum="1">
 
         <nz.net.speakman.destinyraidtimers.crota.CrotaPositionView
+            android:id="@+id/fragment_crota_position"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"/>
