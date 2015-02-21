@@ -27,7 +27,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.35">
+        android:layout_weight="0.4">
 
         <nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView
             android:id="@+id/fragment_crota_position"
@@ -44,7 +44,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.65">
+        android:layout_weight="0.6">
 
         <nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView
             android:id="@+id/fragment_crota_movement_progress"
@@ -57,6 +57,14 @@
             android:src="@drawable/crota_timer_button_crystal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:layout_gravity="bottom|right"
+            android:id="@+id/fragment_crota_timer_reset"
+            android:src="@drawable/crota_timer_button_reset"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
 
         <FrameLayout
             android:id="@+id/fragment_crota_time_elapsed_container"

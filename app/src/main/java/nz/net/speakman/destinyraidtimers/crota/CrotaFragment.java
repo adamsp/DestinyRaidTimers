@@ -71,7 +71,10 @@ public class CrotaFragment extends BaseRaidFragment {
     CrotaPositionView positionView;
 
     @InjectView(R.id.fragment_crota_timer_button)
-    ImageView timerButton;
+    ImageView timerStartButton;
+
+    @InjectView(R.id.fragment_crota_timer_reset)
+    ImageView timerResetButton;
 
     @InjectView(R.id.fragment_crota_toolbar)
     Toolbar toolbar;
@@ -120,23 +123,26 @@ public class CrotaFragment extends BaseRaidFragment {
             startEnrageTimer();
         } else if (!movementTimerRunning) {
             startMovementTimer();
-        } else {
-            reset();
         }
+    }
+
+    @OnClick(R.id.fragment_crota_timer_reset)
+    public void onResetClick() {
+        reset();
     }
 
     private void startEnrageTimer() {
         showTimeElapsedContainer();
         enrageTimerRunning = true;
         enrageTimer.start();
-        timerButton.setImageResource(R.drawable.crota_timer_button_movement);
+        timerStartButton.setImageResource(R.drawable.crota_timer_button_movement);
     }
 
     private void startMovementTimer() {
         movementTimerRunning = true;
         movementTimer.start();
-        timerButton.setImageResource(R.drawable.crota_timer_button_reset);
-        // TODO Animate to different position?
+        timerStartButton.setVisibility(View.INVISIBLE);
+        timerResetButton.setVisibility(View.VISIBLE);
     }
 
     private void reset() {
@@ -147,7 +153,9 @@ public class CrotaFragment extends BaseRaidFragment {
         hideTimeElapsedContainer();
         positionView.reset();
         progressView.reset();
-        timerButton.setImageResource(R.drawable.crota_timer_button_crystal);
+        timerStartButton.setImageResource(R.drawable.crota_timer_button_crystal);
+        timerStartButton.setVisibility(View.VISIBLE);
+        timerResetButton.setVisibility(View.INVISIBLE);
     }
 
     private String formatMinutesFromMillis(long millis) {

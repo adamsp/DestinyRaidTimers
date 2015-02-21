@@ -48,6 +48,14 @@
                 android:src="@drawable/crota_timer_button_crystal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
+
+            <ImageView
+                android:layout_gravity="bottom|right"
+                android:id="@+id/fragment_crota_timer_reset"
+                android:src="@drawable/crota_timer_button_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"/>
         </FrameLayout>
 
     </LinearLayout>

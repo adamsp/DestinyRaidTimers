@@ -162,7 +162,6 @@ public class CrotaMovementCountdownView extends RelativeLayout {
 
     public void reset() {
         resetProgressBar();
-        blowBubble();
         countdown.setText("");
     }
 
