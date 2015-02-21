@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.otto.Subscribe;
@@ -68,6 +69,9 @@ public class CrotaFragment extends BaseRaidFragment {
 
     @InjectView(R.id.fragment_crota_position)
     CrotaPositionView positionView;
+
+    @InjectView(R.id.fragment_crota_timer_button)
+    ImageView timerButton;
 
     @InjectView(R.id.fragment_crota_toolbar)
     Toolbar toolbar;
@@ -125,11 +129,14 @@ public class CrotaFragment extends BaseRaidFragment {
         showTimeElapsedContainer();
         enrageTimerRunning = true;
         enrageTimer.start();
+        timerButton.setImageResource(R.drawable.crota_timer_button_movement);
     }
 
     private void startMovementTimer() {
         movementTimerRunning = true;
         movementTimer.start();
+        timerButton.setImageResource(R.drawable.crota_timer_button_reset);
+        // TODO Animate to different position?
     }
 
     private void reset() {
@@ -140,6 +147,7 @@ public class CrotaFragment extends BaseRaidFragment {
         hideTimeElapsedContainer();
         positionView.reset();
         progressView.reset();
+        timerButton.setImageResource(R.drawable.crota_timer_button_crystal);
     }
 
     private String formatMinutesFromMillis(long millis) {

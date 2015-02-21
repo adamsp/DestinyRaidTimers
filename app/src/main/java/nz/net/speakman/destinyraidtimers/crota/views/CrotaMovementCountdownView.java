@@ -163,7 +163,7 @@ public class CrotaMovementCountdownView extends RelativeLayout {
     public void reset() {
         resetProgressBar();
         blowBubble();
-        countdown.setText(R.string.crota_timer_action_start);
+        countdown.setText("");
     }
 
     private void resetProgressBar() {

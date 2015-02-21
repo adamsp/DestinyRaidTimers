@@ -46,17 +46,17 @@
         android:layout_height="0dp"
         android:layout_weight="0.65">
 
-        <Button
-            android:layout_gravity="top|right"
-            android:id="@+id/fragment_crota_timer_button"
-            android:text="Enrage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
         <nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView
             android:id="@+id/fragment_crota_movement_progress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <ImageView
+            android:layout_gravity="center"
+            android:id="@+id/fragment_crota_timer_button"
+            android:src="@drawable/crota_timer_button_crystal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <FrameLayout
             android:id="@+id/fragment_crota_time_elapsed_container"
