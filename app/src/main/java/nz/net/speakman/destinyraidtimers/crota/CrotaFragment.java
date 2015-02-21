@@ -97,6 +97,14 @@ public class CrotaFragment extends BaseRaidFragment {
         ButterKnife.inject(this, rootView);
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
+        if (enrageTimerRunning) {
+            timerResetButton.setVisibility(View.VISIBLE);
+            timeElapsedContainer.setTranslationY(0);
+            timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
+        }
+        if (movementTimerRunning) {
+            timerIndicator.setVisibility(View.INVISIBLE);
+        }
         if (enrageTimer.isEnraged()) {
             positionView.onEnrage();
             progressView.onEnrage();
