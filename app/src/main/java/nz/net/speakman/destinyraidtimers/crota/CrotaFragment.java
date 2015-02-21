@@ -174,22 +174,30 @@ public class CrotaFragment extends BaseRaidFragment {
         }
     }
 
-    @OnClick(R.id.fragment_crota_enrage_start_button)
-    public void onEnrageStartClick() {
+    @OnClick(R.id.fragment_crota_timer_button)
+    public void onTimerChangeClick() {
+        if (!enrageTimerRunning) {
+            startEnrageTimer();
+        } else if (!movementTimerRunning) {
+            startMovementTimer();
+        } else {
+            reset();
+        }
+    }
+
+    private void startEnrageTimer() {
         showTimeElapsedContainer();
         enrageTimerRunning = true;
         enrageTimer.start();
     }
 
-    @OnClick(R.id.fragment_crota_movement_start_button)
-    public void onMovementStartClick() {
+    private void startMovementTimer() {
         popBubble();
         movementTimerRunning = true;
         movementTimer.start();
     }
 
-    @OnClick(R.id.fragment_crota_reset_button)
-    public void onResetClick() {
+    private void reset() {
         enrageTimerRunning = false;
         enrageTimer.reset();
         movementTimerRunning = false;
