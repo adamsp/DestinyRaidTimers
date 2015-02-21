@@ -70,8 +70,8 @@ public class CrotaFragment extends BaseRaidFragment {
     @InjectView(R.id.fragment_crota_position)
     CrotaPositionView positionView;
 
-    @InjectView(R.id.fragment_crota_timer_button)
-    ImageView timerStartButton;
+    @InjectView(R.id.fragment_crota_timer_indicator)
+    ImageView timerIndicator;
 
     @InjectView(R.id.fragment_crota_timer_reset)
     View timerResetButton;
@@ -116,7 +116,7 @@ public class CrotaFragment extends BaseRaidFragment {
         timeElapsed.setText(formatMinutesFromMillis(event.getMillisUntilEnrage()));
     }
 
-    @OnClick(R.id.fragment_crota_timer_button)
+    @OnClick(R.id.fragment_crota_movement_progress)
     public void onTimerChangeClick() {
         if (!enrageTimerRunning) {
             startEnrageTimer();
@@ -134,14 +134,14 @@ public class CrotaFragment extends BaseRaidFragment {
         showTimeElapsedContainer();
         enrageTimerRunning = true;
         enrageTimer.start();
-        timerStartButton.setImageResource(R.drawable.crota_timer_button_movement);
+        timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
         timerResetButton.setVisibility(View.VISIBLE);
     }
 
     private void startMovementTimer() {
         movementTimerRunning = true;
         movementTimer.start();
-        timerStartButton.setVisibility(View.INVISIBLE);
+        timerIndicator.setVisibility(View.INVISIBLE);
     }
 
     private void reset() {
@@ -152,8 +152,8 @@ public class CrotaFragment extends BaseRaidFragment {
         hideTimeElapsedContainer();
         positionView.reset();
         progressView.reset();
-        timerStartButton.setImageResource(R.drawable.crota_timer_button_crystal);
-        timerStartButton.setVisibility(View.VISIBLE);
+        timerIndicator.setImageResource(R.drawable.crota_timer_button_crystal);
+        timerIndicator.setVisibility(View.VISIBLE);
         timerResetButton.setVisibility(View.INVISIBLE);
     }
 

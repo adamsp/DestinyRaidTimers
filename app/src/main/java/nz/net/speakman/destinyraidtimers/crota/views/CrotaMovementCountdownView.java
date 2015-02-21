@@ -105,10 +105,9 @@ public class CrotaMovementCountdownView extends RelativeLayout {
         Resources resources = ctx.getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
                 .setRingColor(resources.getColor(R.color.accent))
-                .setInnerCircleScale(1f)
                 .setRingWidth(resources.getDimensionPixelSize(R.dimen.fragment_crota_progress_width))
-                .setCenterColor(resources.getColor(R.color.accent))
                 .create();
+        progressDrawable.setProgress(1f);
         progressView.setImageDrawable(progressDrawable);
         bus.register(this);
     }
@@ -179,19 +178,5 @@ public class CrotaMovementCountdownView extends RelativeLayout {
             animator.cancel();
         }
         resetAnimator.start();
-    }
-
-    private void popBubble() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.CIRCLE_SCALE_PROPERTY,
-                1f, 0f).setDuration(RESET_ANIMATION_DURATION);
-        objectAnimator.setInterpolator(new DecelerateInterpolator());
-        objectAnimator.start();
-    }
-
-    private void blowBubble() {
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.CIRCLE_SCALE_PROPERTY,
-                0f, 1f).setDuration(RESET_ANIMATION_DURATION);
-        objectAnimator.setInterpolator(new DecelerateInterpolator());
-        objectAnimator.start();
     }
 }

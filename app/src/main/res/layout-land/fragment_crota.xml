@@ -45,7 +45,7 @@
 
             <ImageView
                 android:layout_gravity="center"
-                android:id="@+id/fragment_crota_timer_button"
+                android:id="@+id/fragment_crota_timer_indicator"
                 android:src="@drawable/crota_timer_button_crystal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
