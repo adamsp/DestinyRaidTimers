@@ -74,7 +74,7 @@ public class CrotaFragment extends BaseRaidFragment {
     ImageView timerStartButton;
 
     @InjectView(R.id.fragment_crota_timer_reset)
-    ImageView timerResetButton;
+    View timerResetButton;
 
     @InjectView(R.id.fragment_crota_toolbar)
     Toolbar toolbar;
@@ -136,13 +136,13 @@ public class CrotaFragment extends BaseRaidFragment {
         enrageTimerRunning = true;
         enrageTimer.start();
         timerStartButton.setImageResource(R.drawable.crota_timer_button_movement);
+        timerResetButton.setVisibility(View.VISIBLE);
     }
 
     private void startMovementTimer() {
         movementTimerRunning = true;
         movementTimer.start();
         timerStartButton.setVisibility(View.INVISIBLE);
-        timerResetButton.setVisibility(View.VISIBLE);
     }
 
     private void reset() {

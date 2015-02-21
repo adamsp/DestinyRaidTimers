@@ -15,56 +15,55 @@
   ~ limitations under the License.
   -->
 
-<LinearLayout
-    android:id="@+id/fragment_crota_top_container"
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/primary_light"
-    android:orientation="vertical"
-    android:weightSum="1">
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/fragment_crota_top_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.4">
+        android:layout_height="match_parent"
+        android:background="@color/primary_light"
+        android:orientation="vertical"
+        android:weightSum="1">
 
-        <nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView
-            android:id="@+id/fragment_crota_position"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.4">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/fragment_crota_toolbar"
+            <nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView
+                android:id="@+id/fragment_crota_position"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/fragment_crota_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
+        </FrameLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="0dp"
+            android:layout_weight="0.6">
 
-    </FrameLayout>
+            <nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView
+                android:id="@+id/fragment_crota_movement_progress"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.6">
+            <ImageView
+                android:id="@+id/fragment_crota_timer_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/crota_timer_button_crystal"/>
 
-        <nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView
-            android:id="@+id/fragment_crota_movement_progress"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <ImageView
-            android:layout_gravity="center"
-            android:id="@+id/fragment_crota_timer_button"
-            android:src="@drawable/crota_timer_button_crystal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-        <ImageView
-            android:layout_gravity="bottom|right"
-            android:id="@+id/fragment_crota_timer_reset"
-            android:src="@drawable/crota_timer_button_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"/>
+        </FrameLayout>
 
         <FrameLayout
             android:id="@+id/fragment_crota_time_elapsed_container"
@@ -81,5 +80,16 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="16dp"/>
         </FrameLayout>
-    </FrameLayout>
-</LinearLayout>
+    </LinearLayout>
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fragment_crota_timer_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:visibility="invisible"
+        fab:fab_colorNormal="@color/accent"
+        fab:fab_colorPressed="@color/primary"/>
+</FrameLayout>
