@@ -17,12 +17,20 @@
 package nz.net.speakman.destinyraidtimers.crota;
 
 /**
- * Created by Adam on 15-02-15.
+ * Created by Adam on 15-02-21.
  */
-public class CrotaUpdateEvent {
-    public final long millisUntilFinished;
+public class CrotaEnrageTimerUpdateEvent {
+    private long millisUntilEnrage;
 
-    public CrotaUpdateEvent(long millisUntilFinished) {
-        this.millisUntilFinished = millisUntilFinished;
+    public long getMillisUntilEnrage() {
+        return millisUntilEnrage;
+    }
+
+    public void setMillisUntilEnrage(long millisUntilEnrage) {
+        this.millisUntilEnrage = millisUntilEnrage;
+    }
+
+    public boolean isEnraged() {
+        return millisUntilEnrage <= 0;
     }
 }

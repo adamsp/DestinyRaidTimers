@@ -16,33 +16,40 @@
 
 package nz.net.speakman.destinyraidtimers.crota;
 
-import com.squareup.otto.Bus;
-
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
+import java.util.EnumSet;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Created by Adam on 15-02-15.
+ * Created by Adam on 15-02-21.
  */
-@Module(
-        complete = false,
-        injects = {
-                CrotaFragment.class,
-                CrotaPositionView.class
+public enum CrotaPosition {
+    ENRAGE(-2),
+    RESET(-1),
+    CENTER_L(0),
+    LEFT(1),
+    CENTER_R(2),
+    RIGHT(3);
+
+    private static final Map<Integer, CrotaPosition> lookup = new HashMap<>();
+
+    static {
+        for (CrotaPosition p : EnumSet.allOf(CrotaPosition.class)) {
+            lookup.put(p.getCode(), p);
         }
-)
-public class CrotaModule {
-    @Singleton
-    @Provides
-    CrotaMovementTimer provideCrotaMovementTimer(Bus bus) {
-        return new CrotaMovementTimer(bus);
     }
 
-    @Singleton
-    @Provides
-    CrotaEnrageTimer provideCrotaEnrgageTimer(Bus bus) {
-        return new CrotaEnrageTimer(bus);
+    private int code;
+
+    private CrotaPosition(int code) {
+        this.code = code;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public static CrotaPosition get(int code) {
+        return lookup.get(code);
     }
 }

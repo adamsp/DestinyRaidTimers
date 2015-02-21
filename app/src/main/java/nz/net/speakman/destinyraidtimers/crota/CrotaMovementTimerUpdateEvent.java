@@ -16,32 +16,26 @@
 
 package nz.net.speakman.destinyraidtimers.crota;
 
-import android.os.CountDownTimer;
-
-import com.squareup.otto.Bus;
-
 /**
  * Created by Adam on 15-02-15.
  */
-public class CrotaTimer extends CountDownTimer {
-    public static final long UPDATE_INTERVAL = 100; // 100 ms
-    public static final long MOVEMENT_PERIOD_MS = 1000 * 60; // 1 minute
-    public static final long TIME_TO_ENRAGE_MS = MOVEMENT_PERIOD_MS * 9; // 9 minutes
+public class CrotaMovementTimerUpdateEvent {
+    private long millisUntilMove;
+    private CrotaPosition position;
 
-    private Bus bus;
-
-    public CrotaTimer(Bus bus) {
-        super(TIME_TO_ENRAGE_MS, UPDATE_INTERVAL);
-        this.bus = bus;
+    public long getMillisUntilMove() {
+        return millisUntilMove;
     }
 
-    @Override
-    public void onTick(long millisUntilFinished) {
-        bus.post(new CrotaUpdateEvent(millisUntilFinished));
+    public void setMillisUntilMove(long millisUntilMove) {
+        this.millisUntilMove = millisUntilMove;
     }
 
-    @Override
-    public void onFinish() {
-        bus.post(new CrotaUpdateEvent(0));
+    public CrotaPosition getPosition() {
+        return position;
+    }
+
+    public void setPosition(CrotaPosition position) {
+        this.position = position;
     }
 }

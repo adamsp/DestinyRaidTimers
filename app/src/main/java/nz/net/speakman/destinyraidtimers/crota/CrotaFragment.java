@@ -57,8 +57,9 @@ public class CrotaFragment extends BaseRaidFragment {
         @Override public void onAnimationCancel(Animator animation) { }
     }
 
-    private static final String KEY_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_TIMER_RUNNING";
-    private static final String KEY_PROGRESS = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_PROGRESS";
+    private static final String KEY_ENRAGE_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_ENRAGE_TIMER_RUNNING";
+    private static final String KEY_MOVEMENT_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_MOVEMENT_TIMER_RUNNING";
+    private static final String KEY_MOVEMENT_PROGRESS = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_MOVEMENT_PROGRESS";
 
     private static final int RESET_ANIMATION_DURATION = 750;
 
@@ -67,7 +68,10 @@ public class CrotaFragment extends BaseRaidFragment {
     }
 
     @Inject
-    CrotaTimer timer;
+    CrotaMovementTimer movementTimer;
+
+    @Inject
+    CrotaEnrageTimer enrageTimer;
 
     @InjectView(R.id.fragment_crota_time_elapsed)
     TextView timeElapsed;
@@ -89,13 +93,15 @@ public class CrotaFragment extends BaseRaidFragment {
 
     private ObjectAnimator animator;
     private CircularProgressDrawable progressDrawable;
-    private boolean timerRunning;
+    private boolean enrageTimerRunning;
+    private boolean movementTimerRunning;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (savedInstanceState != null) {
-            timerRunning = savedInstanceState.getBoolean(KEY_TIMER_RUNNING, false);
+            enrageTimerRunning = savedInstanceState.getBoolean(KEY_ENRAGE_TIMER_RUNNING, false);
+            movementTimerRunning = savedInstanceState.getBoolean(KEY_MOVEMENT_TIMER_RUNNING, false);
         }
     }
 
@@ -115,15 +121,14 @@ public class CrotaFragment extends BaseRaidFragment {
             resetLabels();
             progressDrawable.setProgress(1f);
         } else {
-            progressDrawable.setProgress(savedInstanceState.getFloat(KEY_PROGRESS, 1f));
+            progressDrawable.setProgress(savedInstanceState.getFloat(KEY_MOVEMENT_PROGRESS, 1f));
 
         }
         progressView.setImageDrawable(progressDrawable);
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
-        if (timerRunning) {
-            timeElapsedContainer.setTranslationY(0);
-            progressDrawable.setCircleScale(0f);
+        if (enrageTimer.isEnraged()) {
+            onEnrage();
         }
         return rootView;
     }
@@ -139,63 +144,65 @@ public class CrotaFragment extends BaseRaidFragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(KEY_TIMER_RUNNING, timerRunning);
-        outState.putFloat(KEY_PROGRESS, progressDrawable.getProgress());
+        outState.putBoolean(KEY_ENRAGE_TIMER_RUNNING, enrageTimerRunning);
+        outState.putBoolean(KEY_MOVEMENT_TIMER_RUNNING, movementTimerRunning);
+        outState.putFloat(KEY_MOVEMENT_PROGRESS, progressDrawable.getProgress());
     }
 
     @Subscribe
-    public void onTimerUpdated(CrotaUpdateEvent event) {
-        if (event.millisUntilFinished == 0) {
+    public void onEnrageTimerUpdateEvent(CrotaEnrageTimerUpdateEvent event) {
+        long elapsedTimeMs = CrotaEnrageTimer.TIME_TO_ENRAGE_MS - event.getMillisUntilEnrage();
+        timeElapsed.setText(formatMinutesFromMillis(elapsedTimeMs));
+        if (event.isEnraged()) {
             onEnrage();
-            return;
         }
-        long timeElapsedMs = CrotaTimer.TIME_TO_ENRAGE_MS - event.millisUntilFinished;
-        // Can't just do timeRemaining % movement_period because what if enrage isn't a multiple of 60?
-        long timeToMoveMs = CrotaTimer.MOVEMENT_PERIOD_MS - timeElapsedMs % CrotaTimer.MOVEMENT_PERIOD_MS;
+    }
 
+    @Subscribe
+    public void onMovementTimerUpdateEvent(CrotaMovementTimerUpdateEvent event) {
+        long timeToMoveMs = event.getMillisUntilMove();
         timeToMove.setText(String.valueOf((timeToMoveMs + 999) / 1000));
-        timeElapsed.setText(formatMinutesFromMillis(timeElapsedMs));
-
         if (animator == null) {
-            float progressPct = timeToMoveMs / (float) CrotaTimer.MOVEMENT_PERIOD_MS;
+            float progressPct = timeToMoveMs / (float) CrotaMovementTimer.MOVEMENT_PERIOD_MS;
             // Drawable goes backwards, so we count down from 1 -> 0
             progressDrawable.setProgress(progressPct);
             animator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.PROGRESS_PROPERTY,
                     progressPct, 0f);
             animator.setDuration(timeToMoveMs);
             animator.setInterpolator(new LinearInterpolator());
-            animator.addListener(new AnimationEndListener() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    positionView.showNextPosition();
-                    resetProgressBar();
-                }
-            });
             animator.start();
         }
     }
 
-    @OnClick(R.id.fragment_crota_progress)
-    public void onProgressClick() {
-        if (timerRunning) {
-            timer.cancel();
-            resetProgressBar();
-            hideTimeElapsedContainer();
-            positionView.reset();
-            blowBubble();
-            resetLabels();
-        } else {
-            timer.start();
-            showTimeElapsedContainer();
-            positionView.showNextPosition();
-            popBubble();
-        }
-        timerRunning = !timerRunning;
+    @OnClick(R.id.fragment_crota_enrage_start_button)
+    public void onEnrageStartClick() {
+        showTimeElapsedContainer();
+        enrageTimerRunning = true;
+        enrageTimer.start();
+    }
+
+    @OnClick(R.id.fragment_crota_movement_start_button)
+    public void onMovementStartClick() {
+        popBubble();
+        movementTimerRunning = true;
+        movementTimer.start();
+    }
+
+    @OnClick(R.id.fragment_crota_reset_button)
+    public void onResetClick() {
+        enrageTimerRunning = false;
+        enrageTimer.reset();
+        movementTimerRunning = false;
+        movementTimer.reset();
+        resetProgressBar();
+        hideTimeElapsedContainer();
+        positionView.reset();
+        blowBubble();
+        resetLabels();
     }
 
     private void onEnrage() {
         resetProgressBar();
-        positionView.showEnraged();
         timeToMove.setText(R.string.crota_timer_action_enraged);
     }
 
