@@ -113,8 +113,7 @@ public class CrotaFragment extends BaseRaidFragment {
 
     @Subscribe
     public void onEnrageTimerUpdateEvent(CrotaEnrageTimerUpdateEvent event) {
-        long elapsedTimeMs = CrotaEnrageTimer.TIME_TO_ENRAGE_MS - event.getMillisUntilEnrage();
-        timeElapsed.setText(formatMinutesFromMillis(elapsedTimeMs));
+        timeElapsed.setText(formatMinutesFromMillis(event.getMillisUntilEnrage()));
     }
 
     @OnClick(R.id.fragment_crota_timer_button)
