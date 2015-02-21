@@ -123,7 +123,6 @@ public class CrotaMovementCountdownView extends RelativeLayout {
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
-            // TODO Restore state
             progressDrawable.setProgress(((Bundle) state).getFloat(KEY_MOVEMENT_PROGRESS, 1f));
             state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
         }
@@ -134,6 +133,9 @@ public class CrotaMovementCountdownView extends RelativeLayout {
     public void onCrotaMovementUpdate(CrotaMovementTimerUpdateEvent event) {
         long timeToMoveMs = event.getMillisUntilMove();
         countdown.setText(String.valueOf((timeToMoveMs + 999) / 1000));
+        if (timeToMoveMs == 0) {
+            resetProgressBar();
+        }
         if (animator == null) {
             float progressPct = timeToMoveMs / (float) CrotaMovementTimer.MOVEMENT_PERIOD_MS;
             // Drawable goes backwards, so we count down from 1 -> 0
