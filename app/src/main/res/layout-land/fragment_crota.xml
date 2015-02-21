@@ -60,21 +60,28 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"/>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/fragment_crota_time_elapsed_container"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom|left"
+        android:orientation="vertical"
         android:translationY="?attr/actionBarSize">
 
         <TextView
-            android:id="@+id/fragment_crota_time_elapsed"
-            style="@style/DRT.TextAppearance.Crota.ElapsedTime"
+            style="@style/DRT.TextAppearance.Crota.Enrage.Label"
+            android:text="@string/crota_timer_label_enrage_countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"/>
+
+        <TextView
+            android:id="@+id/fragment_crota_time_elapsed"
+            style="@style/DRT.TextAppearance.Crota.Enrage.Countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"/>
-    </FrameLayout>
+    </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/fragment_crota_timer_reset"

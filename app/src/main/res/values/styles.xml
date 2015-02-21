@@ -15,8 +15,15 @@
 
     <style name="DRT.TextAppearance" parent="Base.TextAppearance.AppCompat"/>
 
-    <style name="DRT.TextAppearance.Crota.ElapsedTime" parent="DRT.TextAppearance">
+    <style name="DRT.TextAppearance.Crota.Enrage" parent="DRT.TextAppearance">
         <item name="android:textColor">@color/primary_text</item>
+    </style>
+
+    <style name="DRT.TextAppearance.Crota.Enrage.Label" parent="DRT.TextAppearance.Crota.Enrage">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="DRT.TextAppearance.Crota.Enrage.Countdown" parent="DRT.TextAppearance.Crota.Enrage">
         <item name="android:textSize">20sp</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:freezesText">true</item>
