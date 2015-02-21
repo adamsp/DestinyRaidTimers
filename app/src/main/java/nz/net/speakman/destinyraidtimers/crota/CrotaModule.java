@@ -22,6 +22,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView;
+import nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView;
 
 /**
  * Created by Adam on 15-02-15.
@@ -30,7 +32,8 @@ import dagger.Provides;
         complete = false,
         injects = {
                 CrotaFragment.class,
-                CrotaPositionView.class
+                CrotaPositionView.class,
+                CrotaMovementCountdownView.class
         }
 )
 public class CrotaModule {

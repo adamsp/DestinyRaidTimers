@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers.crota;
+package nz.net.speakman.destinyraidtimers.crota.views;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -35,14 +35,17 @@ import butterknife.InjectView;
 import butterknife.Optional;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.RaidApplication;
+import nz.net.speakman.destinyraidtimers.crota.CrotaEnrageTimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.crota.CrotaMovementTimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.crota.CrotaPosition;
 
 /**
  * Created by Adam on 15-02-19.
  */
 public class CrotaPositionView extends LinearLayout {
 
-    private static final String KEY_CURRENT_POSITION = "nz.net.speakman.destinyraidtimers.crota.CrotaPositionView.KEY_CURRENT_POSITION";
-    private static final String KEY_SUPER_STATE = "nz.net.speakman.destinyraidtimers.crota.CrotaPositionView.KEY_SUPER_STATE";
+    private static final String KEY_CURRENT_POSITION = "nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView.KEY_CURRENT_POSITION";
+    private static final String KEY_SUPER_STATE = "nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView.KEY_SUPER_STATE";
 
     @Optional
     @InjectView(R.id.crota_position_current)
@@ -124,8 +127,12 @@ public class CrotaPositionView extends LinearLayout {
     @Subscribe
     public void onEnrageUpdate(CrotaEnrageTimerUpdateEvent event) {
         if (event.isEnraged()) {
-            showPosition(CrotaPosition.ENRAGE);
+            onEnrage();
         }
+    }
+
+    public void onEnrage() {
+        showPosition(CrotaPosition.ENRAGE);
     }
 
     public void reset() {

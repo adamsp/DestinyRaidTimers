@@ -27,14 +27,14 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <nz.net.speakman.destinyraidtimers.crota.CrotaPositionView
+        <nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView
             android:id="@+id/fragment_crota_position"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.3"/>
 
-        <include
-            layout="@layout/fragment_crota_progress_layout"
+        <nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView
+            android:id="@+id/fragment_crota_movement_progress"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.7"/>

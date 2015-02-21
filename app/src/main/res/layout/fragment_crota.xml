@@ -29,7 +29,7 @@
         android:layout_height="0dp"
         android:layout_weight="0.35">
 
-        <nz.net.speakman.destinyraidtimers.crota.CrotaPositionView
+        <nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView
             android:id="@+id/fragment_crota_position"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -53,9 +53,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <include
-            android:id="@+id/fragment_crota_progress_container"
-            layout="@layout/fragment_crota_progress_layout"
+        <nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView
+            android:id="@+id/fragment_crota_movement_progress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

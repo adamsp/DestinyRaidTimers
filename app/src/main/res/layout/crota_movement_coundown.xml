@@ -21,12 +21,12 @@
             android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/fragment_crota_progress"
+        android:id="@+id/crota_movement_countdown_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/fragment_crota_time_to_move"
+        android:id="@+id/crota_movement_countdown_label"
         android:text="@string/crota_timer_action_start"
         android:textSize="120dp"
         android:textColor="@color/primary_text"
