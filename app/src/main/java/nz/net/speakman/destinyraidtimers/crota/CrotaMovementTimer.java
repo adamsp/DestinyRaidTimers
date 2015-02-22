@@ -25,7 +25,7 @@ import com.squareup.otto.Bus;
  */
 public class CrotaMovementTimer extends CountDownTimer {
     public static final long UPDATE_INTERVAL = 100; // 100 ms
-    public static final long MOVEMENT_PERIOD_MS = 1000 * 5; // 1 minute
+    public static final long MOVEMENT_PERIOD_MS = 1000 * 60; // 1 minute
 
     private Bus bus;
     private CrotaMovementTimerUpdateEvent event;
