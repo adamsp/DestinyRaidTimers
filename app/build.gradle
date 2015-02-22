@@ -23,8 +23,21 @@ android {
         applicationId "nz.net.speakman.destinyraidtimers"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 1
+        versionCode 3
         versionName "1.0"
+    }
+
+    signingConfigs {
+        final Console console = System.console();
+        release {
+            if (console != null) {
+                // 'gradlew build' in the terminal
+                storeFile file(console.readLine("\n\$ Enter keystore path: "))
+                storePassword new String(console.readPassword("\n\$ Enter keystore password: "))
+                keyAlias console.readLine("\n\$ Enter key alias: ")
+                keyPassword new String(console.readPassword("\n\$ Enter key password: "))
+            }
+        }
     }
     buildTypes {
         debug {
@@ -39,6 +52,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
 }

@@ -71,3 +71,6 @@ Desktop.ini
 # Gradle
 .gradle/
 build/
+
+# Signing
+*.jks
