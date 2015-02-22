@@ -18,8 +18,9 @@
       xmlns:app="http://schemas.android.com/apk/res-auto"
       xmlns:tools="http://schemas.android.com/tools"
       tools:context="nz.net.speakman.destinyraidtimers.MainActivity">
-    <item android:id="@+id/action_licenses"
-          android:title="@string/label_licenses"
+    <item android:id="@+id/action_crota_help"
+          android:title="@string/menu_help"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          android:icon="@drawable/ic_action_help"
+          app:showAsAction="always"/>
 </menu>

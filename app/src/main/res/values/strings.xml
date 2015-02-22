@@ -4,6 +4,19 @@
     <string name="app_name">Destiny Raid Timers</string>
     <string name="crota_timer_action_enraged">Enraged!</string>
     <string name="crota_timer_label_enrage_countdown">Enrage in…</string>
-    <string name="label_licenses">Licenses</string>
+    <string name="menu_help">Help</string>
+
+    <string name="crota_help_title">Crota Help</string>
+    <string name="crota_help_crystal">Tap this when you activate the crystal to trigger the enrage countdown. The glass breaks at 10:00 remaining.</string>
+    <string name="crota_help_movement">Tap this when the first person moves out of the left or right door to start the Crota movement countdown.</string>
+    <string name="crota_help_reset">If you wipe, use this to reset all timers and start again. May or may not give extra heavy ammo drops.</string>
+
+    <string name="crota_help_description">Wondering when Crota is going to move? Is he going left or right next? What are next weeks lottery numbers?
+        If you\'re curious about the answers to these questions and more, Destiny Raid Timers is here to help.</string>
+
+    <string name="app_about_description">
+        This app is free and <a href="https://github.com/adamsp/DestinyRaidTimers">open-source</a>. Contributions are welcome.
+    </string>
+    <string name="app_about_licenses"><u>Open source licenses</u></string>
 
 </resources>

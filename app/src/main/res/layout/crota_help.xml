@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2015 Adam Speakman
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+              android:background="@color/crota_primary_light"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+        <TextView
+            style="@style/CrotaHelpText"
+            android:text="@string/crota_help_description"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                style="@style/CrotaHelpImage"
+                android:src="@drawable/crota_timer_button_crystal"/>
+            <TextView
+                style="@style/CrotaHelpText"
+                android:text="@string/crota_help_crystal"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                style="@style/CrotaHelpImage"
+                android:src="@drawable/crota_timer_button_movement"/>
+            <TextView
+                style="@style/CrotaHelpText"
+                android:text="@string/crota_help_movement"/>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- Use padding for this one cos it's smaller, but we want it aligned with the others. -->
+            <ImageView
+                style="@style/CrotaHelpImage"
+                android:padding="16dp"
+                android:src="@drawable/crota_timer_button_reset"/>
+            <TextView
+                style="@style/CrotaHelpText"
+                android:text="@string/crota_help_reset"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/CrotaHelpText"
+            android:id="@+id/app_about_description"
+            android:text="@string/app_about_description"/>
+
+        <TextView
+            style="@style/CrotaHelpText"
+            android:id="@+id/app_about_licenses"
+            android:layout_gravity="center"
+            android:text="@string/app_about_licenses"/>
+
+    </LinearLayout>
+
+</ScrollView>
