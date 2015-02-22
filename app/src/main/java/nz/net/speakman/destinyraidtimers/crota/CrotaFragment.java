@@ -97,6 +97,12 @@ public class CrotaFragment extends BaseRaidFragment {
         ButterKnife.inject(this, rootView);
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
+        return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         if (enrageTimerRunning) {
             timerResetButton.setVisibility(View.VISIBLE);
             enrageCountdownContainer.setTranslationY(0);
@@ -108,10 +114,8 @@ public class CrotaFragment extends BaseRaidFragment {
         if (enrageTimer.isEnraged()) {
             positionView.onEnrage();
             progressView.onEnrage();
-            // TODO Show enrage icon when, err, enraged
-//            timerIndicator.setImageResource(R.drawable.crota_timer_button_enrage);
+            onEnrage();
         }
-        return rootView;
     }
 
     @Override
@@ -124,9 +128,7 @@ public class CrotaFragment extends BaseRaidFragment {
     @Subscribe
     public void onEnrageTimerUpdateEvent(CrotaEnrageTimerUpdateEvent event) {
         if (event.isEnraged()) {
-            // On enrage, he moves everywhere. Stop firing movement events.
-            movementTimer.reset();
-            enrageCountdown.setText(R.string.crota_timer_action_enraged);
+            onEnrage();
         } else {
             enrageCountdown.setText(formatMinutesFromMillis(event.getMillisUntilEnrage()));
         }
@@ -144,6 +146,13 @@ public class CrotaFragment extends BaseRaidFragment {
     @OnClick(R.id.fragment_crota_timer_reset)
     public void onResetClick() {
         reset();
+    }
+
+    private void onEnrage() {
+        movementTimer.reset();
+        enrageCountdown.setText(R.string.crota_timer_action_enraged);
+        timerIndicator.setImageResource(R.drawable.crota_timer_button_enrage);
+        timerIndicator.setVisibility(View.VISIBLE);
     }
 
     private void startEnrageTimer() {
