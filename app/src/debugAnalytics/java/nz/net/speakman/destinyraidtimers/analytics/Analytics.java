@@ -19,14 +19,22 @@ package nz.net.speakman.destinyraidtimers.analytics;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 
 import io.fabric.sdk.android.Fabric;
+import timber.log.Timber;
 
 /**
  * Created by Adam on 15-02-15.
  */
 public class Analytics {
     public static void initialize(Application app) {
-        Fabric.with(app, new Crashlytics());
+        Timber.d("{analytics enabled} Enabling Crashlytics");
+        Timber.d("{analytics enabled} Enabling Answers");
+        Fabric fabric = new Fabric.Builder(app)
+                .kits(new Crashlytics(), new Answers())
+                .debuggable(true)
+                .build();
+        Fabric.with(fabric);
     }
 }

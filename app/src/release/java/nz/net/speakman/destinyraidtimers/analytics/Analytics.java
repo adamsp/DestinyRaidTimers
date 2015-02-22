@@ -19,6 +19,7 @@ package nz.net.speakman.destinyraidtimers.analytics;
 import android.app.Application;
 
 import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.answers.Answers;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -27,6 +28,9 @@ import io.fabric.sdk.android.Fabric;
  */
 public class Analytics {
     public static void initialize(Application app) {
-        Fabric.with(app, new Crashlytics());
+        Fabric fabric = new Fabric.Builder(app)
+                .kits(new Crashlytics(), new Answers())
+                .build();
+        Fabric.with(fabric);
     }
 }
