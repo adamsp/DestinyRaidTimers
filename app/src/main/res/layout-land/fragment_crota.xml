@@ -61,7 +61,7 @@
         android:layout_height="?attr/actionBarSize"/>
 
     <LinearLayout
-        android:id="@+id/fragment_crota_time_elapsed_container"
+        android:id="@+id/fragment_crota_enrage_countdown_container"
         android:layout_width="wrap_content"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="bottom|left"
@@ -76,7 +76,7 @@
             android:layout_marginLeft="8dp"/>
 
         <TextView
-            android:id="@+id/fragment_crota_time_elapsed"
+            android:id="@+id/fragment_crota_enrage_countdown"
             style="@style/DRT.TextAppearance.Crota.Enrage.Countdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

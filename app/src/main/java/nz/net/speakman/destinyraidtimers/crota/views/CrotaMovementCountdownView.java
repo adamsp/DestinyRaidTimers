@@ -157,7 +157,7 @@ public class CrotaMovementCountdownView extends RelativeLayout {
 
     public void onEnrage() {
         resetProgressBar();
-        countdown.setText(R.string.crota_timer_action_enraged);
+        countdown.setText("");
     }
 
     public void reset() {

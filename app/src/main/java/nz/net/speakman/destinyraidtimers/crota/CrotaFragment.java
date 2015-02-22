@@ -58,11 +58,11 @@ public class CrotaFragment extends BaseRaidFragment {
     @Inject
     CrotaEnrageTimer enrageTimer;
 
-    @InjectView(R.id.fragment_crota_time_elapsed)
-    TextView timeElapsed;
+    @InjectView(R.id.fragment_crota_enrage_countdown)
+    TextView enrageCountdown;
 
-    @InjectView(R.id.fragment_crota_time_elapsed_container)
-    View timeElapsedContainer;
+    @InjectView(R.id.fragment_crota_enrage_countdown_container)
+    View enrageCountdownContainer;
 
     @InjectView(R.id.fragment_crota_movement_progress)
     CrotaMovementCountdownView progressView;
@@ -99,7 +99,7 @@ public class CrotaFragment extends BaseRaidFragment {
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
         if (enrageTimerRunning) {
             timerResetButton.setVisibility(View.VISIBLE);
-            timeElapsedContainer.setTranslationY(0);
+            enrageCountdownContainer.setTranslationY(0);
             timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
         }
         if (movementTimerRunning) {
@@ -108,6 +108,8 @@ public class CrotaFragment extends BaseRaidFragment {
         if (enrageTimer.isEnraged()) {
             positionView.onEnrage();
             progressView.onEnrage();
+            // TODO Show enrage icon when, err, enraged
+//            timerIndicator.setImageResource(R.drawable.crota_timer_button_enrage);
         }
         return rootView;
     }
@@ -121,7 +123,13 @@ public class CrotaFragment extends BaseRaidFragment {
 
     @Subscribe
     public void onEnrageTimerUpdateEvent(CrotaEnrageTimerUpdateEvent event) {
-        timeElapsed.setText(formatMinutesFromMillis(event.getMillisUntilEnrage()));
+        if (event.isEnraged()) {
+            // On enrage, he moves everywhere. Stop firing movement events.
+            movementTimer.reset();
+            enrageCountdown.setText(R.string.crota_timer_action_enraged);
+        } else {
+            enrageCountdown.setText(formatMinutesFromMillis(event.getMillisUntilEnrage()));
+        }
     }
 
     @OnClick(R.id.fragment_crota_movement_progress)
@@ -171,16 +179,16 @@ public class CrotaFragment extends BaseRaidFragment {
     }
 
     private void showTimeElapsedContainer() {
-        ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
-                timeElapsedContainer.getMeasuredHeight(), 0f)
+        ObjectAnimator.ofFloat(enrageCountdownContainer, "translationY",
+                enrageCountdownContainer.getMeasuredHeight(), 0f)
                 .setDuration(500).start();
     }
 
     private void hideTimeElapsedContainer() {
-        ObjectAnimator.ofFloat(timeElapsedContainer, "translationY",
-                0, timeElapsedContainer.getMeasuredHeight())
+        ObjectAnimator.ofFloat(enrageCountdownContainer, "translationY",
+                0, enrageCountdownContainer.getMeasuredHeight())
                 .setDuration(500).start();
-        timeElapsed.setText(formatMinutesFromMillis(0));
+        enrageCountdown.setText(formatMinutesFromMillis(0));
     }
 
 }

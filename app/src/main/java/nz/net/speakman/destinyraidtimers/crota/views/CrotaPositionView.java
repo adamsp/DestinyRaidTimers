@@ -154,7 +154,13 @@ public class CrotaPositionView extends LinearLayout {
             int rightPositionDrawable = R.drawable.crota_position_right_disabled;
             switch (position) {
                 case ENRAGE:
-                    /// TODO Show different enrage image(s)?
+                    positionImageLeft.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageRight.setAlpha(POSITION_ALPHA_ENABLED);
+                    leftPositionDrawable = R.drawable.crota_position_left;
+                    centerPositionDrawable = R.drawable.crota_position_center;
+                    rightPositionDrawable = R.drawable.crota_position_right;
+                    break;
                 case CENTER_L:
                     positionImageLeft.setAlpha(POSITION_ALPHA_NEXT);
                     positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
@@ -196,6 +202,9 @@ public class CrotaPositionView extends LinearLayout {
             int nextPositionDrawable;
             switch (position) {
                 case ENRAGE:
+                    currentPositionDrawable = R.drawable.crota_position_center;
+                    nextPositionDrawable = R.drawable.crota_position_center;
+                    break;
                 case CENTER_L:
                     currentPositionDrawable = R.drawable.crota_position_center;
                     nextPositionDrawable = R.drawable.crota_position_left_disabled;

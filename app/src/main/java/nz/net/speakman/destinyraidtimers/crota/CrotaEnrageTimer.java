@@ -55,7 +55,9 @@ public class CrotaEnrageTimer extends CountDownTimer {
     }
 
     public void reset() {
+        cancel();
         enraged = false;
+        event.setMillisUntilEnrage(TIME_TO_ENRAGE_MS);
     }
 
     private void updateListeners() {
