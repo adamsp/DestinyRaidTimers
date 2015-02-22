@@ -24,7 +24,16 @@ import com.squareup.otto.Bus;
  * Created by Adam on 15-02-21.
  */
 public class CrotaEnrageTimer extends CountDownTimer {
-    public static final long TIME_TO_ENRAGE_MS = 10 * 60 * 1000; // 10 minutes
+    /**
+     * From crystal activation to glass break is 22 seconds.
+     * From glass break, Crota enrages after 10 minutes: https://www.bungie.net/en/Forum/Post/84580574/0/0
+     */
+    public static final long TIME_TO_GLASS_BREAK_MS = 22 * 1000;
+    /**
+     * Time from the first 'Crotas Presence Debuff' (crystal activation) until enrage.
+     * Includes {@link #TIME_TO_GLASS_BREAK_MS}.
+     */
+    public static final long TIME_TO_ENRAGE_MS = 10 * 60 * 1000 + TIME_TO_GLASS_BREAK_MS;
     public static final long UPDATE_INTERVAL = 100; // 100 ms
 
     private final Bus bus;
