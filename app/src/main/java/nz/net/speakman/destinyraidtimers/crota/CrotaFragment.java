@@ -23,6 +23,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -107,6 +108,7 @@ public class CrotaFragment extends BaseRaidFragment {
             timerResetButton.setVisibility(View.VISIBLE);
             enrageCountdownContainer.setTranslationY(0);
             timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
+            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         if (movementTimerRunning) {
             timerIndicator.setVisibility(View.INVISIBLE);
@@ -161,6 +163,7 @@ public class CrotaFragment extends BaseRaidFragment {
         enrageTimer.start();
         timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
         timerResetButton.setVisibility(View.VISIBLE);
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void startMovementTimer() {
@@ -180,6 +183,7 @@ public class CrotaFragment extends BaseRaidFragment {
         timerIndicator.setImageResource(R.drawable.crota_timer_button_crystal);
         timerIndicator.setVisibility(View.VISIBLE);
         timerResetButton.setVisibility(View.INVISIBLE);
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private String formatMinutesFromMillis(long millis) {
