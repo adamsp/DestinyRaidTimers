@@ -16,12 +16,13 @@
   -->
 
 <resources>
-    <color name="primary">#133327</color>
-    <color name="primary_dark">#0D2519</color>
-    <color name="primary_light">#3E7160</color>
-    <color name="accent">#FF9800</color>
-    <color name="primary_text">#FFFFFF</color>
-    <color name="secondary_text">#8EDBA8</color>
-    <color name="icons">#FFFFFF</color>
-    <color name="divider">#B6B6B6</color>
+    <color name="crota_primary">#1B3F35</color>
+    <color name="crota_primary_dark">#0C261D</color>
+    <color name="crota_primary_light">#40715D</color>
+    <color name="crota_accent">#D8AE3A</color>
+    <color name="crota_primary_text">#FFFFFF</color>
+    <color name="crota_secondary_text">#90D7A7</color>
+    <color name="crota_position_enrage">#ff0000</color>
+    <color name="crota_position_current">@color/crota_primary_text</color>
+    <color name="crota_position_disabled">@color/crota_secondary_text</color>
 </resources>

@@ -24,7 +24,7 @@ import com.squareup.otto.Bus;
  * Created by Adam on 15-02-21.
  */
 public class CrotaEnrageTimer extends CountDownTimer {
-    public static final long TIME_TO_ENRAGE_MS = 10 * 60 * 1000; // 10 minutes
+    public static final long TIME_TO_ENRAGE_MS = 1 * 23 * 1000; // 10 minutes
     public static final long UPDATE_INTERVAL = 100; // 100 ms
 
     private final Bus bus;

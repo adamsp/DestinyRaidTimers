@@ -28,7 +28,7 @@
     <TextView
         android:id="@+id/crota_movement_countdown_label"
         android:textSize="120dp"
-        android:textColor="@color/primary_text"
+        android:textColor="@color/crota_primary_text"
         android:freezesText="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

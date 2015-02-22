@@ -103,7 +103,7 @@ public class CrotaMovementCountdownView extends RelativeLayout {
         RaidApplication.getApplication().inject(this);
         Resources resources = ctx.getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
-                .setRingColor(resources.getColor(R.color.accent))
+                .setRingColor(resources.getColor(R.color.crota_accent))
                 .setRingWidth(resources.getDimensionPixelSize(R.dimen.fragment_crota_progress_width))
                 .create();
         progressDrawable.setProgress(1f);
