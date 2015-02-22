@@ -28,7 +28,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:alpha="0.5"
+        android:alpha="@dimen/crota_position_alpha_disabled"
         android:src="@drawable/crota_position_left_disabled"/>
 
     <ImageView
@@ -37,7 +37,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:alpha="0.5"
+        android:alpha="@dimen/crota_position_alpha_disabled"
         android:src="@drawable/crota_position_center_disabled"/>
 
     <ImageView
@@ -46,6 +46,6 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        android:alpha="0.5"
+        android:alpha="@dimen/crota_position_alpha_disabled"
         android:src="@drawable/crota_position_right_disabled"/>
 </LinearLayout>

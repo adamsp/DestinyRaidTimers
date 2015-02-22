@@ -26,6 +26,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -74,9 +75,12 @@ public class CrotaPositionView extends LinearLayout {
     @Inject
     Bus bus;
 
-    ColorFilter enrageFilter;
-    ColorFilter currentPositionFilter;
-    ColorFilter disabledPositionFilter;
+    private ColorFilter enrageFilter;
+    private ColorFilter currentPositionFilter;
+    private ColorFilter disabledPositionFilter;
+    private float positionAlphaEnabled;
+    private float positionAlphaDisabled;
+    private float positionAlphaNext;
 
     private CrotaPosition currentPosition = CrotaPosition.RESET;
 
@@ -110,6 +114,18 @@ public class CrotaPositionView extends LinearLayout {
         enrageFilter = new PorterDuffColorFilter(resources.getColor(R.color.crota_position_enrage), PorterDuff.Mode.MULTIPLY);
         currentPositionFilter = new PorterDuffColorFilter(resources.getColor(R.color.crota_position_current), PorterDuff.Mode.MULTIPLY);
         disabledPositionFilter = new PorterDuffColorFilter(resources.getColor(R.color.crota_position_disabled), PorterDuff.Mode.MULTIPLY);
+        /*
+        See http://stackoverflow.com/a/8780360/1217087 and
+        http://blog.danlew.net/2015/01/06/handling-android-resources-with-non-standard-formats/
+        for an explanation on why this is necessary.
+         */
+        TypedValue outValue = new TypedValue();
+        resources.getValue(R.dimen.crota_position_alpha_enabled, outValue, true);
+        positionAlphaEnabled = outValue.getFloat();
+        resources.getValue(R.dimen.crota_position_alpha_disabled, outValue, true);
+        positionAlphaDisabled = outValue.getFloat();
+        resources.getValue(R.dimen.crota_position_alpha_next, outValue, true);
+        positionAlphaNext = outValue.getFloat();
     }
 
     @Override
@@ -151,9 +167,7 @@ public class CrotaPositionView extends LinearLayout {
         showPosition(CrotaPosition.RESET);
     }
 
-    private static final float POSITION_ALPHA_ENABLED = 1f;
-    private static final float POSITION_ALPHA_DISABLED = 0.25f;
-    private static final float POSITION_ALPHA_NEXT = 0.85f;
+
 
     private void showPosition(CrotaPosition position) {
         if (position == currentPosition) {
@@ -170,46 +184,46 @@ public class CrotaPositionView extends LinearLayout {
             int rightPositionDrawable = R.drawable.crota_position_right_disabled;
             switch (position) {
                 case ENRAGE:
-                    positionImageLeft.setAlpha(POSITION_ALPHA_ENABLED);
-                    positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
-                    positionImageRight.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageLeft.setAlpha(positionAlphaEnabled);
+                    positionImageCenter.setAlpha(positionAlphaEnabled);
+                    positionImageRight.setAlpha(positionAlphaEnabled);
                     leftPositionFilterColor = centerPositionFilterColor = rightPositionFilterColor = enrageFilter;
                     leftPositionDrawable = R.drawable.crota_position_left;
                     centerPositionDrawable = R.drawable.crota_position_center;
                     rightPositionDrawable = R.drawable.crota_position_right;
                     break;
                 case CENTER_L:
-                    positionImageLeft.setAlpha(POSITION_ALPHA_NEXT);
-                    positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
-                    positionImageRight.setAlpha(POSITION_ALPHA_DISABLED);
+                    positionImageLeft.setAlpha(positionAlphaNext);
+                    positionImageCenter.setAlpha(positionAlphaEnabled);
+                    positionImageRight.setAlpha(positionAlphaDisabled);
                     centerPositionDrawable = R.drawable.crota_position_center;
                     centerPositionFilterColor = currentPositionFilter;
                     break;
                 case CENTER_R:
-                    positionImageLeft.setAlpha(POSITION_ALPHA_DISABLED);
-                    positionImageCenter.setAlpha(POSITION_ALPHA_ENABLED);
-                    positionImageRight.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageLeft.setAlpha(positionAlphaDisabled);
+                    positionImageCenter.setAlpha(positionAlphaEnabled);
+                    positionImageRight.setAlpha(positionAlphaNext);
                     centerPositionDrawable = R.drawable.crota_position_center;
                     centerPositionFilterColor = currentPositionFilter;
                     break;
                 case LEFT:
-                    positionImageLeft.setAlpha(POSITION_ALPHA_ENABLED);
-                    positionImageCenter.setAlpha(POSITION_ALPHA_NEXT);
-                    positionImageRight.setAlpha(POSITION_ALPHA_DISABLED);
+                    positionImageLeft.setAlpha(positionAlphaEnabled);
+                    positionImageCenter.setAlpha(positionAlphaNext);
+                    positionImageRight.setAlpha(positionAlphaDisabled);
                     leftPositionDrawable = R.drawable.crota_position_left;
                     leftPositionFilterColor = currentPositionFilter;
                     break;
                 case RIGHT:
-                    positionImageLeft.setAlpha(POSITION_ALPHA_DISABLED);
-                    positionImageCenter.setAlpha(POSITION_ALPHA_NEXT);
-                    positionImageRight.setAlpha(POSITION_ALPHA_ENABLED);
+                    positionImageLeft.setAlpha(positionAlphaDisabled);
+                    positionImageCenter.setAlpha(positionAlphaNext);
+                    positionImageRight.setAlpha(positionAlphaEnabled);
                     rightPositionDrawable = R.drawable.crota_position_right;
                     rightPositionFilterColor = currentPositionFilter;
                     break;
                 case RESET:
-                    positionImageLeft.setAlpha(POSITION_ALPHA_NEXT);
-                    positionImageCenter.setAlpha(POSITION_ALPHA_NEXT);
-                    positionImageRight.setAlpha(POSITION_ALPHA_NEXT);
+                    positionImageLeft.setAlpha(positionAlphaDisabled);
+                    positionImageCenter.setAlpha(positionAlphaDisabled);
+                    positionImageRight.setAlpha(positionAlphaDisabled);
                     break;
                 default:
                     throw new IllegalStateException(String.format("Invalid Crota position supplied (%s)", position));
@@ -221,7 +235,8 @@ public class CrotaPositionView extends LinearLayout {
             positionImageRight.setColorFilter(rightPositionFilterColor);
             positionImageRight.setImageResource(rightPositionDrawable);
         } else { // Landscape
-            float currentPositionAlpha = POSITION_ALPHA_ENABLED;
+            float currentPositionAlpha = positionAlphaEnabled;
+            float nextPositionAlpha = positionAlphaNext;
             int currentPositionDrawable;
             int nextPositionDrawable;
             ColorFilter currentPositionFilter = this.currentPositionFilter;
@@ -232,6 +247,7 @@ public class CrotaPositionView extends LinearLayout {
                     nextPositionDrawable = R.drawable.crota_position_center;
                     currentPositionFilter = enrageFilter;
                     nextPositionFilter = enrageFilter;
+                    nextPositionAlpha = positionAlphaEnabled;
                     break;
                 case CENTER_L:
                     currentPositionDrawable = R.drawable.crota_position_center;
@@ -253,7 +269,8 @@ public class CrotaPositionView extends LinearLayout {
                     currentPositionDrawable = R.drawable.crota_position_center_disabled;
                     nextPositionDrawable = R.drawable.crota_position_left_disabled;
                     currentPositionFilter = disabledPositionFilter;
-                    currentPositionAlpha = POSITION_ALPHA_NEXT;
+                    currentPositionAlpha = positionAlphaDisabled;
+                    nextPositionAlpha = positionAlphaDisabled;
                     break;
                 default:
                     throw new IllegalStateException(String.format("Invalid Crota position supplied (%s)", position));
@@ -261,6 +278,7 @@ public class CrotaPositionView extends LinearLayout {
             positionImageCurrent.setAlpha(currentPositionAlpha);
             positionImageCurrent.setColorFilter(currentPositionFilter);
             positionImageCurrent.setImageResource(currentPositionDrawable);
+            positionImageNext.setAlpha(nextPositionAlpha);
             positionImageNext.setColorFilter(nextPositionFilter);
             positionImageNext.setImageResource(nextPositionDrawable);
         }
