@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="360"
+   height="360"
+   viewBox="0 0 360 360.00001"
+   id="svg4709"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   inkscape:export-filename="/Users/Adam/Desktop/crota images/crota_timer_button_reset.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90"
+   sodipodi:docname="crota_timer_button_movement.svg">
+  <defs
+     id="defs4711">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect4719"
+       is_visible="true" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="1.4142136"
+     inkscape:cx="184.07907"
+     inkscape:cy="220.99515"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1843"
+     inkscape:window-height="1155"
+     inkscape:window-x="77"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1" />
+  <metadata
+     id="metadata4714">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-692.36216)">
+    <g
+       id="g8767">
+      <path
+         id="path8671"
+         transform="translate(0,692.36216)"
+         d="M 180,24.5 C 126.36723,24.5141 82.306736,42.340209 80.5,64.792969 L 80.501953,335.5 279.5,335.5 279.49805,64.78125 C 277.69197,42.33641 233.61383,24.52513 180,24.5 Z m 0,19.248047 c 42.88139,0.02202 78.13749,15.628432 79.58203,35.294922 l 0,237.208981 -159.16406,0 0,-237.197262 C 101.86304,59.381258 137.10347,43.760547 180,43.748047 Z"
+         style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.9665339;stroke-opacity:1"
+         inkscape:connector-curvature="0" />
+      <g
+         transform="translate(-1.31434,0)"
+         style="stroke:none;stroke-opacity:1"
+         id="g8758">
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+           d="m 246.39628,864.74112 -6.25362,-7.4508 -23.53183,19.7478 -30.0687,-20.17268 -5.41936,8.07925 36.11652,24.2289 z"
+           id="rect8697"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccc" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+           d="m 152.34892,843.46421 -36.11652,24.22889 5.41937,8.07925 30.16827,-20.23906 23.37915,19.62166 6.25361,-7.45078 z"
+           id="rect8705"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccc" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.84956378;stroke-opacity:1"
+           d="m 214.42289,936.83198 -42.58136,-32.20859 -5.97049,7.89492 36.7438,27.79373 -16.16086,43.14532 9.27013,3.47197 z"
+           id="rect8701"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccc" />
+        <path
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.84956378;stroke-opacity:1"
+           d="m 180.14162,961.82738 -11.48709,-52.13782 -9.66588,2.12879 9.8916,44.9039 -40.32543,22.34794 4.79754,8.6568 z"
+           id="rect8725"
+           inkscape:connector-curvature="0"
+           sodipodi:nodetypes="ccccccc" />
+        <ellipse
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+           id="path8754"
+           cx="454.1124"
+           cy="704.47058"
+           rx="28.125"
+           ry="27.375"
+           transform="matrix(0.94388027,0.33028781,-0.33028781,0.94388027,0,0)" />
+        <rect
+           style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-opacity:1"
+           id="rect8756"
+           width="13.127428"
+           height="93.173416"
+           x="431.06717"
+           y="703.34186"
+           transform="matrix(0.93453668,0.35586681,-0.30612138,0.95199249,0,0)" />
+      </g>
+    </g>
+  </g>
+</svg>
