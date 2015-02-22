@@ -26,10 +26,10 @@ import java.util.Map;
 public enum CrotaPosition {
     ENRAGE(-2),
     RESET(-1),
-    CENTER_L(0),
-    LEFT(1),
-    CENTER_R(2),
-    RIGHT(3);
+    CENTER_R(0),
+    RIGHT(1),
+    CENTER_L(2),
+    LEFT(3);
 
     private static final Map<Integer, CrotaPosition> lookup = new HashMap<>();
 

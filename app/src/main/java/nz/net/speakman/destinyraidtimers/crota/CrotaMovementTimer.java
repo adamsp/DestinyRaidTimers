@@ -29,13 +29,14 @@ public class CrotaMovementTimer extends CountDownTimer {
 
     private Bus bus;
     private CrotaMovementTimerUpdateEvent event;
-    private int currentPosition = CrotaPosition.CENTER_L.getCode();
+    private int currentPosition;
 
     public CrotaMovementTimer(Bus bus) {
         super(MOVEMENT_PERIOD_MS, UPDATE_INTERVAL);
         this.bus = bus;
         this.event = new CrotaMovementTimerUpdateEvent();
-        event.setPosition(CrotaPosition.CENTER_L);
+        event.setPosition(CrotaPosition.CENTER_R);
+        currentPosition = CrotaPosition.CENTER_R.getCode();
     }
 
     @Override
@@ -55,8 +56,8 @@ public class CrotaMovementTimer extends CountDownTimer {
 
     public void reset() {
         cancel();
-        currentPosition = CrotaPosition.CENTER_L.getCode();
-        event.setPosition(CrotaPosition.get(currentPosition));
+        event.setPosition(CrotaPosition.CENTER_R);
+        currentPosition = CrotaPosition.CENTER_R.getCode();
     }
 
     private void updateListeners() {

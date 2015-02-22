@@ -267,7 +267,7 @@ public class CrotaPositionView extends LinearLayout {
                     break;
                 case RESET:
                     currentPositionDrawable = R.drawable.crota_position_center_disabled;
-                    nextPositionDrawable = R.drawable.crota_position_left_disabled;
+                    nextPositionDrawable = R.drawable.crota_position_right_disabled;
                     currentPositionFilter = disabledPositionFilter;
                     currentPositionAlpha = positionAlphaDisabled;
                     nextPositionAlpha = positionAlphaDisabled;
