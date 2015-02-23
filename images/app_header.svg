@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1024"
+   height="500"
+   viewBox="0 0 1024 500"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="app_header.svg"
+   inkscape:export-filename="/Users/Adam/Development/Code/DestinyRaidTimers/images/app_header.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="-62.685229 : 70.556626 : 1"
+       inkscape:vp_y="0 : 1070.3728 : 0"
+       inkscape:vp_z="46.040634 : 160.55663 : 1"
+       inkscape:persp3d-origin="101.49913 : 49.518982 : 1"
+       id="perspective6382" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect6352"
+       is_visible="true" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#9ea0b3"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="1"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.9899495"
+     inkscape:cx="497.36871"
+     inkscape:cy="165.87554"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer6"
+     showgrid="false"
+     units="px"
+     inkscape:window-width="1843"
+     inkscape:window-height="1155"
+     inkscape:window-x="77"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     showguides="false" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Bottom Ring"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-552.36216)"
+     style="display:inline" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer4"
+     inkscape:label="Icon"
+     style="display:inline"
+     transform="translate(0,308)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer5"
+     inkscape:label="Top Ring"
+     style="display:inline"
+     transform="translate(0,308)" />
+  <g
+     inkscape:groupmode="layer"
+     id="layer6"
+     inkscape:label="Clock Hands"
+     style="display:inline"
+     transform="translate(0,308)">
+    <g
+       id="g4299"
+       transform="translate(9.0913728,33.481298)">
+      <path
+         inkscape:connector-curvature="0"
+         id="ellipse4157"
+         d="M 219.36825,581.00973 A 175.22577,180.63922 0 0 0 44.143064,761.64799 175.22577,180.63922 0 0 0 219.36825,942.29035 175.22577,180.63922 0 0 0 394.59343,761.64802 175.22577,180.63922 0 0 0 219.36825,581.00976 Z m 0,27.09713 A 148.9419,153.54334 0 0 1 368.30886,761.64799 148.9419,153.54334 0 0 1 219.36825,915.1932 148.9419,153.54334 0 0 1 70.427637,761.64799 148.9419,153.54334 0 0 1 219.36825,608.10686 Z"
+         style="display:inline;fill:#e2e2e7;fill-opacity:1;stroke:#000000;stroke-width:2.25645065;stroke-opacity:1"
+         transform="translate(0,-860.36216)" />
+      <path
+         inkscape:connector-curvature="0"
+         id="path6346"
+         d="m 127.923,-190.97991 c -2.48396,-0.0404 -4.97063,0.13505 -7.42397,0.53269 -9.81335,1.59052 -19.01126,6.72975 -25.511519,14.2516 -6.500253,7.52185 -10.250908,17.36695 -10.402265,27.30721 -0.15136,9.94025 3.296487,19.89916 9.564725,27.61542 4.846407,5.96598 11.204709,10.51189 17.749179,14.54307 6.54447,4.03118 13.36757,7.63141 19.61858,12.104154 22.88725,16.376362 36.50664,43.941138 38.90213,71.981696 1.11589,13.0621089 0.0532,26.6002838 4.59308,38.898777 2.75508,7.463405 7.55236,14.174434 13.77923,19.126087 6.22688,4.951696 13.87206,8.118985 21.78614,8.931566 7.91409,0.812564 16.06803,-0.745792 23.08264,-4.499269 7.01458,-3.753497 12.85181,-9.698464 16.39572,-16.821212 5.35667,-10.766122 5.29702,-23.28547671 6.74053,-35.223635 4.49217,-37.151008 25.25574,-71.910676 55.43856,-94.032494 8.39863,-6.15558 17.67364,-11.55882 23.89339,-19.91004 5.39676,-7.24619 8.09248,-16.43302 7.59816,-25.45456 -0.49429,-9.02153 -4.15134,-17.81681 -10.10408,-24.61367 -5.95275,-6.79686 -14.1495,-11.57011 -22.97211,-13.51793 -8.82262,-1.94781 -18.22537,-1.08155 -26.59361,2.32503 -8.60691,3.50372 -15.94427,9.51331 -24.19825,13.78258 -13.35915,6.90985 -28.76698,9.04386 -43.80008,8.57642 -23.50002,-0.73069 -46.78198,-7.66437 -66.85257,-19.91004 -6.40749,-3.81271 -13.83175,-5.87215 -21.28361,-5.99345 z m 87.5231,51.63277 a 41.963229,41.65693 0 0 1 41.96083,41.659321 41.963229,41.65693 0 0 1 -41.96083,41.655983 41.963229,41.65693 0 0 1 -41.96419,-41.655983 41.963229,41.65693 0 0 1 41.96419,-41.659321 z"
+         style="display:inline;fill:#e2e2e7;fill-opacity:1;stroke:#000000;stroke-width:1.7152853;stroke-opacity:1" />
+      <path
+         style="display:inline;fill:#bbbbbe;fill-opacity:1;stroke:#000000;stroke-width:1.7152853;stroke-opacity:1"
+         d="m 115.91835,-176.37122 c -2.48395,-0.0404 -4.97063,0.13505 -7.42397,0.53268 -9.813348,1.59051 -19.011262,6.72975 -25.511518,14.2516 -6.500254,7.52186 -10.250909,17.36696 -10.402265,27.30721 -0.151362,9.94025 3.296486,19.89915 9.564725,27.61542 4.846408,5.96598 11.204709,10.511893 17.749183,14.543071 6.544475,4.031178 13.367565,7.631409 19.618575,12.104163 22.88725,16.376346 36.50664,43.941122 38.90213,71.9816795 1.11589,13.0621091 0.0532,26.6002835 4.59308,38.8987725 2.75507,7.463431 7.55236,14.17444 13.77923,19.126118 6.22688,4.951679 13.87205,8.11898 21.78614,8.931536 7.91409,0.812564 16.06804,-0.745793 23.08263,-4.499264 7.01461,-3.753489 12.8518,-9.698439 16.39573,-16.821196 5.35665,-10.766136 5.29703,-23.285494 6.74055,-35.2236524 4.49214,-37.1510076 25.25573,-71.9106696 55.43855,-94.0324816 8.39864,-6.155585 17.67362,-11.558816 23.89339,-19.910036 5.39676,-7.2462 8.09246,-16.43303 7.59816,-25.45456 -0.4943,-9.02154 -4.15135,-17.81682 -10.10411,-24.61367 -5.95273,-6.79687 -14.14949,-11.57011 -22.97208,-13.51793 -8.82261,-1.94781 -18.22537,-1.08156 -26.59364,2.32501 -8.60689,3.50373 -15.94424,9.51333 -24.19824,13.78259 -13.35915,6.90984 -28.76697,9.04385 -43.80007,8.57643 -23.50002,-0.7307 -46.78198,-7.66438 -66.85257,-19.91004 -6.40749,-3.81273 -13.83175,-5.87215 -21.28361,-5.99345 z m 87.5231,51.63276 a 41.963229,41.65693 0 0 1 41.96082,41.659313 41.963229,41.65693 0 0 1 -41.96082,41.655985 41.963229,41.65693 0 0 1 -41.96418,-41.655985 41.963229,41.65693 0 0 1 41.96418,-41.659313 z"
+         id="path6355"
+         inkscape:connector-curvature="0" />
+      <path
+         inkscape:connector-curvature="0"
+         style="display:inline;fill:#bbbbbb;fill-opacity:1;stroke:#000000;stroke-width:2.25645065;stroke-opacity:1"
+         d="M 207.13213,-264.89059 A 175.22577,180.63922 0 0 0 31.90694,-84.252326 175.22577,180.63922 0 0 0 207.13213,96.389838 175.22577,180.63922 0 0 0 382.35731,-84.252326 175.22577,180.63922 0 0 0 207.13213,-264.89059 Z m 0,27.09714 A 148.9419,153.54334 0 0 1 356.07273,-84.252347 148.9419,153.54334 0 0 1 207.13213,69.292721 148.9419,153.54334 0 0 1 58.191513,-84.252347 148.9419,153.54334 0 0 1 207.13213,-237.79345 Z"
+         id="path4170" />
+      <g
+         transform="matrix(2.0393548,0,0,2.0393548,17.451422,-285.22004)"
+         id="g6538">
+        <g
+           id="g6534"
+           transform="translate(19.950513,30.304576)">
+          <path
+             sodipodi:nodetypes="ccccc"
+             inkscape:connector-curvature="0"
+             id="rect6370"
+             d="m 38.841193,100.23389 -1.72014,-1.885413 43.537824,-41.964672 3.87406,4.246295 z"
+             style="fill:#737373;fill-opacity:1;stroke:#000000;stroke-width:0.43123484;stroke-opacity:1" />
+          <path
+             style="fill:#737373;fill-opacity:1;stroke:#000000;stroke-width:0.5075404;stroke-opacity:1"
+             d="m 133.0733,100.33514 -1.21266,2.20679 -75.164939,-39.438447 2.731124,-4.970068 z"
+             id="path6486"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="ccccc" />
+        </g>
+        <g
+           id="g6528"
+           transform="translate(-0.25253833,1.2626909)">
+          <path
+             style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.43123484;stroke-opacity:1"
+             d="m 57.150207,130.28592 -1.720139,-1.88541 43.537824,-41.964667 3.874058,4.246295 z"
+             id="path6494"
+             inkscape:connector-curvature="0"
+             sodipodi:nodetypes="ccccc" />
+          <path
+             sodipodi:nodetypes="ccccc"
+             inkscape:connector-curvature="0"
+             id="path6496"
+             d="m 151.3823,130.38718 -1.21266,2.20679 -75.164925,-39.438449 2.731124,-4.970068 z"
+             style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.5075404;stroke-opacity:1" />
+        </g>
+      </g>
+    </g>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:80px;line-height:125%;font-family:'Heiti SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;text-anchor:middle;text-align:center;-inkscape-font-specification:'Heiti SC';font-stretch:normal;font-variant:normal;"
+       x="705.94385"
+       y="-179.73613"
+       id="text4312"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4314"
+         x="516.18799"
+         y="-179.73613">Destiny Raid </tspan><tspan
+         sodipodi:role="line"
+         x="516.18799"
+         y="-104.73613"
+         id="tspan4332">Timers</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:40px;line-height:125%;font-family:'Heiti SC';-inkscape-font-specification:'Heiti SC';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="528.30981"
+       y="-12.050806"
+       id="text4316"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4318"
+         x="528.30981"
+         y="-12.050806">- Crota enrage</tspan><tspan
+         sodipodi:role="line"
+         x="528.30981"
+         y="37.949196"
+         id="tspan4328">- Crota movement</tspan><tspan
+         sodipodi:role="line"
+         x="528.30981"
+         y="87.949196"
+         id="tspan4334">- Good times<tspan
+   style="font-size:27.5px"
+   id="tspan4340">*</tspan></tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:27.5px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="619.22351"
+       y="180.88832"
+       id="text4336"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="tspan4338"
+         x="619.22351"
+         y="180.88832">* good times not guaranteed</tspan></text>
+  </g>
+</svg>
