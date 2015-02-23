@@ -68,6 +68,6 @@ dependencies {
     compile('com.crashlytics.sdk.android:crashlytics:2.2.1@aar') {
         transitive = true;
     }
-    compile 'com.sefford:circular-progress-drawable:1.3@aar'
+    compile 'com.sefford:circular-progress-drawable:1.31@aar'
     compile 'com.getbase:floatingactionbutton:1.8.0@aar'
 }
