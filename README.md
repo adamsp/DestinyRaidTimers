@@ -1,8 +1,16 @@
 Destiny Raid Timers
 ============
-This app has raid timers for the game [Destiny](http://www.destinythegame.com/ca/en).
 
-Currently, it only has timers for the Crota fight of the Crotas End raid.
+<a href="https://play.google.com/store/apps/details?id=nz.net.speakman.destinyraidtimers">
+  <img alt="Get it on Google Play"
+       src="https://developer.android.com/images/brand/en_generic_rgb_wo_60.png" />
+</a>
+
+Raid timers for [Destiny](http://www.destinythegame.com/ca/en). Currently, the app only has timers for the Crota fight of the Crotas End raid. Timers and guides for more fights are expected to arrive soon. Need to do something while we wait for House of Wolves, right?
+
+Release names are drawn from the list of Destiny related terms on the [Destiny Wikia site](http://destiny.wikia.com/wiki/Special:AllPages).
+
+The only permission required currently is the Internet permission, used for reporting crashes to Crashlytics. Not that I expect there to be any crashes.
 
 ## Libraries
 
@@ -14,10 +22,11 @@ This app makes use of the following libraries:
 - [Dagger](http://square.github.io/dagger/) (dependency injection)
 - [ButterKnife](http://jakewharton.github.io/butterknife/) (for view and click handler injection)
 - [CircularProgressDrawable](https://github.com/Sefford/CircularProgressDrawable) (currently used for displaying progress on the Crota fight)
+- [android-floating-action-button](https://github.com/futuresimple/android-floating-action-button) (for the timer reset button)
 
 ## Build types
 
-There are 3 build types; `debug`, `debugAnalytics` and `release`. The `debug` build should work for anyone - you can select it from the Build Variants window of Android Studio. The other two require a `crashlytics.properties` file included in the root of the app directory with an apiKey and apiSecret defined.
+There are 3 build types; `debug`, `debugAnalytics` and `release`. The `debug` build should work for anyone - you can select it from the Build Variants window of Android Studio. The other two require a `crashlytics.properties` file included in the root of the app directory with an apiKey and apiSecret defined. If you really want to build a release build you'll need your own keystore, obviously.
 
 ## License
 
