@@ -31,7 +31,7 @@ import nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView;
 @Module(
         complete = false,
         injects = {
-                CrotaFragment.class,
+                CrotaActivity.class,
                 CrotaPositionView.class,
                 CrotaMovementCountdownView.class
         }

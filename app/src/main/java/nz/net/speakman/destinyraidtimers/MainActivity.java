@@ -17,16 +17,14 @@
 package nz.net.speakman.destinyraidtimers;
 
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import nz.net.speakman.destinyraidtimers.crota.CrotaHelpDialog;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseRaidActivity {
 
-    private static final String FRAGMENT_TAG = "nz.net.speakman.destinyraidtimers.FRAGMENT_TAG";
     private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.DIALOG_TAG";
 
     @Override
@@ -36,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, new SelectionFragment(), FRAGMENT_TAG)
+                    .add(R.id.fragment_container, new SelectionFragment(), "TAG")
                     .commit();
         }
     }

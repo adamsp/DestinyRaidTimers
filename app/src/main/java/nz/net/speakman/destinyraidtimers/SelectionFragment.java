@@ -16,20 +16,22 @@
 
 package nz.net.speakman.destinyraidtimers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import nz.net.speakman.destinyraidtimers.crota.CrotaFragment;
+import nz.net.speakman.destinyraidtimers.crota.CrotaActivity;
 
 /**
  * Created by Adam on 15-03-06.
  */
-public class SelectionFragment extends BaseRaidFragment {
+public class SelectionFragment extends Fragment {
 
     private int containerId;
 
@@ -43,9 +45,7 @@ public class SelectionFragment extends BaseRaidFragment {
 
     @OnClick(R.id.fragment_selection_crota_card)
     void onCrotaSelection() {
-        getFragmentManager().beginTransaction()
-                .replace(containerId, CrotaFragment.newInstance(), getTag())
-                .addToBackStack(null)
-                .commit();
+        Intent intent = new Intent(getActivity(), CrotaActivity.class);
+        startActivity(intent);
     }
 }
