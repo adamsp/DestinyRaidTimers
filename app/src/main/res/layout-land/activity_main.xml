@@ -19,13 +19,13 @@
               xmlns:card_view="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:weightSum="2">
 
     <android.support.v7.widget.CardView
-        android:id="@+id/fragment_selection_crota_card"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:id="@+id/activity_main_selection_crota_card"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:layout_margin="4dp"
         android:layout_weight="1"
@@ -40,7 +40,6 @@
             android:src="@drawable/crota_timer_button_crystal"/>
 
         <TextView
-            android:id="@+id/info_text"
             style="@style/DRT.TextAppearance.Selection.BottomText"
             android:layout_gravity="bottom"
             android:text="@string/selection_title_crota"/>

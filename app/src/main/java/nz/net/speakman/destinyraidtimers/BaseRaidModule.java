@@ -31,7 +31,6 @@ import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
         complete = false,
         injects = {
                 MainActivity.class,
-                SelectionFragment.class,
                 RaidApplication.class
         },
         includes = {

@@ -16,27 +16,26 @@
 
 package nz.net.speakman.destinyraidtimers;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+import nz.net.speakman.destinyraidtimers.crota.CrotaActivity;
 import nz.net.speakman.destinyraidtimers.crota.CrotaHelpDialog;
 
 
 public class MainActivity extends BaseRaidActivity {
 
-    private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.DIALOG_TAG";
+    private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.MainActivity.DIALOG_TAG";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if (savedInstanceState == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, new SelectionFragment(), "TAG")
-                    .commit();
-        }
+        ButterKnife.inject(this);
     }
 
     @Override
@@ -54,5 +53,10 @@ public class MainActivity extends BaseRaidActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.activity_main_selection_crota_card)
+    void onCrotaSelection() {
+        startActivity(new Intent(this, CrotaActivity.class));
     }
 }
