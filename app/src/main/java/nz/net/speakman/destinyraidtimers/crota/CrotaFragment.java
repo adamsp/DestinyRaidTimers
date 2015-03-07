@@ -94,7 +94,7 @@ public class CrotaFragment extends BaseRaidFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = getActivity().getLayoutInflater().inflate(R.layout.fragment_crota, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_crota, container, false);
         ButterKnife.inject(this, rootView);
         ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
         ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");

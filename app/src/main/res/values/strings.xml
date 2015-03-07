@@ -6,6 +6,8 @@
     <string name="crota_timer_label_enrage_countdown">Enrage in…</string>
     <string name="menu_help">Help</string>
 
+    <string name="selection_title_crota">Crota</string>
+
     <string name="crota_help_title">Crota Help</string>
     <string name="crota_help_crystal">Tap this when you activate the crystal to trigger the enrage countdown. The glass breaks at 10:00 remaining.</string>
     <string name="crota_help_movement">Tap this when the first person moves out of the left or right door to start the Crota movement countdown.</string>

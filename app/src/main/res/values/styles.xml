@@ -1,7 +1,9 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"/>
+
+    <style name="CrotaTheme" parent="AppTheme">
         <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/crota_primary</item>
 
@@ -15,6 +17,16 @@
 
     <style name="DRT.TextAppearance" parent="Base.TextAppearance.AppCompat"/>
 
+    <style name="DRT.TextAppearance.Selection.BottomText" parent="DRT.TextAppearance">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">@color/selection_text</item>
+        <item name="android:background">@color/selection_text_background</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
     <style name="DRT.TextAppearance.Crota.Enrage" parent="DRT.TextAppearance">
         <item name="android:textColor">@color/crota_primary_text</item>
     </style>
@@ -27,6 +39,11 @@
         <item name="android:textSize">20sp</item>
         <item name="android:layout_gravity">center_vertical</item>
         <item name="android:freezesText">true</item>
+    </style>
+
+    <style name="SelectionGridImage">
+        <item name="android:layout_margin">8dp</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 
     <style name="CrotaHelpImage">

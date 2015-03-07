@@ -21,7 +21,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import nz.net.speakman.destinyraidtimers.crota.CrotaFragment;
 import nz.net.speakman.destinyraidtimers.crota.CrotaHelpDialog;
 
 
@@ -37,7 +36,7 @@ public class MainActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.fragment_container, CrotaFragment.newInstance(), FRAGMENT_TAG)
+                    .add(R.id.fragment_container, new SelectionFragment(), FRAGMENT_TAG)
                     .commit();
         }
     }
