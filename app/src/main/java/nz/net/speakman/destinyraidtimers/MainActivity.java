@@ -18,10 +18,12 @@ package nz.net.speakman.destinyraidtimers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.crota.CrotaActivity;
 import nz.net.speakman.destinyraidtimers.crota.CrotaHelpDialog;
@@ -31,11 +33,15 @@ public class MainActivity extends BaseRaidActivity {
 
     private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.MainActivity.DIALOG_TAG";
 
+    @InjectView(R.id.activity_main_toolbar)
+    Toolbar toolbar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.inject(this);
+        setSupportActionBar(toolbar);
     }
 
     @Override
@@ -48,7 +54,7 @@ public class MainActivity extends BaseRaidActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_crota_help) {
+        if (id == R.id.action_main_about) {
             new CrotaHelpDialog().show(getSupportFragmentManager(), DIALOG_TAG);
             return true;
         }

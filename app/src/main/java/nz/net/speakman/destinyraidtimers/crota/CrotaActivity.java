@@ -19,6 +19,8 @@ package nz.net.speakman.destinyraidtimers.crota;
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -43,6 +45,7 @@ import nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView;
  */
 public class CrotaActivity extends BaseRaidActivity {
 
+    private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.DIALOG_TAG";
     private static final String KEY_ENRAGE_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.KEY_ENRAGE_TIMER_RUNNING";
     private static final String KEY_MOVEMENT_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.KEY_MOVEMENT_TIMER_RUNNING";
 
@@ -87,6 +90,27 @@ public class CrotaActivity extends BaseRaidActivity {
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_crota_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.action_crota_help) {
+            new CrotaHelpDialog().show(getSupportFragmentManager(), DIALOG_TAG);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
