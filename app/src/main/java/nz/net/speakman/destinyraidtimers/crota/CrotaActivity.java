@@ -46,8 +46,6 @@ import nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView;
 public class CrotaActivity extends BaseRaidActivity {
 
     private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.DIALOG_TAG";
-    private static final String KEY_ENRAGE_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.KEY_ENRAGE_TIMER_RUNNING";
-    private static final String KEY_MOVEMENT_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.KEY_MOVEMENT_TIMER_RUNNING";
 
     @Inject
     CrotaMovementTimer movementTimer;
@@ -82,10 +80,8 @@ public class CrotaActivity extends BaseRaidActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            enrageTimerRunning = savedInstanceState.getBoolean(KEY_ENRAGE_TIMER_RUNNING, false);
-            movementTimerRunning = savedInstanceState.getBoolean(KEY_MOVEMENT_TIMER_RUNNING, false);
-        }
+        enrageTimerRunning = enrageTimer.isRunning();
+        movementTimerRunning = movementTimer.isRunning();
         setContentView(R.layout.activity_crota);
         ButterKnife.inject(this);
         setSupportActionBar(toolbar);
@@ -126,6 +122,7 @@ public class CrotaActivity extends BaseRaidActivity {
             timerIndicator.setVisibility(View.INVISIBLE);
         }
         if (enrageTimer.isEnraged()) {
+            timerResetButton.setVisibility(View.VISIBLE);
             positionView.onEnrage();
             progressView.onEnrage();
             onEnrage();
@@ -133,10 +130,9 @@ public class CrotaActivity extends BaseRaidActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(KEY_ENRAGE_TIMER_RUNNING, enrageTimerRunning);
-        outState.putBoolean(KEY_MOVEMENT_TIMER_RUNNING, movementTimerRunning);
+    public void onPause() {
+        super.onPause();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Subscribe

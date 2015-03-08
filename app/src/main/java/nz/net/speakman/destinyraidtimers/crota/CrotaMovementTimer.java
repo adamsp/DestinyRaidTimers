@@ -30,6 +30,7 @@ public class CrotaMovementTimer extends CountDownTimer {
     private Bus bus;
     private CrotaMovementTimerUpdateEvent event;
     private int currentPosition;
+    private boolean running;
 
     public CrotaMovementTimer(Bus bus) {
         super(MOVEMENT_PERIOD_MS, UPDATE_INTERVAL);
@@ -41,12 +42,14 @@ public class CrotaMovementTimer extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
+        running = true;
         event.setMillisUntilMove(millisUntilFinished);
         updateListeners();
     }
 
     @Override
     public void onFinish() {
+        running = false;
         currentPosition = (currentPosition + 1) % 4;
         event.setPosition(CrotaPosition.get(currentPosition));
         event.setMillisUntilMove(0);
@@ -56,8 +59,13 @@ public class CrotaMovementTimer extends CountDownTimer {
 
     public void reset() {
         cancel();
+        running = false;
         event.setPosition(CrotaPosition.CENTER_R);
         currentPosition = CrotaPosition.CENTER_R.getCode();
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     private void updateListeners() {
