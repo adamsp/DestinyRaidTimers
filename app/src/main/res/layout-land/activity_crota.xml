@@ -33,8 +33,11 @@
             android:layout_weight="0.3"
             android:weightSum="1"
             android:orientation="vertical">
+
+            <!-- The right-side position arrow overlaps the back button unless we set a top margin on this view -->
             <nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView
                 android:id="@+id/activity_crota_position"
+                android:layout_marginTop="?attr/actionBarSize"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"/>
