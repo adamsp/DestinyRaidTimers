@@ -39,6 +39,7 @@ public class CrotaEnrageTimer extends CountDownTimer {
     private final Bus bus;
     private CrotaEnrageTimerUpdateEvent event;
     private boolean enraged;
+    private boolean running;
 
     public CrotaEnrageTimer(Bus bus) {
         super(TIME_TO_ENRAGE_MS, UPDATE_INTERVAL);
@@ -48,12 +49,14 @@ public class CrotaEnrageTimer extends CountDownTimer {
 
     @Override
     public void onTick(long millisUntilFinished) {
+        running = true;
         event.setMillisUntilEnrage(millisUntilFinished);
         updateListeners();
     }
 
     @Override
     public void onFinish() {
+        running = false;
         event.setMillisUntilEnrage(0L);
         enraged = true;
         updateListeners();
@@ -65,8 +68,13 @@ public class CrotaEnrageTimer extends CountDownTimer {
 
     public void reset() {
         cancel();
+        running = false;
         enraged = false;
         event.setMillisUntilEnrage(TIME_TO_ENRAGE_MS);
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     private void updateListeners() {

@@ -16,25 +16,25 @@
 
 package nz.net.speakman.destinyraidtimers;
 
-import android.app.Activity;
-import android.support.v4.app.Fragment;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 
 import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
 /**
- * Created by Adam on 15-02-15.
+ * Created by Adam on 15-03-07.
  */
-public class BaseRaidFragment extends Fragment {
+public class BaseRaidActivity extends ActionBarActivity {
 
     @Inject
     protected Bus bus;
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((RaidApplication)activity.getApplicationContext()).inject(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((RaidApplication)getApplicationContext()).inject(this);
     }
 
     @Override

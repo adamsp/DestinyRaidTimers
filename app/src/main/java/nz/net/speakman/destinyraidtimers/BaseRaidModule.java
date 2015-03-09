@@ -30,6 +30,7 @@ import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
 @Module(
         complete = false,
         injects = {
+                MainActivity.class,
                 RaidApplication.class
         },
         includes = {

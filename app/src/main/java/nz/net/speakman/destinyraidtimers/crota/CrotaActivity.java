@@ -18,11 +18,10 @@ package nz.net.speakman.destinyraidtimers.crota;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -36,22 +35,17 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import nz.net.speakman.destinyraidtimers.BaseRaidFragment;
+import nz.net.speakman.destinyraidtimers.BaseRaidActivity;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView;
 import nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView;
 
 /**
- * Created by Adam on 15-02-15.
+ * Created by Adam on 15-03-07.
  */
-public class CrotaFragment extends BaseRaidFragment {
+public class CrotaActivity extends BaseRaidActivity {
 
-    private static final String KEY_ENRAGE_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_ENRAGE_TIMER_RUNNING";
-    private static final String KEY_MOVEMENT_TIMER_RUNNING = "nz.net.speakman.destinyraidtimers.crota.CrotaFragment.KEY_MOVEMENT_TIMER_RUNNING";
-
-    public static CrotaFragment newInstance() {
-        return new CrotaFragment();
-    }
+    private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.crota.CrotaActivity.DIALOG_TAG";
 
     @Inject
     CrotaMovementTimer movementTimer;
@@ -59,25 +53,25 @@ public class CrotaFragment extends BaseRaidFragment {
     @Inject
     CrotaEnrageTimer enrageTimer;
 
-    @InjectView(R.id.fragment_crota_enrage_countdown)
+    @InjectView(R.id.activity_crota_enrage_countdown)
     TextView enrageCountdown;
 
-    @InjectView(R.id.fragment_crota_enrage_countdown_container)
+    @InjectView(R.id.activity_crota_enrage_countdown_container)
     View enrageCountdownContainer;
 
-    @InjectView(R.id.fragment_crota_movement_progress)
+    @InjectView(R.id.activity_crota_movement_progress)
     CrotaMovementCountdownView progressView;
 
-    @InjectView(R.id.fragment_crota_position)
+    @InjectView(R.id.activity_crota_position)
     CrotaPositionView positionView;
 
-    @InjectView(R.id.fragment_crota_timer_indicator)
+    @InjectView(R.id.activity_crota_timer_indicator)
     ImageView timerIndicator;
 
-    @InjectView(R.id.fragment_crota_timer_reset)
+    @InjectView(R.id.activity_crota_timer_reset)
     View timerResetButton;
 
-    @InjectView(R.id.fragment_crota_toolbar)
+    @InjectView(R.id.activity_crota_toolbar)
     Toolbar toolbar;
 
     private boolean enrageTimerRunning;
@@ -86,19 +80,33 @@ public class CrotaFragment extends BaseRaidFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (savedInstanceState != null) {
-            enrageTimerRunning = savedInstanceState.getBoolean(KEY_ENRAGE_TIMER_RUNNING, false);
-            movementTimerRunning = savedInstanceState.getBoolean(KEY_MOVEMENT_TIMER_RUNNING, false);
-        }
+        enrageTimerRunning = enrageTimer.isRunning();
+        movementTimerRunning = movementTimer.isRunning();
+        setContentView(R.layout.activity_crota);
+        ButterKnife.inject(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = getActivity().getLayoutInflater().inflate(R.layout.fragment_crota, container, false);
-        ButterKnife.inject(this, rootView);
-        ((ActionBarActivity)getActivity()).setSupportActionBar(toolbar);
-        ((ActionBarActivity)getActivity()).getSupportActionBar().setTitle("");
-        return rootView;
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_crota_activity, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            return true;
+        } else if (id == R.id.action_crota_help) {
+            new CrotaHelpDialog().show(getSupportFragmentManager(), DIALOG_TAG);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -108,12 +116,13 @@ public class CrotaFragment extends BaseRaidFragment {
             timerResetButton.setVisibility(View.VISIBLE);
             enrageCountdownContainer.setTranslationY(0);
             timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
-            getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         }
         if (movementTimerRunning) {
             timerIndicator.setVisibility(View.INVISIBLE);
         }
         if (enrageTimer.isEnraged()) {
+            timerResetButton.setVisibility(View.VISIBLE);
             positionView.onEnrage();
             progressView.onEnrage();
             onEnrage();
@@ -121,10 +130,9 @@ public class CrotaFragment extends BaseRaidFragment {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(KEY_ENRAGE_TIMER_RUNNING, enrageTimerRunning);
-        outState.putBoolean(KEY_MOVEMENT_TIMER_RUNNING, movementTimerRunning);
+    public void onPause() {
+        super.onPause();
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Subscribe
@@ -136,7 +144,7 @@ public class CrotaFragment extends BaseRaidFragment {
         }
     }
 
-    @OnClick(R.id.fragment_crota_movement_progress)
+    @OnClick(R.id.activity_crota_movement_progress)
     public void onTimerChangeClick() {
         if (!enrageTimerRunning) {
             startEnrageTimer();
@@ -145,7 +153,7 @@ public class CrotaFragment extends BaseRaidFragment {
         }
     }
 
-    @OnClick(R.id.fragment_crota_timer_reset)
+    @OnClick(R.id.activity_crota_timer_reset)
     public void onResetClick() {
         reset();
     }
@@ -163,7 +171,7 @@ public class CrotaFragment extends BaseRaidFragment {
         enrageTimer.start();
         timerIndicator.setImageResource(R.drawable.crota_timer_button_movement);
         timerResetButton.setVisibility(View.VISIBLE);
-        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void startMovementTimer() {
@@ -183,7 +191,7 @@ public class CrotaFragment extends BaseRaidFragment {
         timerIndicator.setImageResource(R.drawable.crota_timer_button_crystal);
         timerIndicator.setVisibility(View.VISIBLE);
         timerResetButton.setVisibility(View.INVISIBLE);
-        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private String formatMinutesFromMillis(long millis) {
@@ -203,5 +211,4 @@ public class CrotaFragment extends BaseRaidFragment {
                 .setDuration(500).start();
         enrageCountdown.setText(formatMinutesFromMillis(0));
     }
-
 }

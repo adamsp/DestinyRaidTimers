@@ -16,6 +16,14 @@
   -->
 
 <resources>
+    <color name="selection_text_background">#99262626</color>
+    <color name="selection_text">#FFFFFF</color>
+
+    <color name="main_theme_primary">#2C5071</color>
+    <color name="main_theme_primary_dark">#041629</color>
+    <color name="main_theme_primary_light">#5A82A5</color>
+    <color name="main_theme_accent">#F3C68E</color>
+
     <color name="crota_primary">#1B3F35</color>
     <color name="crota_primary_dark">#0C261D</color>
     <color name="crota_primary_light">#40715D</color>
