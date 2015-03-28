@@ -24,6 +24,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.BaseRaidActivity;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.consumables.views.Consumables10CountdownView;
@@ -69,5 +70,25 @@ public class ConsumablesActivity extends BaseRaidActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.activity_consumables_10_countdown)
+    public void onConsumables10Click() {
+        if (consumables10Timer.isRunning()) {
+            consumables10Timer.reset();
+            consumables10CountdownView.reset();
+        } else {
+            consumables10Timer.start();
+        }
+    }
+
+    @OnClick(R.id.activity_consumables_30_countdown)
+    public void onConsumables30Click() {
+        if (consumables30Timer.isRunning()) {
+            consumables30Timer.reset();
+            consumables30CountdownView.reset();
+        } else {
+            consumables30Timer.start();
+        }
     }
 }

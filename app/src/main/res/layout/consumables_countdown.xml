@@ -27,7 +27,7 @@
 
     <TextView
         android:id="@+id/consumables_countdown_label"
-        android:textSize="120dp"
+        android:textSize="80dp"
         android:textColor="@color/consumables_primary_text"
         android:freezesText="true"
         android:layout_width="wrap_content"
