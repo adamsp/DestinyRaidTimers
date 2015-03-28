@@ -14,15 +14,15 @@
     </style>
 
     <style name="CrotaTheme" parent="AppTheme">
-        <!-- colorPrimary is used for the default action bar background -->
         <item name="colorPrimary">@color/crota_primary</item>
-
-        <!-- colorPrimaryDark is used for the status bar -->
         <item name="colorPrimaryDark">@color/crota_primary_dark</item>
-
-        <!-- colorAccent is used as the default value for colorControlActivated,
-             which is used to tint widgets -->
         <item name="colorAccent">@color/crota_accent</item>
+    </style>
+
+    <style name="ConsumablesTheme" parent="AppTheme">
+        <item name="colorPrimary">@color/consumables_primary</item>
+        <item name="colorPrimaryDark">@color/consumables_primary_dark</item>
+        <item name="colorAccent">@color/consumables_accent</item>
     </style>
 
     <style name="DRT.TextAppearance" parent="Base.TextAppearance.AppCompat"/>

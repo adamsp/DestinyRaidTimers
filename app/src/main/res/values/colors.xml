@@ -33,4 +33,14 @@
     <color name="crota_position_enrage">#ff0000</color>
     <color name="crota_position_current">@color/crota_primary_text</color>
     <color name="crota_position_disabled">@color/crota_secondary_text</color>
+
+    <color name="consumables_primary">#1B3F35</color>
+    <color name="consumables_primary_dark">#0C261D</color>
+    <color name="consumables_primary_light">#40715D</color>
+    <color name="consumables_accent">#D8AE3A</color>
+    <color name="consumables_primary_text">#FFFFFF</color>
+    <color name="consumables_secondary_text">#90D7A7</color>
+    <color name="consumables_position_enrage">#ff0000</color>
+    <color name="consumables_position_current">@color/consumables_primary_text</color>
+    <color name="consumables_position_disabled">@color/consumables_secondary_text</color>
 </resources>

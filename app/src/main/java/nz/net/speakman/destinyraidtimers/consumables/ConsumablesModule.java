@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers;
+package nz.net.speakman.destinyraidtimers.consumables;
 
 import com.squareup.otto.Bus;
 
@@ -22,27 +22,26 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import nz.net.speakman.destinyraidtimers.consumables.ConsumablesModule;
-import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
 
 /**
- * Created by Adam on 15-02-15.
+ * Created by Adam on 15-03-28.
  */
 @Module(
         complete = false,
         injects = {
-                MainActivity.class,
-                RaidApplication.class
-        },
-        includes = {
-                CrotaModule.class,
-                ConsumablesModule.class
+                ConsumablesActivity.class
         }
 )
-public class BaseRaidModule {
+public class ConsumablesModule {
     @Singleton
     @Provides
-    Bus providesEventBus() {
-        return new Bus();
+    Consumables10Timer provideConsumables10Timer(Bus bus) {
+        return new Consumables10Timer(bus);
+    }
+
+    @Singleton
+    @Provides
+    Consumables30Timer provideConsumables30Timer(Bus bus) {
+        return new Consumables30Timer(bus);
     }
 }

@@ -25,6 +25,7 @@ import android.view.MenuItem;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import nz.net.speakman.destinyraidtimers.consumables.ConsumablesActivity;
 import nz.net.speakman.destinyraidtimers.crota.CrotaActivity;
 import nz.net.speakman.destinyraidtimers.crota.CrotaHelpDialog;
 
@@ -64,5 +65,10 @@ public class MainActivity extends BaseRaidActivity {
     @OnClick(R.id.activity_main_selection_crota_card)
     void onCrotaSelection() {
         startActivity(new Intent(this, CrotaActivity.class));
+    }
+
+    @OnClick(R.id.activity_main_selection_consumables_card)
+    void onConsumablesSelection() {
+        startActivity(new Intent(this, ConsumablesActivity.class));
     }
 }
