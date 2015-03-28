@@ -20,16 +20,14 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import com.squareup.otto.Subscribe;
-
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import nz.net.speakman.destinyraidtimers.BaseRaidActivity;
 import nz.net.speakman.destinyraidtimers.R;
+import nz.net.speakman.destinyraidtimers.consumables.views.Consumables10CountdownView;
+import nz.net.speakman.destinyraidtimers.consumables.views.Consumables30CountdownView;
 
 /**
  * Created by Adam on 15-03-28.
@@ -43,6 +41,12 @@ public class ConsumablesActivity extends BaseRaidActivity {
 
     @Inject
     Consumables30Timer consumables30Timer;
+
+    @InjectView(R.id.activity_consumables_10_countdown)
+    Consumables10CountdownView consumables10CountdownView;
+
+    @InjectView(R.id.activity_consumables_30_countdown)
+    Consumables30CountdownView consumables30CountdownView;
 
     @InjectView(R.id.activity_consumables_toolbar)
     Toolbar toolbar;
@@ -65,20 +69,5 @@ public class ConsumablesActivity extends BaseRaidActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Subscribe
-    public void onConsumables10TimerUpdatedEvent(Consumables10TimerUpdateEvent event) {
-        // TODO Update UI
-    }
-
-    @Subscribe
-    public void onConsumables30TimerUpdatedEvent(Consumables30TimerUpdateEvent event) {
-        // TODO Update UI
-    }
-
-    private String formatMinutesFromMillis(long millis) {
-        return String.format("%d:%02d", TimeUnit.MILLISECONDS.toMinutes(millis),
-                TimeUnit.MILLISECONDS.toSeconds(millis % (1000 * 60)));
     }
 }

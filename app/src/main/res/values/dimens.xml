@@ -7,4 +7,6 @@
     <item name="crota_position_alpha_disabled" type="dimen" format="float">0.2</item>
     <item name="crota_position_alpha_enabled" type="dimen" format="float">1.0</item>
     <item name="crota_position_alpha_next" type="dimen" format="float">0.85</item>
+
+    <dimen name="consumables_progress_width">@dimen/crota_progress_width</dimen>
 </resources>

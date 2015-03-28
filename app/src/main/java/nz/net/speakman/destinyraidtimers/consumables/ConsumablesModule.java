@@ -22,6 +22,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import nz.net.speakman.destinyraidtimers.consumables.views.Consumables10CountdownView;
+import nz.net.speakman.destinyraidtimers.consumables.views.Consumables30CountdownView;
 
 /**
  * Created by Adam on 15-03-28.
@@ -29,7 +31,9 @@ import dagger.Provides;
 @Module(
         complete = false,
         injects = {
-                ConsumablesActivity.class
+                ConsumablesActivity.class,
+                Consumables10CountdownView.class,
+                Consumables30CountdownView.class
         }
 )
 public class ConsumablesModule {
