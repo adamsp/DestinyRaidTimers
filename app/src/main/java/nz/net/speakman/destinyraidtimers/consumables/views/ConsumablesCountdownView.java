@@ -160,14 +160,14 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
-            float progress = ((Bundle) state).getFloat(KEY_COUNTDOWN_PROGRESS, 1f);
-            progressDrawable.setProgress(progress);
-            String text = ((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText());
-            countdown.setText(text);
-            state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
             if (getTimer().isRunning()) {
+                float progress = ((Bundle) state).getFloat(KEY_COUNTDOWN_PROGRESS, 1f);
+                progressDrawable.setProgress(progress);
+                String text = ((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText());
+                countdown.setText(text);
                 resetButton.setVisibility(View.VISIBLE);
             }
+            state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
         }
         super.onRestoreInstanceState(state);
     }
