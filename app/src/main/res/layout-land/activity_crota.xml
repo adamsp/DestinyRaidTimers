@@ -100,7 +100,7 @@
         android:layout_marginBottom="16dp"
         android:layout_marginRight="16dp"
         android:visibility="invisible"
-        fab:fab_icon="@drawable/crota_timer_button_reset"
+        fab:fab_icon="@drawable/timer_button_reset"
         fab:fab_colorNormal="@color/crota_accent"
         fab:fab_colorPressed="@color/crota_primary_light"/>
 
