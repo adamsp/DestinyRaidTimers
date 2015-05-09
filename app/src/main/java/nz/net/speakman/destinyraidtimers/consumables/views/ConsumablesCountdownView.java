@@ -83,6 +83,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     @InjectView(R.id.consumables_countdown_image)
     ImageView progressView;
 
+    @InjectView(R.id.consumables_countdown_timer_reset)
+    View resetButton;
+
     @Inject
     Bus bus;
 
@@ -150,6 +153,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     public void reset() {
         resetProgressBar();
         countdown.setText(getDefaultText());
+        resetButton.setVisibility(View.INVISIBLE);
     }
 
     protected void onTimerUpdated(long timeRemainingMs, long totalTimeMs) {
@@ -166,6 +170,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     }
 
     protected void resetProgressBar() {
+        if (animator != null) {
+            animator.cancel();
+        }
         ObjectAnimator resetAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.PROGRESS_PROPERTY,
                 progressDrawable.getProgress(), 1f);
         resetAnimator.setDuration(RESET_ANIMATION_DURATION);
@@ -175,9 +182,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 animator = null;
             }
         });
-        if (animator != null) {
-            animator.cancel();
-        }
         resetAnimator.start();
     }
 
@@ -193,13 +197,14 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
     @OnClick(R.id.consumables_countdown_image)
     public void onCountdownClick() {
-        ConsumablesTimer timer = getTimer();
-        if (timer.isRunning()) {
-            timer.reset();
-            this.reset();
-        } else {
-            timer.start();
-        }
+        resetButton.setVisibility(View.VISIBLE);
+        getTimer().start();
+    }
+
+    @OnClick(R.id.consumables_countdown_timer_reset)
+    public void onResetClick() {
+        getTimer().reset();
+        reset();
     }
 
     protected abstract String getDefaultText();
