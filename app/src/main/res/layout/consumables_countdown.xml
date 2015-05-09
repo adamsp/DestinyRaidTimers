@@ -17,13 +17,13 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:fab="http://schemas.android.com/apk/res-auto"
-            android:padding="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/consumables_countdown_image"
         android:layout_width="match_parent"
+        android:layout_margin="16dp"
         android:layout_height="match_parent"/>
 
     <TextView
