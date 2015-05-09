@@ -143,6 +143,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 .create();
         progressDrawable.setProgress(1f);
         progressView.setImageDrawable(progressDrawable);
+        countdown.setText(getDefaultText());
         bus.register(this);
     }
 
