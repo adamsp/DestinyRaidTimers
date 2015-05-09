@@ -162,6 +162,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             String text = ((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText());
             countdown.setText(text);
             state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
+            if (getTimer().isRunning()) {
+                resetButton.setVisibility(View.VISIBLE);
+            }
         }
         super.onRestoreInstanceState(state);
     }
