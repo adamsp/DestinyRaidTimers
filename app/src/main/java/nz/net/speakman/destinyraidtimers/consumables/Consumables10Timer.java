@@ -23,7 +23,7 @@ import com.squareup.otto.Bus;
  */
 public class Consumables10Timer extends ConsumablesTimer {
     public static final long UPDATE_INTERVAL = 100; // 100 ms
-    public static final long TOTAL_TIME_MS = 1000 * 60 * 10; // 30 minutes
+    public static final long TOTAL_TIME_MS = 1000 * 60 * 10; // 10 minutes
 
     public Consumables10Timer(Bus bus) {
         super(bus, new Consumables10TimerUpdateEvent(), TOTAL_TIME_MS, UPDATE_INTERVAL);

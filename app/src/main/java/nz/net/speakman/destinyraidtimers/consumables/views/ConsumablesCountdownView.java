@@ -173,6 +173,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     }
 
     public void reset() {
+        getTimer().reset();
         hideResetButton();
         resetProgressBar();
         countdown.setText(getDefaultText());
@@ -258,13 +259,15 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
     @OnClick(R.id.consumables_countdown_image)
     public void onCountdownClick() {
+        if (getTimer().isRunning()) {
+            return;
+        }
         showResetButton();
         getTimer().start();
     }
 
     @OnClick(R.id.consumables_countdown_timer_reset)
     public void onResetClick() {
-        getTimer().reset();
         reset();
     }
 
