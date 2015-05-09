@@ -30,8 +30,6 @@ import nz.net.speakman.destinyraidtimers.R;
  */
 public class ConsumablesActivity extends BaseRaidActivity {
 
-    private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.crota.ConsumablesActivity.DIALOG_TAG";
-
     @InjectView(R.id.activity_consumables_toolbar)
     Toolbar toolbar;
 

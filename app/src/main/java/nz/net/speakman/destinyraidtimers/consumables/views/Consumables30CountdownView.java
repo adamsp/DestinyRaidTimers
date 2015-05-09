@@ -25,6 +25,7 @@ import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
+import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.consumables.Consumables30Timer;
 import nz.net.speakman.destinyraidtimers.consumables.Consumables30TimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
@@ -66,5 +67,10 @@ public class Consumables30CountdownView extends ConsumablesCountdownView {
 
     protected ConsumablesTimer getTimer() {
         return consumables30Timer;
+    }
+
+    @Override
+    protected int getConsumableIconResource() {
+        return R.drawable.consumable_glimmer;
     }
 }

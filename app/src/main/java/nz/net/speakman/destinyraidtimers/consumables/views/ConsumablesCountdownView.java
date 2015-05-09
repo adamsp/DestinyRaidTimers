@@ -25,6 +25,7 @@ import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -101,6 +102,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     @InjectView(R.id.consumables_countdown_image)
     ImageView progressView;
 
+    @InjectView(R.id.consumables_countdown_icon)
+    ImageView consumableIcon;
+
     @InjectView(R.id.consumables_countdown_timer_reset)
     View resetButton;
 
@@ -132,9 +136,8 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     }
 
     protected void init(Context ctx) {
-        View target = this;
-        View source = inflate(ctx, R.layout.consumables_countdown, this);
-        ButterKnife.inject(target, source);
+        inflate(ctx, R.layout.consumables_countdown, this);
+        ButterKnife.inject(this);
         RaidApplication.getApplication().inject(this);
         Resources resources = ctx.getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
@@ -143,10 +146,11 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 .create();
         progressDrawable.setProgress(1f);
         progressView.setImageDrawable(progressDrawable);
+        consumableIcon.setImageResource(getConsumableIconResource());
         if (getTimer().isRunning()) {
+            consumableIcon.setVisibility(View.INVISIBLE);
             resetButton.setVisibility(View.VISIBLE);
         }
-        countdown.setText(getDefaultText());
         bus.register(this);
     }
 
@@ -180,7 +184,8 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         getTimer().reset();
         hideResetButton();
         resetProgressBar();
-        countdown.setText(getDefaultText());
+        countdown.setVisibility(View.INVISIBLE);
+        consumableIcon.setVisibility(View.VISIBLE);
     }
 
     protected void onTimerUpdated(long timeRemainingMs, long totalTimeMs) {
@@ -266,6 +271,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         if (getTimer().isRunning()) {
             return;
         }
+        consumableIcon.setVisibility(View.INVISIBLE);
+        countdown.setVisibility(View.VISIBLE);
+        countdown.setText(getDefaultText());
         showResetButton();
         getTimer().start();
     }
@@ -278,4 +286,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     protected abstract String getDefaultText();
 
     protected abstract ConsumablesTimer getTimer();
+
+    @DrawableRes
+    protected abstract int getConsumableIconResource();
 }
