@@ -27,6 +27,8 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -223,6 +225,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                     resetButton.getMeasuredWidth(), 0f);
         }
         showAnimator.setDuration(500);
+        showAnimator.setInterpolator(new DecelerateInterpolator());
         showAnimator.addListener(new AnimationStartListener() {
             @Override
             public void onAnimationStart(Animator animation) {
@@ -242,6 +245,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                     0, resetButton.getMeasuredWidth());
         }
         hideAnimator.setDuration(500);
+        hideAnimator.setInterpolator(new AccelerateInterpolator());
         hideAnimator.addListener(new AnimationEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
