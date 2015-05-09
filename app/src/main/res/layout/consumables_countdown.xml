@@ -41,7 +41,7 @@
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="8dp"
         android:layout_marginRight="8dp"
-        android:visibility="visible"
+        android:visibility="invisible"
         fab:fab_icon="@drawable/timer_button_reset"
         fab:fab_colorNormal="@color/consumables_accent"
         fab:fab_colorPressed="@color/consumables_primary_light"/>

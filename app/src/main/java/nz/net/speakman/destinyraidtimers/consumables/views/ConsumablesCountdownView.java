@@ -20,6 +20,7 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
@@ -58,6 +59,21 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
         @Override
         public void onAnimationStart(Animator animation) {
+        }
+
+        @Override
+        public void onAnimationRepeat(Animator animation) {
+        }
+
+        @Override
+        public void onAnimationCancel(Animator animation) {
+        }
+    }
+
+    protected abstract static class AnimationStartListener implements Animator.AnimatorListener {
+
+        @Override
+        public void onAnimationEnd(Animator animation) {
         }
 
         @Override
@@ -151,15 +167,14 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     }
 
     public void reset() {
+        hideResetButton();
         resetProgressBar();
         countdown.setText(getDefaultText());
-        resetButton.setVisibility(View.INVISIBLE);
     }
 
     protected void onTimerUpdated(long timeRemainingMs, long totalTimeMs) {
         if (timeRemainingMs == 0) {
-            countdown.setText(getDefaultText());
-            resetProgressBar();
+            reset();
         } else {
             countdown.setText(formatMinutesFromMillis(timeRemainingMs));
         }
@@ -195,9 +210,47 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         animator.start();
     }
 
+    private void showResetButton() {
+        ObjectAnimator showAnimator;
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            showAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
+                    resetButton.getMeasuredHeight(), 0f);
+        } else {
+            showAnimator = ObjectAnimator.ofFloat(resetButton, "translationX",
+                    resetButton.getMeasuredWidth(), 0f);
+        }
+        showAnimator.setDuration(500);
+        showAnimator.addListener(new AnimationStartListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                resetButton.setVisibility(View.VISIBLE);
+            }
+        });
+        showAnimator.start();
+    }
+
+    private void hideResetButton() {
+        ObjectAnimator hideAnimator;
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            hideAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
+                    0, resetButton.getMeasuredHeight());
+        } else {
+            hideAnimator = ObjectAnimator.ofFloat(resetButton, "translationX",
+                    0, resetButton.getMeasuredWidth());
+        }
+        hideAnimator.setDuration(500);
+        hideAnimator.addListener(new AnimationEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                resetButton.setVisibility(View.INVISIBLE);
+            }
+        });
+        hideAnimator.start();
+    }
+
     @OnClick(R.id.consumables_countdown_image)
     public void onCountdownClick() {
-        resetButton.setVisibility(View.VISIBLE);
+        showResetButton();
         getTimer().start();
     }
 
