@@ -69,12 +69,11 @@
         card_view:cardCornerRadius="2dp"
         card_view:cardElevation="8dp">
 
-        <!-- TODO: #2 Add Consumables image -->
         <ImageView
             style="@style/SelectionGridImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/crota_timer_button_movement"/>
+            android:src="@drawable/consumable_glimmer"/>
 
         <TextView
             style="@style/DRT.TextAppearance.Selection.BottomText"
