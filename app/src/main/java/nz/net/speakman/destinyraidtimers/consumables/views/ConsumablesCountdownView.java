@@ -25,6 +25,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.AttributeSet;
+import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -39,8 +40,10 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.RaidApplication;
+import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.
@@ -108,8 +111,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     }
 
     protected void init(Context ctx) {
-        inflate(ctx, R.layout.consumables_countdown, this);
-        ButterKnife.inject(this);
+        View target = this;
+        View source = inflate(ctx, R.layout.consumables_countdown, this);
+        ButterKnife.inject(target, source);
         RaidApplication.getApplication().inject(this);
         Resources resources = ctx.getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
@@ -134,8 +138,10 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     @Override
     protected void onRestoreInstanceState(Parcelable state) {
         if (state instanceof Bundle) {
-            progressDrawable.setProgress(((Bundle) state).getFloat(KEY_COUNTDOWN_PROGRESS, 1f));
-            countdown.setText(((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText()));
+            float progress = ((Bundle) state).getFloat(KEY_COUNTDOWN_PROGRESS, 1f);
+            progressDrawable.setProgress(progress);
+            String text = ((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText());
+            countdown.setText(text);
             state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
         }
         super.onRestoreInstanceState(state);
@@ -185,5 +191,18 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         animator.start();
     }
 
+    @OnClick(R.id.consumables_countdown_image)
+    public void onCountdownClick() {
+        ConsumablesTimer timer = getTimer();
+        if (timer.isRunning()) {
+            timer.reset();
+            this.reset();
+        } else {
+            timer.start();
+        }
+    }
+
     protected abstract String getDefaultText();
+
+    protected abstract ConsumablesTimer getTimer();
 }

@@ -20,15 +20,10 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.BaseRaidActivity;
 import nz.net.speakman.destinyraidtimers.R;
-import nz.net.speakman.destinyraidtimers.consumables.views.Consumables10CountdownView;
-import nz.net.speakman.destinyraidtimers.consumables.views.Consumables30CountdownView;
 
 /**
  * Created by Adam on 15-03-28.
@@ -36,18 +31,6 @@ import nz.net.speakman.destinyraidtimers.consumables.views.Consumables30Countdow
 public class ConsumablesActivity extends BaseRaidActivity {
 
     private static final String DIALOG_TAG = "nz.net.speakman.destinyraidtimers.crota.ConsumablesActivity.DIALOG_TAG";
-
-    @Inject
-    Consumables10Timer consumables10Timer;
-
-    @Inject
-    Consumables30Timer consumables30Timer;
-
-    @InjectView(R.id.activity_consumables_10_countdown)
-    Consumables10CountdownView consumables10CountdownView;
-
-    @InjectView(R.id.activity_consumables_30_countdown)
-    Consumables30CountdownView consumables30CountdownView;
 
     @InjectView(R.id.activity_consumables_toolbar)
     Toolbar toolbar;
@@ -70,25 +53,5 @@ public class ConsumablesActivity extends BaseRaidActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @OnClick(R.id.activity_consumables_10_countdown)
-    public void onConsumables10Click() {
-        if (consumables10Timer.isRunning()) {
-            consumables10Timer.reset();
-            consumables10CountdownView.reset();
-        } else {
-            consumables10Timer.start();
-        }
-    }
-
-    @OnClick(R.id.activity_consumables_30_countdown)
-    public void onConsumables30Click() {
-        if (consumables30Timer.isRunning()) {
-            consumables30Timer.reset();
-            consumables30CountdownView.reset();
-        } else {
-            consumables30Timer.start();
-        }
     }
 }

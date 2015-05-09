@@ -19,17 +19,26 @@ package nz.net.speakman.destinyraidtimers.consumables.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 
 import com.squareup.otto.Subscribe;
 
+import javax.inject.Inject;
+
 import nz.net.speakman.destinyraidtimers.consumables.Consumables10Timer;
 import nz.net.speakman.destinyraidtimers.consumables.Consumables10TimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.
  */
 public class Consumables10CountdownView extends ConsumablesCountdownView {
+
+    @Inject
+    Consumables10Timer consumables10Timer;
 
     public Consumables10CountdownView(Context context) {
         super(context);
@@ -56,5 +65,9 @@ public class Consumables10CountdownView extends ConsumablesCountdownView {
 
     protected String getDefaultText() {
         return formatMinutesFromMillis(Consumables10Timer.TOTAL_TIME_MS);
+    }
+
+    protected ConsumablesTimer getTimer() {
+        return consumables10Timer;
     }
 }

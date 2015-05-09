@@ -23,13 +23,19 @@ import android.util.AttributeSet;
 
 import com.squareup.otto.Subscribe;
 
+import javax.inject.Inject;
+
 import nz.net.speakman.destinyraidtimers.consumables.Consumables30Timer;
 import nz.net.speakman.destinyraidtimers.consumables.Consumables30TimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.
  */
 public class Consumables30CountdownView extends ConsumablesCountdownView {
+
+    @Inject
+    Consumables30Timer consumables30Timer;
 
     public Consumables30CountdownView(Context context) {
         super(context);
@@ -56,5 +62,9 @@ public class Consumables30CountdownView extends ConsumablesCountdownView {
 
     protected String getDefaultText() {
         return formatMinutesFromMillis(Consumables30Timer.TOTAL_TIME_MS);
+    }
+
+    protected ConsumablesTimer getTimer() {
+        return consumables30Timer;
     }
 }
