@@ -141,7 +141,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         RaidApplication.getApplication().inject(this);
         Resources resources = ctx.getResources();
         progressDrawable = new CircularProgressDrawable.Builder()
-                .setRingColor(resources.getColor(R.color.consumables_accent))
+                .setRingColor(resources.getColor(R.color.consumables_primary_light))
                 .setRingWidth(resources.getDimensionPixelSize(R.dimen.consumables_progress_width))
                 .create();
         progressDrawable.setProgress(1f);
