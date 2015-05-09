@@ -143,10 +143,14 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 .create();
         progressDrawable.setProgress(1f);
         progressView.setImageDrawable(progressDrawable);
+        if (getTimer().isRunning()) {
+            resetButton.setVisibility(View.VISIBLE);
+        }
         countdown.setText(getDefaultText());
         bus.register(this);
     }
 
+    // We only save & restore state to prevent brief 'blips' of the initial view, until the timer refreshes.
     @Override
     protected Parcelable onSaveInstanceState() {
         Parcelable superState = super.onSaveInstanceState();
