@@ -17,11 +17,15 @@
 package nz.net.speakman.destinyraidtimers.consumables.views;
 
 import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -32,11 +36,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sefford.circularprogressdrawable.CircularProgressDrawable;
 import com.squareup.otto.Bus;
 
@@ -64,6 +70,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     private static final float ICON_MAX_SCALE = 1.0f;
     private static final float TEXT_MIN_SCALE = 1.0f;
     private static final float TEXT_MAX_SCALE = 3.5f;
+
+    private AnimatorSet showAnimation = new AnimatorSet().setDuration(500);
+    private AnimatorSet hideAnimation = new AnimatorSet().setDuration(500);
 
     protected abstract static class AnimationEndListener implements Animator.AnimatorListener {
 
@@ -95,6 +104,34 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         }
     }
 
+    // Private class pulled from the FAB library (already included in licenses file): http://bit.ly/1Iu9Hgw
+    private static class RotatingDrawable extends LayerDrawable {
+        public RotatingDrawable(Drawable drawable) {
+            super(new Drawable[] { drawable });
+        }
+
+        private float mRotation;
+
+        @SuppressWarnings("UnusedDeclaration")
+        public float getRotation() {
+            return mRotation;
+        }
+
+        @SuppressWarnings("UnusedDeclaration")
+        public void setRotation(float rotation) {
+            mRotation = rotation;
+            invalidateSelf();
+        }
+
+        @Override
+        public void draw(Canvas canvas) {
+            canvas.save();
+            canvas.rotate(mRotation, getBounds().centerX(), getBounds().centerY());
+            super.draw(canvas);
+            canvas.restore();
+        }
+    }
+
     // TODO Put in resources?...
     protected static final int RESET_ANIMATION_DURATION = 750;
 
@@ -113,7 +150,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     ImageView consumableIcon;
 
     @InjectView(R.id.consumables_countdown_timer_reset)
-    View resetButton;
+    FloatingActionButton resetButton;
 
     @Inject
     Bus bus;
@@ -155,6 +192,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         progressView.setImageDrawable(progressDrawable);
         consumableIcon.setImageResource(getConsumableIconResource());
         countdownText.setText(getDefaultText());
+        resetButton.setIconDrawable(getResetDrawable());
         if (getTimer().isRunning()) {
             resetButton.setVisibility(View.VISIBLE);
             // Unfortunately this animates things into place, but I couldn't figure out how to scale
@@ -162,6 +200,23 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             scaleDownIcon();
         }
         bus.register(this);
+    }
+
+    private Drawable getResetDrawable() {
+        final RotatingDrawable rotatingDrawable = new RotatingDrawable(getResources().getDrawable(R.drawable.timer_button_reset));
+
+        final OvershootInterpolator interpolator = new OvershootInterpolator();
+
+        final ObjectAnimator showAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", 180f, 0f);
+        final ObjectAnimator hideAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", 0, -180f);
+
+        showAnimator.setInterpolator(interpolator);
+        hideAnimator.setInterpolator(interpolator);
+
+        showAnimation.play(showAnimator);
+        hideAnimation.play(hideAnimator);
+
+        return rotatingDrawable;
     }
 
     // We only save & restore state to prevent brief 'blips' of the initial view, until the timer refreshes.
@@ -253,10 +308,12 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             }
         });
         showAnimator.start();
+        showAnimation.start();
     }
 
     private void hideResetButton() {
         ObjectAnimator hideAnimator;
+        // TODO The animation direction should be configured via the layout file.
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             hideAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
                     0, resetButton.getMeasuredHeight());
@@ -273,6 +330,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             }
         });
         hideAnimator.start();
+        hideAnimation.start();
     }
 
     private void scaleUpIcon() {
