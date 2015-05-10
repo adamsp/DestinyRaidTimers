@@ -19,6 +19,7 @@ package nz.net.speakman.destinyraidtimers.consumables.views;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -33,11 +34,9 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -71,8 +70,8 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     private static final float TEXT_MIN_SCALE = 1.0f;
     private static final float TEXT_MAX_SCALE = 3.5f;
 
-    private AnimatorSet showAnimation = new AnimatorSet().setDuration(500);
-    private AnimatorSet hideAnimation = new AnimatorSet().setDuration(500);
+    private AnimatorSet startAnimation;
+    private AnimatorSet resetAnimation;
 
     protected abstract static class AnimationEndListener implements Animator.AnimatorListener {
 
@@ -192,31 +191,112 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         progressView.setImageDrawable(progressDrawable);
         consumableIcon.setImageResource(getConsumableIconResource());
         countdownText.setText(getDefaultText());
-        resetButton.setIconDrawable(getResetDrawable());
-        if (getTimer().isRunning()) {
-            resetButton.setVisibility(View.VISIBLE);
-            // Unfortunately this animates things into place, but I couldn't figure out how to scale
-            // it explicitly while still using the correct pivot points. Weird.
-            scaleDownIcon();
-        }
         bus.register(this);
     }
 
-    private Drawable getResetDrawable() {
-        final RotatingDrawable rotatingDrawable = new RotatingDrawable(getResources().getDrawable(R.drawable.timer_button_reset));
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        super.onLayout(changed, l, t, r, b);
+        // Have to set animations up after first layout pass, since we need to figure out the
+        // pivot points for the icon & text.
+        initAnimationsIfNeeded();
+    }
 
-        final OvershootInterpolator interpolator = new OvershootInterpolator();
+    private void initAnimationsIfNeeded() {
+        if (startAnimation != null && resetAnimation != null) return;
 
-        final ObjectAnimator showAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", 180f, 0f);
-        final ObjectAnimator hideAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", 0, -180f);
+        startAnimation = new AnimatorSet().setDuration(500);
+        resetAnimation = new AnimatorSet().setDuration(500);
 
-        showAnimator.setInterpolator(interpolator);
-        hideAnimator.setInterpolator(interpolator);
+        OvershootInterpolator overshootInterpolator = new OvershootInterpolator();
+        DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
+        AccelerateInterpolator accelerateInterpolator = new AccelerateInterpolator();
 
-        showAnimation.play(showAnimator);
-        hideAnimation.play(hideAnimator);
+        // Reset button
+        RotatingDrawable rotatingDrawable = new RotatingDrawable(getResources().getDrawable(R.drawable.timer_button_reset));
+        ObjectAnimator resetShowRotationAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", 180f, 0f);
+        ObjectAnimator resetHideRotationAnimator = ObjectAnimator.ofFloat(rotatingDrawable, "rotation", 0, -180f);
+        resetShowRotationAnimator.setInterpolator(overshootInterpolator);
+        resetHideRotationAnimator.setInterpolator(overshootInterpolator);
+        resetButton.setIconDrawable(rotatingDrawable);
 
-        return rotatingDrawable;
+        ObjectAnimator resetHideTransitionAnimator;
+        // TODO The animation direction should be configured via the layout file.
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            resetHideTransitionAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
+                    0, resetButton.getMeasuredHeight());
+        } else {
+            resetHideTransitionAnimator = ObjectAnimator.ofFloat(resetButton, "translationX",
+                    0, resetButton.getMeasuredWidth());
+        }
+        resetHideTransitionAnimator.setInterpolator(accelerateInterpolator);
+        resetHideTransitionAnimator.addListener(new AnimationEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                resetButton.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        ObjectAnimator resetShowTransitionAnimator;
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            resetShowTransitionAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
+                    resetButton.getMeasuredHeight(), 0f);
+        } else {
+            resetShowTransitionAnimator = ObjectAnimator.ofFloat(resetButton, "translationX",
+                    resetButton.getMeasuredWidth(), 0f);
+        }
+        resetShowTransitionAnimator.setInterpolator(decelerateInterpolator);
+        resetShowTransitionAnimator.addListener(new AnimationStartListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                resetButton.setVisibility(View.VISIBLE);
+            }
+        });
+
+        consumableIcon.setPivotX(consumableIcon.getWidth() / 2);
+        consumableIcon.setPivotY(0);
+        ObjectAnimator scaleUpIconAnimator = ObjectAnimator.ofPropertyValuesHolder(consumableIcon,
+                PropertyValuesHolder.ofFloat("scaleX", ICON_MIN_SCALE, ICON_MAX_SCALE),
+                PropertyValuesHolder.ofFloat("scaleY", ICON_MIN_SCALE, ICON_MAX_SCALE));
+        scaleUpIconAnimator.setInterpolator(decelerateInterpolator);
+        scaleUpIconAnimator.addListener(new AnimationEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                countdownText.setText(getDefaultText());
+            }
+        });
+        ObjectAnimator scaleDownIconAnimator = ObjectAnimator.ofPropertyValuesHolder(consumableIcon,
+                PropertyValuesHolder.ofFloat("scaleX", ICON_MAX_SCALE, ICON_MIN_SCALE),
+                PropertyValuesHolder.ofFloat("scaleY", ICON_MAX_SCALE, ICON_MIN_SCALE));
+        scaleDownIconAnimator.setInterpolator(decelerateInterpolator);
+
+
+        countdownText.setPivotX(countdownText.getWidth() / 2);
+        countdownText.setPivotY(countdownText.getHeight());
+        ObjectAnimator scaleUpTextAnimator = ObjectAnimator.ofPropertyValuesHolder(countdownText,
+                PropertyValuesHolder.ofFloat("scaleX", TEXT_MIN_SCALE, TEXT_MAX_SCALE),
+                PropertyValuesHolder.ofFloat("scaleY", TEXT_MIN_SCALE, TEXT_MAX_SCALE));
+        scaleUpTextAnimator.setInterpolator(decelerateInterpolator);
+        ObjectAnimator scaleDownTextAnimator = ObjectAnimator.ofPropertyValuesHolder(countdownText,
+                PropertyValuesHolder.ofFloat("scaleX", TEXT_MAX_SCALE, TEXT_MIN_SCALE),
+                PropertyValuesHolder.ofFloat("scaleY", TEXT_MAX_SCALE, TEXT_MIN_SCALE));
+        scaleDownTextAnimator.setInterpolator(decelerateInterpolator);
+
+        startAnimation.play(resetShowRotationAnimator).with(resetShowTransitionAnimator)
+                .with(scaleUpTextAnimator)
+                .with(scaleDownIconAnimator);
+        resetAnimation.play(resetHideRotationAnimator).with(resetHideTransitionAnimator)
+                .with(scaleDownTextAnimator)
+                .with(scaleUpIconAnimator);
+
+        // If we've already got a timer running, we should put everything in its "timer running" state/placement.
+        if (getTimer().isRunning()) {
+            resetButton.setVisibility(View.VISIBLE);
+            consumableIcon.setScaleX(ICON_MIN_SCALE);
+            consumableIcon.setScaleY(ICON_MIN_SCALE);
+            countdownText.setScaleX(TEXT_MAX_SCALE);
+            countdownText.setScaleY(TEXT_MAX_SCALE);
+        }
     }
 
     // We only save & restore state to prevent brief 'blips' of the initial view, until the timer refreshes.
@@ -247,9 +327,9 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
     public void reset() {
         getTimer().reset();
-        hideResetButton();
         resetProgressBar();
-        scaleUpIcon();
+        startAnimation.cancel();
+        resetAnimation.start();
     }
 
     protected void onTimerUpdated(long timeRemainingMs, long totalTimeMs) {
@@ -290,98 +370,13 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         progressAnimator.start();
     }
 
-    private void showResetButton() {
-        ObjectAnimator showAnimator;
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            showAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
-                    resetButton.getMeasuredHeight(), 0f);
-        } else {
-            showAnimator = ObjectAnimator.ofFloat(resetButton, "translationX",
-                    resetButton.getMeasuredWidth(), 0f);
-        }
-        showAnimator.setDuration(500);
-        showAnimator.setInterpolator(new DecelerateInterpolator());
-        showAnimator.addListener(new AnimationStartListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                resetButton.setVisibility(View.VISIBLE);
-            }
-        });
-        showAnimator.start();
-        showAnimation.start();
-    }
-
-    private void hideResetButton() {
-        ObjectAnimator hideAnimator;
-        // TODO The animation direction should be configured via the layout file.
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            hideAnimator = ObjectAnimator.ofFloat(resetButton, "translationY",
-                    0, resetButton.getMeasuredHeight());
-        } else {
-            hideAnimator = ObjectAnimator.ofFloat(resetButton, "translationX",
-                    0, resetButton.getMeasuredWidth());
-        }
-        hideAnimator.setDuration(500);
-        hideAnimator.setInterpolator(new AccelerateInterpolator());
-        hideAnimator.addListener(new AnimationEndListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                resetButton.setVisibility(View.INVISIBLE);
-            }
-        });
-        hideAnimator.start();
-        hideAnimation.start();
-    }
-
-    private void scaleUpIcon() {
-        ScaleAnimation scaleIcon = new ScaleAnimation(ICON_MIN_SCALE, ICON_MAX_SCALE, ICON_MIN_SCALE, ICON_MAX_SCALE,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f);
-        scaleIcon.setDuration(500);
-        scaleIcon.setFillAfter(true);
-        scaleIcon.setInterpolator(new DecelerateInterpolator());
-        consumableIcon.startAnimation(scaleIcon);
-        ScaleAnimation scaleText = new ScaleAnimation(TEXT_MAX_SCALE, TEXT_MIN_SCALE, TEXT_MAX_SCALE, TEXT_MIN_SCALE,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f);
-        scaleText.setDuration(500);
-        scaleText.setFillAfter(true);
-        scaleText.setInterpolator(new DecelerateInterpolator());
-        // This is not an Animator listener, but an Animation listener. Obviously.
-        scaleText.setAnimationListener(new Animation.AnimationListener() {
-            @Override public void onAnimationStart(Animation animation) { }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                countdownText.setText(getDefaultText());
-            }
-
-            @Override public void onAnimationRepeat(Animation animation) { }
-        });
-        countdownText.startAnimation(scaleText);
-    }
-
-    private void scaleDownIcon() {
-        ScaleAnimation scaleIcon = new ScaleAnimation(ICON_MAX_SCALE, ICON_MIN_SCALE, ICON_MAX_SCALE, ICON_MIN_SCALE,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f);
-        scaleIcon.setDuration(500);
-        scaleIcon.setFillAfter(true);
-        scaleIcon.setInterpolator(new DecelerateInterpolator());
-        consumableIcon.startAnimation(scaleIcon);
-        ScaleAnimation scaleText = new ScaleAnimation(TEXT_MIN_SCALE, TEXT_MAX_SCALE, TEXT_MIN_SCALE, TEXT_MAX_SCALE,
-                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f);
-        scaleText.setDuration(500);
-        scaleText.setFillAfter(true);
-        scaleText.setInterpolator(new DecelerateInterpolator());
-        countdownText.startAnimation(scaleText);
-    }
-
     @OnClick(R.id.consumables_countdown_image)
     public void onCountdownClick() {
         if (getTimer().isRunning()) {
             return;
         }
-        countdownText.setText(getDefaultText());
-        showResetButton();
-        scaleDownIcon();
+        resetAnimation.cancel();
+        startAnimation.start();
         getTimer().start();
     }
 
