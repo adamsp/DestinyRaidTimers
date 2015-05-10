@@ -71,6 +71,6 @@ public class TelemetryCountdownView extends ConsumablesCountdownView {
 
     @Override
     protected int getConsumableIconResource() {
-        return R.drawable.consumable_glimmer;
+        return R.drawable.consumable_telemetry;
     }
 }
