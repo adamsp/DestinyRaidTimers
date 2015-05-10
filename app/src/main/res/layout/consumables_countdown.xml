@@ -26,20 +26,26 @@
         android:layout_margin="16dp"
         android:layout_height="match_parent"/>
 
-    <TextView
-        android:id="@+id/consumables_countdown_label"
-        android:textSize="80dp"
-        android:textColor="@color/consumables_primary_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
-
-    <ImageView
-        android:id="@+id/consumables_countdown_icon"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:src="@drawable/consumable_glimmer"/>
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/consumables_countdown_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/consumable_glimmer" />
+
+        <TextView
+            android:id="@+id/consumables_countdown_label"
+            android:textSize="20dp"
+            android:textColor="@color/consumables_primary_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/consumables_countdown_timer_reset"

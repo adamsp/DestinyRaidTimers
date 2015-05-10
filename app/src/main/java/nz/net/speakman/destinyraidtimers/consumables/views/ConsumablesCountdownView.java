@@ -29,8 +29,10 @@ import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -57,6 +59,11 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     private static final String KEY_SUPER_STATE = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_SUPER_STATE";
     private static final String KEY_COUNTDOWN_PROGRESS = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_COUNTDOWN_PROGRESS";
     private static final String KEY_COUNTDOWN_LABEL = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_COUNTDOWN_LABEL";
+
+    private static final float ICON_MIN_SCALE = 0.5f;
+    private static final float ICON_MAX_SCALE = 1.0f;
+    private static final float TEXT_MIN_SCALE = 1.0f;
+    private static final float TEXT_MAX_SCALE = 3.5f;
 
     protected abstract static class AnimationEndListener implements Animator.AnimatorListener {
 
@@ -147,9 +154,12 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         progressDrawable.setProgress(1f);
         progressView.setImageDrawable(progressDrawable);
         consumableIcon.setImageResource(getConsumableIconResource());
+        countdownText.setText(getDefaultText());
         if (getTimer().isRunning()) {
-            consumableIcon.setVisibility(View.INVISIBLE);
             resetButton.setVisibility(View.VISIBLE);
+            // Unfortunately this animates things into place, but I couldn't figure out how to scale
+            // it explicitly while still using the correct pivot points. Weird.
+            scaleDownIcon();
         }
         bus.register(this);
     }
@@ -184,8 +194,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         getTimer().reset();
         hideResetButton();
         resetProgressBar();
-        countdownText.setVisibility(View.INVISIBLE);
-        consumableIcon.setVisibility(View.VISIBLE);
+        scaleUpIcon();
     }
 
     protected void onTimerUpdated(long timeRemainingMs, long totalTimeMs) {
@@ -266,15 +275,55 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         hideAnimator.start();
     }
 
+    private void scaleUpIcon() {
+        ScaleAnimation scaleIcon = new ScaleAnimation(ICON_MIN_SCALE, ICON_MAX_SCALE, ICON_MIN_SCALE, ICON_MAX_SCALE,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f);
+        scaleIcon.setDuration(500);
+        scaleIcon.setFillAfter(true);
+        scaleIcon.setInterpolator(new DecelerateInterpolator());
+        consumableIcon.startAnimation(scaleIcon);
+        ScaleAnimation scaleText = new ScaleAnimation(TEXT_MAX_SCALE, TEXT_MIN_SCALE, TEXT_MAX_SCALE, TEXT_MIN_SCALE,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f);
+        scaleText.setDuration(500);
+        scaleText.setFillAfter(true);
+        scaleText.setInterpolator(new DecelerateInterpolator());
+        // This is not an Animator listener, but an Animation listener. Obviously.
+        scaleText.setAnimationListener(new Animation.AnimationListener() {
+            @Override public void onAnimationStart(Animation animation) { }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                countdownText.setText(getDefaultText());
+            }
+
+            @Override public void onAnimationRepeat(Animation animation) { }
+        });
+        countdownText.startAnimation(scaleText);
+    }
+
+    private void scaleDownIcon() {
+        ScaleAnimation scaleIcon = new ScaleAnimation(ICON_MAX_SCALE, ICON_MIN_SCALE, ICON_MAX_SCALE, ICON_MIN_SCALE,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0f);
+        scaleIcon.setDuration(500);
+        scaleIcon.setFillAfter(true);
+        scaleIcon.setInterpolator(new DecelerateInterpolator());
+        consumableIcon.startAnimation(scaleIcon);
+        ScaleAnimation scaleText = new ScaleAnimation(TEXT_MIN_SCALE, TEXT_MAX_SCALE, TEXT_MIN_SCALE, TEXT_MAX_SCALE,
+                Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 1f);
+        scaleText.setDuration(500);
+        scaleText.setFillAfter(true);
+        scaleText.setInterpolator(new DecelerateInterpolator());
+        countdownText.startAnimation(scaleText);
+    }
+
     @OnClick(R.id.consumables_countdown_image)
     public void onCountdownClick() {
         if (getTimer().isRunning()) {
             return;
         }
-        consumableIcon.setVisibility(View.INVISIBLE);
-        countdownText.setVisibility(View.VISIBLE);
         countdownText.setText(getDefaultText());
         showResetButton();
+        scaleDownIcon();
         getTimer().start();
     }
 
