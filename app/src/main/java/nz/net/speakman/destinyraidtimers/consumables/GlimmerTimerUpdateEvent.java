@@ -19,5 +19,5 @@ package nz.net.speakman.destinyraidtimers.consumables;
 /**
  * Created by Adam on 15-03-28.
  */
-public class Consumables30TimerUpdateEvent extends ConsumablesTimerUpdateEvent {
+public class GlimmerTimerUpdateEvent extends ConsumablesTimerUpdateEvent {
 }

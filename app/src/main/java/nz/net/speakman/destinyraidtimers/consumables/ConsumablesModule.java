@@ -22,8 +22,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import nz.net.speakman.destinyraidtimers.consumables.views.Consumables10CountdownView;
-import nz.net.speakman.destinyraidtimers.consumables.views.Consumables30CountdownView;
+import nz.net.speakman.destinyraidtimers.consumables.views.GlimmerCountdownView;
+import nz.net.speakman.destinyraidtimers.consumables.views.TelemetryCountdownView;
 
 /**
  * Created by Adam on 15-03-28.
@@ -32,20 +32,20 @@ import nz.net.speakman.destinyraidtimers.consumables.views.Consumables30Countdow
         complete = false,
         injects = {
                 ConsumablesActivity.class,
-                Consumables10CountdownView.class,
-                Consumables30CountdownView.class
+                GlimmerCountdownView.class,
+                TelemetryCountdownView.class
         }
 )
 public class ConsumablesModule {
     @Singleton
     @Provides
-    Consumables10Timer provideConsumables10Timer(Bus bus) {
-        return new Consumables10Timer(bus);
+    GlimmerTimer provideGlimmerTimer(Bus bus) {
+        return new GlimmerTimer(bus);
     }
 
     @Singleton
     @Provides
-    Consumables30Timer provideConsumables30Timer(Bus bus) {
-        return new Consumables30Timer(bus);
+    TelemetryTimer provideTelemetryTimer(Bus bus) {
+        return new TelemetryTimer(bus);
     }
 }

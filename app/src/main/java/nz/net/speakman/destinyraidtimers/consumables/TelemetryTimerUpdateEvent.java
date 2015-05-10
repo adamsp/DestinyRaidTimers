@@ -16,17 +16,8 @@
 
 package nz.net.speakman.destinyraidtimers.consumables;
 
-import com.squareup.otto.Bus;
-
 /**
  * Created by Adam on 15-03-28.
  */
-public class Consumables30Timer extends ConsumablesTimer {
-
-    public static final long UPDATE_INTERVAL = 100; // 100 ms
-    public static final long TOTAL_TIME_MS = 1000 * 60 * 30; // 30 minutes
-
-    public Consumables30Timer(Bus bus) {
-        super(bus, new Consumables30TimerUpdateEvent(), TOTAL_TIME_MS, UPDATE_INTERVAL);
-    }
+public class TelemetryTimerUpdateEvent extends ConsumablesTimerUpdateEvent {
 }

@@ -26,47 +26,47 @@ import com.squareup.otto.Subscribe;
 import javax.inject.Inject;
 
 import nz.net.speakman.destinyraidtimers.R;
-import nz.net.speakman.destinyraidtimers.consumables.Consumables30Timer;
-import nz.net.speakman.destinyraidtimers.consumables.Consumables30TimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.GlimmerTimer;
+import nz.net.speakman.destinyraidtimers.consumables.GlimmerTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.
  */
-public class Consumables30CountdownView extends ConsumablesCountdownView {
+public class GlimmerCountdownView extends ConsumablesCountdownView {
 
     @Inject
-    Consumables30Timer consumables30Timer;
+    GlimmerTimer glimmerTimer;
 
-    public Consumables30CountdownView(Context context) {
+    public GlimmerCountdownView(Context context) {
         super(context);
     }
 
-    public Consumables30CountdownView(Context context, AttributeSet attrs) {
+    public GlimmerCountdownView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public Consumables30CountdownView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public GlimmerCountdownView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Consumables30CountdownView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public GlimmerCountdownView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Subscribe
-    public void onConsumable30TimerUpdate(Consumables30TimerUpdateEvent event) {
+    public void onGlimmerTimerUpdate(GlimmerTimerUpdateEvent event) {
         long timeRemainingMs = event.getMillisRemaining();
-        onTimerUpdated(timeRemainingMs, Consumables30Timer.TOTAL_TIME_MS);
+        onTimerUpdated(timeRemainingMs, GlimmerTimer.TOTAL_TIME_MS);
     }
 
     protected String getDefaultText() {
-        return formatMinutesFromMillis(Consumables30Timer.TOTAL_TIME_MS);
+        return formatMinutesFromMillis(GlimmerTimer.TOTAL_TIME_MS);
     }
 
     protected ConsumablesTimer getTimer() {
-        return consumables30Timer;
+        return glimmerTimer;
     }
 
     @Override

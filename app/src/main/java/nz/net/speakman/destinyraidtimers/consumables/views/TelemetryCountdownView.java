@@ -19,9 +19,6 @@ package nz.net.speakman.destinyraidtimers.consumables.views;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.util.AttributeSet;
 
 import com.squareup.otto.Subscribe;
@@ -29,47 +26,47 @@ import com.squareup.otto.Subscribe;
 import javax.inject.Inject;
 
 import nz.net.speakman.destinyraidtimers.R;
-import nz.net.speakman.destinyraidtimers.consumables.Consumables10Timer;
-import nz.net.speakman.destinyraidtimers.consumables.Consumables10TimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.TelemetryTimer;
+import nz.net.speakman.destinyraidtimers.consumables.TelemetryTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.
  */
-public class Consumables10CountdownView extends ConsumablesCountdownView {
+public class TelemetryCountdownView extends ConsumablesCountdownView {
 
     @Inject
-    Consumables10Timer consumables10Timer;
+    TelemetryTimer telemetryTimer;
 
-    public Consumables10CountdownView(Context context) {
+    public TelemetryCountdownView(Context context) {
         super(context);
     }
 
-    public Consumables10CountdownView(Context context, AttributeSet attrs) {
+    public TelemetryCountdownView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public Consumables10CountdownView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public TelemetryCountdownView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public Consumables10CountdownView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public TelemetryCountdownView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
     @Subscribe
-    public void onConsumable10TimerUpdate(Consumables10TimerUpdateEvent event) {
+    public void onTelemetryTimerUpdate(TelemetryTimerUpdateEvent event) {
         long timeRemainingMs = event.getMillisRemaining();
-        onTimerUpdated(timeRemainingMs, Consumables10Timer.TOTAL_TIME_MS);
+        onTimerUpdated(timeRemainingMs, TelemetryTimer.TOTAL_TIME_MS);
     }
 
     protected String getDefaultText() {
-        return formatMinutesFromMillis(Consumables10Timer.TOTAL_TIME_MS);
+        return formatMinutesFromMillis(TelemetryTimer.TOTAL_TIME_MS);
     }
 
     protected ConsumablesTimer getTimer() {
-        return consumables10Timer;
+        return telemetryTimer;
     }
 
     @Override
