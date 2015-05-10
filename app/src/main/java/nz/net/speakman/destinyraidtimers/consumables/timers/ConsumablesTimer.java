@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers.consumables;
+package nz.net.speakman.destinyraidtimers.consumables.timers;
 
 import android.os.CountDownTimer;
 

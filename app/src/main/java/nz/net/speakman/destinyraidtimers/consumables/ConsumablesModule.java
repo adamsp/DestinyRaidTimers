@@ -22,6 +22,8 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimer;
+import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimer;
 import nz.net.speakman.destinyraidtimers.consumables.views.GlimmerCountdownView;
 import nz.net.speakman.destinyraidtimers.consumables.views.TelemetryCountdownView;
 

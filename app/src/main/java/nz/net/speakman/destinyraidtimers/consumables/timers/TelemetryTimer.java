@@ -14,19 +14,19 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers.consumables;
+package nz.net.speakman.destinyraidtimers.consumables.timers;
+
+import com.squareup.otto.Bus;
 
 /**
  * Created by Adam on 15-03-28.
  */
-public abstract class ConsumablesTimerUpdateEvent {
-    private long millisRemaining;
+public class TelemetryTimer extends ConsumablesTimer {
 
-    public long getMillisRemaining() {
-        return millisRemaining;
-    }
+    public static final long UPDATE_INTERVAL = 100; // 100 ms
+    public static final long TOTAL_TIME_MS = 1000 * 60 * 30; // 30 minutes
 
-    public void setMillisRemaining(long millisRemaining) {
-        this.millisRemaining = millisRemaining;
+    public TelemetryTimer(Bus bus) {
+        super(bus, new TelemetryTimerUpdateEvent(), TOTAL_TIME_MS, UPDATE_INTERVAL);
     }
 }

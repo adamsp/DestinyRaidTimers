@@ -14,10 +14,19 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers.consumables;
+package nz.net.speakman.destinyraidtimers.consumables.timers;
 
 /**
  * Created by Adam on 15-03-28.
  */
-public class TelemetryTimerUpdateEvent extends ConsumablesTimerUpdateEvent {
+public abstract class ConsumablesTimerUpdateEvent {
+    private long millisRemaining;
+
+    public long getMillisRemaining() {
+        return millisRemaining;
+    }
+
+    public void setMillisRemaining(long millisRemaining) {
+        this.millisRemaining = millisRemaining;
+    }
 }

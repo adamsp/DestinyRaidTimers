@@ -49,7 +49,7 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.RaidApplication;
-import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
+import nz.net.speakman.destinyraidtimers.consumables.timers.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.

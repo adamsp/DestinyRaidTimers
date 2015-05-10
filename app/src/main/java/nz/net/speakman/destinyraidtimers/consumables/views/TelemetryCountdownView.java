@@ -26,9 +26,9 @@ import com.squareup.otto.Subscribe;
 import javax.inject.Inject;
 
 import nz.net.speakman.destinyraidtimers.R;
-import nz.net.speakman.destinyraidtimers.consumables.TelemetryTimer;
-import nz.net.speakman.destinyraidtimers.consumables.TelemetryTimerUpdateEvent;
-import nz.net.speakman.destinyraidtimers.consumables.ConsumablesTimer;
+import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimer;
+import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.timers.ConsumablesTimer;
 
 /**
  * Created by Adam on 15-03-28.

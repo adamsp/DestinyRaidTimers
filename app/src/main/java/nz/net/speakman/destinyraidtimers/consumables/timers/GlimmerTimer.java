@@ -14,10 +14,18 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers.consumables;
+package nz.net.speakman.destinyraidtimers.consumables.timers;
+
+import com.squareup.otto.Bus;
 
 /**
  * Created by Adam on 15-03-28.
  */
-public class GlimmerTimerUpdateEvent extends ConsumablesTimerUpdateEvent {
+public class GlimmerTimer extends ConsumablesTimer {
+    public static final long UPDATE_INTERVAL = 100; // 100 ms
+    public static final long TOTAL_TIME_MS = 1000 * 10 * 60; // 10 minutes
+
+    public GlimmerTimer(Bus bus) {
+        super(bus, new GlimmerTimerUpdateEvent(), TOTAL_TIME_MS, UPDATE_INTERVAL);
+    }
 }
