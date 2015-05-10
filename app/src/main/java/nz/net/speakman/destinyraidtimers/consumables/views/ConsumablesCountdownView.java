@@ -277,6 +277,15 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 PropertyValuesHolder.ofFloat("scaleX", TEXT_MIN_SCALE, TEXT_MAX_SCALE),
                 PropertyValuesHolder.ofFloat("scaleY", TEXT_MIN_SCALE, TEXT_MAX_SCALE));
         scaleUpTextAnimator.setInterpolator(decelerateInterpolator);
+        scaleUpTextAnimator.addListener(new AnimationEndListener() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                ConsumablesTimer timer = getTimer();
+                if (!timer.isRunning()) {
+                    timer.start();
+                }
+            }
+        });
         ObjectAnimator scaleDownTextAnimator = ObjectAnimator.ofPropertyValuesHolder(countdownText,
                 PropertyValuesHolder.ofFloat("scaleX", TEXT_MAX_SCALE, TEXT_MIN_SCALE),
                 PropertyValuesHolder.ofFloat("scaleY", TEXT_MAX_SCALE, TEXT_MIN_SCALE));
@@ -377,7 +386,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         }
         resetAnimation.cancel();
         startAnimation.start();
-        getTimer().start();
     }
 
     @OnClick(R.id.consumables_countdown_timer_reset)

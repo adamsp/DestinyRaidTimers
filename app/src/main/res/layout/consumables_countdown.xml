@@ -43,7 +43,8 @@
             android:id="@+id/consumables_countdown_label"
             android:textSize="20dp"
             android:textColor="@color/consumables_primary_text"
-            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
 
