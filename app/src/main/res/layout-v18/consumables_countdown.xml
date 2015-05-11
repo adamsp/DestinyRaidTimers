@@ -26,30 +26,27 @@
         android:layout_margin="16dp"
         android:layout_height="match_parent"/>
 
+    <!-- For API18 and above, we can scale the text view and image view here without any pixelation -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:weightSum="1"
         android:gravity="center">
 
         <ImageView
-            android:layout_weight="0.3"
             android:id="@+id/consumables_countdown_icon"
             android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:scaleType="fitCenter"
+            android:layout_height="wrap_content"
             android:src="@drawable/consumable_glimmer" />
 
         <TextView
-            android:layout_weight="0.3"
             android:id="@+id/consumables_countdown_label"
-            android:textSize="60dp"
+            android:textSize="20dp"
             android:textColor="@color/consumables_primary_text"
             android:gravity="center_horizontal"
             android:layout_width="match_parent"
-            android:layout_height="0dp"/>
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 
     <com.getbase.floatingactionbutton.FloatingActionButton

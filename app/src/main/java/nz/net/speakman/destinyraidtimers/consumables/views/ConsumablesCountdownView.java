@@ -65,11 +65,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     private static final String KEY_COUNTDOWN_PROGRESS = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_COUNTDOWN_PROGRESS";
     private static final String KEY_COUNTDOWN_LABEL = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_COUNTDOWN_LABEL";
 
-    private static final float ICON_MIN_SCALE = 0.5f;
-    private static final float ICON_MAX_SCALE = 1.0f;
-    private static final float TEXT_MIN_SCALE = 1.0f;
-    private static final float TEXT_MAX_SCALE = 3.5f;
-
     private AnimatorSet startAnimation;
     private AnimatorSet resetAnimation;
 
@@ -204,6 +199,19 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
     private void initAnimationsIfNeeded() {
         if (startAnimation != null && resetAnimation != null) return;
+
+        float ICON_MIN_SCALE = 0.5f;
+        float ICON_MAX_SCALE = 1.0f;
+        float TEXT_MIN_SCALE = 1.0f;
+        float TEXT_MAX_SCALE = 3.5f;
+        // If we're below 4.3, scaling a text view doesn't work so well, so we just use a static size.
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            ICON_MAX_SCALE = 1.0f;
+            ICON_MIN_SCALE = 1.0f;
+            TEXT_MIN_SCALE = 1.0f;
+            TEXT_MAX_SCALE = 1.0f;
+        }
+
 
         startAnimation = new AnimatorSet().setDuration(500);
         resetAnimation = new AnimatorSet().setDuration(500);
