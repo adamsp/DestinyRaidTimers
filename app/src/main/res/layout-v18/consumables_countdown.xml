@@ -26,29 +26,11 @@
         android:layout_margin="16dp"
         android:layout_height="match_parent"/>
 
-    <!-- For API18 and above, we can scale the text view and image view here without any pixelation -->
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <nz.net.speakman.destinyraidtimers.consumables.views.CountdownScaleView
+        android:id="@+id/consumables_countdown_scale_view"
         android:layout_gravity="center"
-        android:gravity="center">
-
-        <ImageView
-            android:id="@+id/consumables_countdown_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/consumables_icon_scale_margin"
-            android:src="@drawable/consumable_glimmer" />
-
-        <TextView
-            android:id="@+id/consumables_countdown_label"
-            android:textSize="@dimen/consumables_text_size_scale"
-            android:textColor="@color/consumables_primary_text"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/consumables_countdown_timer_reset"
