@@ -205,8 +205,8 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 countdownScaleView.setText(getDefaultText());
             }
         });
-//        consumableIcon.setImageResource(getConsumableIconResource());
-//        countdownText.setText(getDefaultText());
+        countdownScaleView.setText(getDefaultText());
+        initAnimationsIfNeeded();
         bus.register(this);
     }
 
@@ -215,24 +215,11 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         super.onLayout(changed, l, t, r, b);
         // Have to set animations up after first layout pass, since we need to figure out the
         // pivot points for the icon & text.
-        initAnimationsIfNeeded();
+
     }
 
     private void initAnimationsIfNeeded() {
         if (startAnimation != null && resetAnimation != null) return;
-
-        float ICON_MIN_SCALE = 0.5f;
-        float ICON_MAX_SCALE = 1.0f;
-        float TEXT_MIN_SCALE = 1.0f;
-        float TEXT_MAX_SCALE = 3.5f;
-        // If we're below 4.3, scaling a text view doesn't work so well, so we just use a static size.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR2) {
-            ICON_MAX_SCALE = 1.0f;
-            ICON_MIN_SCALE = 1.0f;
-            TEXT_MIN_SCALE = 1.0f;
-            TEXT_MAX_SCALE = 1.0f;
-        }
-
 
         startAnimation = new AnimatorSet().setDuration(500);
         resetAnimation = new AnimatorSet().setDuration(500);
@@ -282,58 +269,13 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             }
         });
 
-//        consumableIcon.setPivotX(consumableIcon.getWidth() / 2);
-//        consumableIcon.setPivotY(0);
-//        ObjectAnimator scaleUpIconAnimator = ObjectAnimator.ofPropertyValuesHolder(consumableIcon,
-//                PropertyValuesHolder.ofFloat("scaleX", ICON_MIN_SCALE, ICON_MAX_SCALE),
-//                PropertyValuesHolder.ofFloat("scaleY", ICON_MIN_SCALE, ICON_MAX_SCALE));
-//        scaleUpIconAnimator.setInterpolator(decelerateInterpolator);
-//        scaleUpIconAnimator.addListener(new AnimationEndListener() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                countdownText.setText(getDefaultText());
-//            }
-//        });
-//        ObjectAnimator scaleDownIconAnimator = ObjectAnimator.ofPropertyValuesHolder(consumableIcon,
-//                PropertyValuesHolder.ofFloat("scaleX", ICON_MAX_SCALE, ICON_MIN_SCALE),
-//                PropertyValuesHolder.ofFloat("scaleY", ICON_MAX_SCALE, ICON_MIN_SCALE));
-//        scaleDownIconAnimator.setInterpolator(decelerateInterpolator);
-//
-//
-//        countdownText.setPivotX(countdownText.getWidth() / 2);
-//        countdownText.setPivotY(countdownText.getHeight());
-//        ObjectAnimator scaleUpTextAnimator = ObjectAnimator.ofPropertyValuesHolder(countdownText,
-//                PropertyValuesHolder.ofFloat("scaleX", TEXT_MIN_SCALE, TEXT_MAX_SCALE),
-//                PropertyValuesHolder.ofFloat("scaleY", TEXT_MIN_SCALE, TEXT_MAX_SCALE));
-//        scaleUpTextAnimator.setInterpolator(decelerateInterpolator);
-//        scaleUpTextAnimator.addListener(new AnimationEndListener() {
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                ConsumablesTimer timer = getTimer();
-//                if (!timer.isRunning()) {
-//                    timer.start();
-//                }
-//            }
-//        });
-//        ObjectAnimator scaleDownTextAnimator = ObjectAnimator.ofPropertyValuesHolder(countdownText,
-//                PropertyValuesHolder.ofFloat("scaleX", TEXT_MAX_SCALE, TEXT_MIN_SCALE),
-//                PropertyValuesHolder.ofFloat("scaleY", TEXT_MAX_SCALE, TEXT_MIN_SCALE));
-//        scaleDownTextAnimator.setInterpolator(decelerateInterpolator);
-
         startAnimation.play(resetShowRotationAnimator).with(resetShowTransitionAnimator);
-//                .with(scaleUpTextAnimator)
-//                .with(scaleDownIconAnimator);
         resetAnimation.play(resetHideRotationAnimator).with(resetHideTransitionAnimator);
-//                .with(scaleDownTextAnimator)
-//                .with(scaleUpIconAnimator);
 
         // If we've already got a timer running, we should put everything in its "timer running" state/placement.
         if (getTimer().isRunning()) {
             resetButton.setVisibility(View.VISIBLE);
-//            consumableIcon.setScaleX(ICON_MIN_SCALE);
-//            consumableIcon.setScaleY(ICON_MIN_SCALE);
-//            countdownText.setScaleX(TEXT_MAX_SCALE);
-//            countdownText.setScaleY(TEXT_MAX_SCALE);
+            countdownScaleView.scaleUpText();
         }
     }
 
@@ -355,7 +297,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 float progress = ((Bundle) state).getFloat(KEY_COUNTDOWN_PROGRESS, 1f);
                 progressDrawable.setProgress(progress);
                 String text = ((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText());
-//                countdownText.setText(text);
+                countdownScaleView.setText(text);
                 resetButton.setVisibility(View.VISIBLE);
             }
             state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
@@ -376,7 +318,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             reset();
         } else {
             countdownScaleView.setText(formatMinutesFromMillis(timeRemainingMs));
-//            countdownText.setText(formatMinutesFromMillis(timeRemainingMs));
         }
         if (progressAnimator == null) {
             float progressPct = timeRemainingMs / (float) totalTimeMs;
@@ -428,7 +369,4 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     protected abstract String getDefaultText();
 
     protected abstract ConsumablesTimer getTimer();
-
-    @DrawableRes
-    protected abstract int getConsumableIconResource();
 }
