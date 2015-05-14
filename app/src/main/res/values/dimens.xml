@@ -6,7 +6,4 @@
     <item name="crota_position_alpha_next" type="dimen" format="float">0.85</item>
 
     <dimen name="consumables_progress_width">@dimen/crota_progress_width</dimen>
-    <dimen name="consumables_text_size_static">50dp</dimen>
-    <dimen name="consumables_text_size_scale">20dp</dimen>
-    <dimen name="consumables_icon_scale_margin">0dp</dimen>
 </resources>

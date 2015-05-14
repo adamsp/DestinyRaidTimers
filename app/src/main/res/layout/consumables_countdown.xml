@@ -26,31 +26,11 @@
         android:layout_margin="16dp"
         android:layout_height="match_parent"/>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <nz.net.speakman.destinyraidtimers.consumables.views.CountdownScaleView
+        android:id="@+id/consumables_countdown_scale_view"
         android:layout_gravity="center"
-        android:weightSum="1"
-        android:gravity="center">
-
-        <ImageView
-            android:layout_weight="0.3"
-            android:id="@+id/consumables_countdown_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/consumable_glimmer" />
-
-        <TextView
-            android:layout_weight="0.3"
-            android:id="@+id/consumables_countdown_label"
-            android:textSize="@dimen/consumables_text_size_static"
-            android:textColor="@color/consumables_primary_text"
-            android:gravity="center_horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"/>
-    </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
     <com.getbase.floatingactionbutton.FloatingActionButton
         android:id="@+id/consumables_countdown_timer_reset"

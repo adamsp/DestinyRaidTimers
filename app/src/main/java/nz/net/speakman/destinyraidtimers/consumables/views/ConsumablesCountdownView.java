@@ -19,7 +19,6 @@ package nz.net.speakman.destinyraidtimers.consumables.views;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.Configuration;
@@ -30,7 +29,6 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -39,7 +37,6 @@ import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.sefford.circularprogressdrawable.CircularProgressDrawable;
@@ -52,7 +49,6 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.Optional;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.RaidApplication;
 import nz.net.speakman.destinyraidtimers.consumables.timers.ConsumablesTimer;
@@ -138,16 +134,8 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     @InjectView(R.id.consumables_countdown_scale_view)
     CountdownScaleView countdownScaleView;
 
-    @Optional
-    @InjectView(R.id.consumables_countdown_label)
-    TextView countdownText;
-
     @InjectView(R.id.consumables_countdown_image)
     ImageView progressView;
-
-    @Optional
-    @InjectView(R.id.consumables_countdown_icon)
-    ImageView consumableIcon;
 
     @InjectView(R.id.consumables_countdown_timer_reset)
     FloatingActionButton resetButton;
@@ -208,14 +196,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         countdownScaleView.setText(getDefaultText());
         initAnimationsIfNeeded();
         bus.register(this);
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int l, int t, int r, int b) {
-        super.onLayout(changed, l, t, r, b);
-        // Have to set animations up after first layout pass, since we need to figure out the
-        // pivot points for the icon & text.
-
     }
 
     private void initAnimationsIfNeeded() {
@@ -286,7 +266,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         Bundle outState = new Bundle();
         outState.putParcelable(KEY_SUPER_STATE, superState);
         outState.putFloat(KEY_COUNTDOWN_PROGRESS, progressDrawable.getProgress());
-        outState.putString(KEY_COUNTDOWN_LABEL, countdownText.getText().toString());
         return outState;
     }
 
