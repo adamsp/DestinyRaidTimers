@@ -40,11 +40,11 @@ import nz.net.speakman.destinyraidtimers.R;
  */
 public class CountdownScaleView extends FrameLayout {
 
-    final float MIN_IMAGE_WEIGHT = 0.15f;
-    final float MAX_IMAGE_WEIGHT = 0.35f;
+    final float MIN_IMAGE_WEIGHT = 0.2f;
+    final float MAX_IMAGE_WEIGHT = 0.4f;
 
-    final float MIN_TEXT_WEIGHT = 0.15f;
-    final float MAX_TEXT_WEIGHT = 0.35f;
+    final float MIN_TEXT_WEIGHT = 0.1f;
+    final float MAX_TEXT_WEIGHT = 0.3f;
 
     @InjectView(R.id.countdown_label_container)
     FrameLayout countdownLabelContainer;
