@@ -18,6 +18,7 @@ package nz.net.speakman.destinyraidtimers.consumables.views;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -39,8 +40,11 @@ import nz.net.speakman.destinyraidtimers.R;
  */
 public class CountdownScaleView extends FrameLayout {
 
-    final float MIN_WEIGHT = 0.2f;
-    final float MAX_WEIGHT = 0.4f;
+    final float MIN_IMAGE_WEIGHT = 0.15f;
+    final float MAX_IMAGE_WEIGHT = 0.35f;
+
+    final float MIN_TEXT_WEIGHT = 0.15f;
+    final float MAX_TEXT_WEIGHT = 0.35f;
 
     @InjectView(R.id.countdown_label_container)
     FrameLayout countdownLabelContainer;
@@ -48,8 +52,8 @@ public class CountdownScaleView extends FrameLayout {
     @InjectView(R.id.countdown_label)
     AutoResizeTextView countdownLabel;
 
-    @InjectView(R.id.countdown_icon)
-    ImageView countdownIcon;
+    @InjectView(R.id.countdown_image)
+    ImageView countdownImage;
 
     private AnimatorSet scaleUpTextAnimation;
     private AnimatorSet scaleDownTextAnimation;
@@ -88,7 +92,7 @@ public class CountdownScaleView extends FrameLayout {
                 resizeText();
             }
         });
-        updateWeights(MIN_WEIGHT, MAX_WEIGHT);
+        updateWeights(MIN_TEXT_WEIGHT, MAX_IMAGE_WEIGHT);
     }
 
     private void initAnimations() {
@@ -100,18 +104,21 @@ public class CountdownScaleView extends FrameLayout {
         ValueAnimator.AnimatorUpdateListener textScaleUpdater = new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
-                Float val = (Float) animation.getAnimatedValue();
-                float textWeight = val;
-                float iconWeight = MAX_WEIGHT - (textWeight - MIN_WEIGHT);
-                updateWeights(textWeight, iconWeight);
+                float textWeight = (Float) animation.getAnimatedValue("textWeight");;
+                float imageWeight = (Float) animation.getAnimatedValue("imageWeight");
+                updateWeights(textWeight, imageWeight);
                 resizeText();
             }
         };
 
-        ValueAnimator scaleUpTextAnimator = ValueAnimator.ofFloat(MIN_WEIGHT, MAX_WEIGHT);
+        ValueAnimator scaleUpTextAnimator = ValueAnimator.ofPropertyValuesHolder(
+                PropertyValuesHolder.ofFloat("textWeight", MIN_TEXT_WEIGHT, MAX_TEXT_WEIGHT),
+                PropertyValuesHolder.ofFloat("imageWeight", MAX_IMAGE_WEIGHT, MIN_IMAGE_WEIGHT));
         scaleUpTextAnimator.addUpdateListener(textScaleUpdater);
         scaleUpTextAnimator.setInterpolator(decelerateInterpolator);
-        ValueAnimator scaleDownTextAnimator = ValueAnimator.ofFloat(MAX_WEIGHT, MIN_WEIGHT);
+        ValueAnimator scaleDownTextAnimator = ValueAnimator.ofPropertyValuesHolder(
+                PropertyValuesHolder.ofFloat("textWeight", MAX_TEXT_WEIGHT, MIN_TEXT_WEIGHT),
+                PropertyValuesHolder.ofFloat("imageWeight", MIN_IMAGE_WEIGHT, MAX_IMAGE_WEIGHT));
         scaleDownTextAnimator.addUpdateListener(textScaleUpdater);
         scaleDownTextAnimator.setInterpolator(decelerateInterpolator);
 
@@ -125,14 +132,14 @@ public class CountdownScaleView extends FrameLayout {
         super.onMeasure(minSide, minSide);
     }
 
-    private void updateWeights(float textWeight, float iconWeight) {
+    private void updateWeights(float textWeight, float imageWeight) {
         LinearLayout.LayoutParams textLP = (LinearLayout.LayoutParams) countdownLabelContainer.getLayoutParams();
         textLP.weight = textWeight;
         countdownLabelContainer.setLayoutParams(textLP);
 
-        LinearLayout.LayoutParams iconLP = (LinearLayout.LayoutParams) countdownIcon.getLayoutParams();
-        iconLP.weight = iconWeight;
-        countdownIcon.setLayoutParams(iconLP);
+        LinearLayout.LayoutParams imageLP = (LinearLayout.LayoutParams) countdownImage.getLayoutParams();
+        imageLP.weight = imageWeight;
+        countdownImage.setLayoutParams(imageLP);
     }
 
     private void resizeText() {
