@@ -22,16 +22,13 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.ViewGroup;
+import android.view.View;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -42,15 +39,20 @@ import nz.net.speakman.destinyraidtimers.R;
  */
 public class CountdownScaleView extends FrameLayout {
 
+    final float MIN_WEIGHT = 0.2f;
+    final float MAX_WEIGHT = 0.4f;
+
     @InjectView(R.id.countdown_label_container)
-    FrameLayout _textViewcontainer;
+    FrameLayout countdownLabelContainer;
+
+    @InjectView(R.id.countdown_label)
+    AutoResizeTextView countdownLabel;
 
     @InjectView(R.id.countdown_icon)
     ImageView countdownIcon;
 
     private AnimatorSet scaleUpTextAnimation;
     private AnimatorSet scaleDownTextAnimation;
-    AutoResizeTextView textView;
 
     public CountdownScaleView(Context context) {
         super(context);
@@ -73,90 +75,48 @@ public class CountdownScaleView extends FrameLayout {
         init(context);
     }
 
-    protected void init(Context ctx) {
+    private void init(Context ctx) {
         inflate(ctx, R.layout.countdown_scale, this);
         ButterKnife.inject(this);
-        initAnimationsIfNeeded();
+        initAnimations();
+        countdownLabel.setEnableSizeCache(true);
+        addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                // We only run this once - we need to size the text after the views have been weighted.
+                removeOnLayoutChangeListener(this);
+                resizeText();
+            }
+        });
+        updateWeights(MIN_WEIGHT, MAX_WEIGHT);
     }
-    private void initAnimationsIfNeeded() {
-        if (scaleUpTextAnimation != null && scaleDownTextAnimation != null) return;
 
-        // TODO This should be in the XML
-        float ICON_MIN_SCALE = 0.2f;
-        float ICON_MAX_SCALE = 0.4f;
-        float TEXT_MIN_SCALE = 0.2f;
-        float TEXT_MAX_SCALE = 0.4f;
-
+    private void initAnimations() {
         scaleUpTextAnimation = new AnimatorSet().setDuration(500);
         scaleDownTextAnimation = new AnimatorSet().setDuration(500);
 
         DecelerateInterpolator decelerateInterpolator = new DecelerateInterpolator();
 
-        ValueAnimator.AnimatorUpdateListener iconScaleUpdater = new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                Float val = (Float) animation.getAnimatedValue();
-                float weight = val.floatValue();
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) countdownIcon.getLayoutParams();
-                lp.weight = weight;
-                countdownIcon.setLayoutParams(lp);
-            }
-        };
-        ValueAnimator scaleUpIconAnimator = ValueAnimator.ofFloat(ICON_MIN_SCALE, ICON_MAX_SCALE);
-        scaleUpIconAnimator.addUpdateListener(iconScaleUpdater);
-        scaleUpIconAnimator.setInterpolator(decelerateInterpolator);
-        ValueAnimator scaleDownIconAnimator = ValueAnimator.ofFloat(ICON_MAX_SCALE, ICON_MIN_SCALE);
-        scaleDownIconAnimator.addUpdateListener(iconScaleUpdater);
-        scaleDownIconAnimator.setInterpolator(decelerateInterpolator);
-
         ValueAnimator.AnimatorUpdateListener textScaleUpdater = new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 Float val = (Float) animation.getAnimatedValue();
-                float weight = val.floatValue();
-                LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) _textViewcontainer.getLayoutParams();
-                lp.weight = weight;
-                _textViewcontainer.setLayoutParams(lp);
-                recreateTextView(textView.getText());
+                float textWeight = val;
+                float iconWeight = MAX_WEIGHT - (textWeight - MIN_WEIGHT);
+                updateWeights(textWeight, iconWeight);
+                resizeText();
             }
         };
 
-        ValueAnimator scaleUpTextAnimator = ValueAnimator.ofFloat(TEXT_MIN_SCALE, TEXT_MAX_SCALE);
+        ValueAnimator scaleUpTextAnimator = ValueAnimator.ofFloat(MIN_WEIGHT, MAX_WEIGHT);
         scaleUpTextAnimator.addUpdateListener(textScaleUpdater);
         scaleUpTextAnimator.setInterpolator(decelerateInterpolator);
-        ValueAnimator scaleDownTextAnimator = ValueAnimator.ofFloat(TEXT_MAX_SCALE, TEXT_MIN_SCALE);
+        ValueAnimator scaleDownTextAnimator = ValueAnimator.ofFloat(MAX_WEIGHT, MIN_WEIGHT);
         scaleDownTextAnimator.addUpdateListener(textScaleUpdater);
         scaleDownTextAnimator.setInterpolator(decelerateInterpolator);
 
-        scaleUpTextAnimation.play(scaleUpTextAnimator).with(scaleDownIconAnimator);
-        scaleDownTextAnimation.play(scaleDownTextAnimator).with(scaleUpIconAnimator);
-    }
-
-    protected void recreateTextView(CharSequence text)
-    {
-        final int maxHeight=_textViewcontainer.getHeight();
-        if (textView != null) {
-            textView.setText(text);
-            textView.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxHeight, getResources().getDisplayMetrics()));
-            return;
-        }
-        _textViewcontainer.removeAllViews();
-        final int maxWidth=_textViewcontainer.getWidth();
-
-        textView=new AutoResizeTextView(getContext());
-        textView.setGravity(Gravity.CENTER);
-//        final int width=_widthSeekBar.getProgress()*maxWidth/_widthSeekBar.getMax();
-//        final int height=_heightSeekBar.getProgress()*maxHeight/_heightSeekBar.getMax();
-//        final int maxLinesCount=Integer.parseInt(_linesCountTextView.getText().toString());
-        textView.setMaxLines(1);
-        textView.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxHeight, getResources().getDisplayMetrics()));
-        textView.setEllipsize(TextUtils.TruncateAt.END);
-        // since we use it only once per each click, we don't need to cache the results, ever
-        textView.setEnableSizeCache(true);
-        textView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-//        textView.setBackgroundColor(0xff00ff00);
-        textView.setText(text);
-        _textViewcontainer.addView(textView);
+        scaleUpTextAnimation.play(scaleUpTextAnimator);
+        scaleDownTextAnimation.play(scaleDownTextAnimator);
     }
 
     @Override
@@ -165,8 +125,24 @@ public class CountdownScaleView extends FrameLayout {
         super.onMeasure(minSide, minSide);
     }
 
+    private void updateWeights(float textWeight, float iconWeight) {
+        LinearLayout.LayoutParams textLP = (LinearLayout.LayoutParams) countdownLabelContainer.getLayoutParams();
+        textLP.weight = textWeight;
+        countdownLabelContainer.setLayoutParams(textLP);
+
+        LinearLayout.LayoutParams iconLP = (LinearLayout.LayoutParams) countdownIcon.getLayoutParams();
+        iconLP.weight = iconWeight;
+        countdownIcon.setLayoutParams(iconLP);
+    }
+
+    private void resizeText() {
+        int maxHeight = countdownLabelContainer.getHeight();
+        countdownLabel.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, maxHeight, getResources().getDisplayMetrics()));
+    }
+
     public void setText(CharSequence text) {
-        recreateTextView(text);//.setText(text);
+        countdownLabel.setText(text);
+        resizeText();
     }
 
     public void scaleUpText() {
