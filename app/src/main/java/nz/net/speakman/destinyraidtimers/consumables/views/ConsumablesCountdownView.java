@@ -29,6 +29,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
+import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -194,6 +195,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             }
         });
         countdownScaleView.setText(getDefaultText());
+        countdownScaleView.setImage(resources.getDrawable(getConsumableIconResource()));
         initAnimationsIfNeeded();
         bus.register(this);
     }
@@ -348,4 +350,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     protected abstract String getDefaultText();
 
     protected abstract ConsumablesTimer getTimer();
+
+    @DrawableRes
+    protected abstract int getConsumableIconResource();
 }

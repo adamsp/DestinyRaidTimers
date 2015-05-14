@@ -22,6 +22,7 @@ import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -150,6 +151,10 @@ public class CountdownScaleView extends FrameLayout {
     public void setText(CharSequence text) {
         countdownLabel.setText(text);
         resizeText();
+    }
+
+    public void setImage(Drawable image) {
+        countdownImage.setImageDrawable(image);
     }
 
     public void scaleUpText() {

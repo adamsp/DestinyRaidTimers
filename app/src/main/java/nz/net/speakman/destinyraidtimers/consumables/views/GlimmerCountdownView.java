@@ -68,4 +68,9 @@ public class GlimmerCountdownView extends ConsumablesCountdownView {
     protected ConsumablesTimer getTimer() {
         return glimmerTimer;
     }
+
+    @Override
+    protected int getConsumableIconResource() {
+        return R.drawable.consumable_glimmer;
+    }
 }

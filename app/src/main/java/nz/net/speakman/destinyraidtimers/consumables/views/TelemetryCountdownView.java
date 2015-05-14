@@ -68,4 +68,9 @@ public class TelemetryCountdownView extends ConsumablesCountdownView {
     protected ConsumablesTimer getTimer() {
         return telemetryTimer;
     }
+
+    @Override
+    protected int getConsumableIconResource() {
+        return R.drawable.consumable_telemetry;
+    }
 }
