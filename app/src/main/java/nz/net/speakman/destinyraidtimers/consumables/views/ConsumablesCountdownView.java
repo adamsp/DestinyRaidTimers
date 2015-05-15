@@ -61,7 +61,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
     private static final String KEY_SUPER_STATE = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_SUPER_STATE";
     private static final String KEY_COUNTDOWN_PROGRESS = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_COUNTDOWN_PROGRESS";
-    private static final String KEY_COUNTDOWN_LABEL = "nz.net.speakman.destinyraidtimers.consumables.views.ConsumablesCountdownView.KEY_COUNTDOWN_LABEL";
 
     private AnimatorSet startAnimation;
     private AnimatorSet resetAnimation;
@@ -277,8 +276,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             if (getTimer().isRunning()) {
                 float progress = ((Bundle) state).getFloat(KEY_COUNTDOWN_PROGRESS, 1f);
                 progressDrawable.setProgress(progress);
-                String text = ((Bundle)state).getString(KEY_COUNTDOWN_LABEL, getDefaultText());
-                countdownScaleView.setText(text);
                 resetButton.setVisibility(View.VISIBLE);
             }
             state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);

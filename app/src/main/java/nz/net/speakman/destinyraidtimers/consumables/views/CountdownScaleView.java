@@ -24,6 +24,8 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.View;
@@ -40,6 +42,12 @@ import nz.net.speakman.destinyraidtimers.R;
  * Created by Adam on 15-05-12.
  */
 public class CountdownScaleView extends FrameLayout {
+
+    private static final String KEY_SUPER_STATE = "nz.net.speakman.destinyraidtimers.consumables.views.CountdownScaleView.KEY_SUPER_STATE";
+    private static final String KEY_LABEL = "nz.net.speakman.destinyraidtimers.consumables.views.CountdownScaleView.KEY_LABEL";
+    private static final String KEY_LABEL_WEIGHT = "nz.net.speakman.destinyraidtimers.consumables.views.CountdownScaleView.KEY_LABEL_WEIGHT";
+    private static final String KEY_IMAGE_WEIGHT = "nz.net.speakman.destinyraidtimers.consumables.views.CountdownScaleView.KEY_IMAGE_WEIGHT";
+
 
     final float MIN_IMAGE_WEIGHT = 0.2f;
     final float MAX_IMAGE_WEIGHT = 0.4f;
@@ -125,6 +133,32 @@ public class CountdownScaleView extends FrameLayout {
 
         scaleUpTextAnimation.play(scaleUpTextAnimator);
         scaleDownTextAnimation.play(scaleDownTextAnimator);
+    }
+
+    @Override
+    protected Parcelable onSaveInstanceState() {
+        scaleUpTextAnimation.end();
+        scaleDownTextAnimation.end();
+        Parcelable superState = super.onSaveInstanceState();
+        Bundle outState = new Bundle();
+        outState.putParcelable(KEY_SUPER_STATE, superState);
+        outState.putCharSequence(KEY_LABEL, countdownLabel.getText());
+        outState.putFloat(KEY_LABEL_WEIGHT, ((LinearLayout.LayoutParams) countdownLabelContainer.getLayoutParams()).weight);
+        outState.putFloat(KEY_IMAGE_WEIGHT, ((LinearLayout.LayoutParams) countdownImage.getLayoutParams()).weight);
+        return outState;
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Parcelable state) {
+        if (state instanceof Bundle) {
+            float labelWeight = ((Bundle)state).getFloat(KEY_LABEL_WEIGHT);
+            float imageWeight = ((Bundle)state).getFloat(KEY_IMAGE_WEIGHT);
+            CharSequence label = ((Bundle)state).getCharSequence(KEY_LABEL);
+            updateWeights(labelWeight, imageWeight);
+            setText(label);
+            state = ((Bundle) state).getParcelable(KEY_SUPER_STATE);
+        }
+        super.onRestoreInstanceState(state);
     }
 
     @Override
