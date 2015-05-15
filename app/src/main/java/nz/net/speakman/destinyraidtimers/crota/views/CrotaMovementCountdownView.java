@@ -38,6 +38,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import nz.net.speakman.destinyraidtimers.AnimatorEndListener;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.RaidApplication;
 import nz.net.speakman.destinyraidtimers.crota.CrotaEnrageTimerUpdateEvent;
@@ -48,15 +49,6 @@ import nz.net.speakman.destinyraidtimers.crota.CrotaMovementTimerUpdateEvent;
  * Created by Adam on 15-02-21.
  */
 public class CrotaMovementCountdownView extends RelativeLayout {
-
-    private abstract static class AnimationEndListener implements Animator.AnimatorListener {
-
-        @Override public void onAnimationStart(Animator animation) { }
-
-        @Override public void onAnimationRepeat(Animator animation) { }
-
-        @Override public void onAnimationCancel(Animator animation) { }
-    }
 
     private static final String KEY_SUPER_STATE = "nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView.KEY_SUPER_STATE";
     private static final String KEY_MOVEMENT_PROGRESS = "nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView.KEY_MOVEMENT_PROGRESS";
@@ -169,7 +161,7 @@ public class CrotaMovementCountdownView extends RelativeLayout {
         ObjectAnimator resetAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.PROGRESS_PROPERTY,
                 progressDrawable.getProgress(), 1f);
         resetAnimator.setDuration(RESET_ANIMATION_DURATION);
-        resetAnimator.addListener(new AnimationEndListener() {
+        resetAnimator.addListener(new AnimatorEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 animator = null;

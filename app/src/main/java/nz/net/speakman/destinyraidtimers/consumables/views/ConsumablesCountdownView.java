@@ -34,7 +34,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -50,6 +49,8 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import nz.net.speakman.destinyraidtimers.AnimatorEndListener;
+import nz.net.speakman.destinyraidtimers.AnimatorStartListener;
 import nz.net.speakman.destinyraidtimers.R;
 import nz.net.speakman.destinyraidtimers.RaidApplication;
 import nz.net.speakman.destinyraidtimers.consumables.timers.ConsumablesTimer;
@@ -64,36 +65,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
 
     private AnimatorSet startAnimation;
     private AnimatorSet resetAnimation;
-
-    protected abstract static class AnimationEndListener implements Animator.AnimatorListener {
-
-        @Override
-        public void onAnimationStart(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-        }
-    }
-
-    protected abstract static class AnimationStartListener implements Animator.AnimatorListener {
-
-        @Override
-        public void onAnimationEnd(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationRepeat(Animator animation) {
-        }
-
-        @Override
-        public void onAnimationCancel(Animator animation) {
-        }
-    }
 
     // Private class pulled from the FAB library (already included in licenses file): http://bit.ly/1Iu9Hgw
     private static class RotatingDrawable extends LayerDrawable {
@@ -143,7 +114,6 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
     @Inject
     Bus bus;
 
-    ObjectAnimator progressAnimator;
     CircularProgressDrawable progressDrawable;
 
     public ConsumablesCountdownView(Context context) {
@@ -178,7 +148,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 .create();
         progressDrawable.setProgress(1f);
         progressView.setImageDrawable(progressDrawable);
-        countdownScaleView.addScaleUpAnimationLister(new AnimationEndListener() {
+        countdownScaleView.addScaleUpAnimationLister(new AnimatorEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 ConsumablesTimer timer = getTimer();
@@ -187,7 +157,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                 }
             }
         });
-        countdownScaleView.addScaleDownAnimationListener(new AnimationEndListener() {
+        countdownScaleView.addScaleDownAnimationListener(new AnimatorEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 countdownScaleView.setText(getDefaultText());
@@ -227,7 +197,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                     0, resetButton.getMeasuredWidth());
         }
         resetHideTransitionAnimator.setInterpolator(accelerateInterpolator);
-        resetHideTransitionAnimator.addListener(new AnimationEndListener() {
+        resetHideTransitionAnimator.addListener(new AnimatorEndListener() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 resetButton.setVisibility(View.INVISIBLE);
@@ -243,7 +213,7 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
                     resetButton.getMeasuredWidth(), 0f);
         }
         resetShowTransitionAnimator.setInterpolator(decelerateInterpolator);
-        resetShowTransitionAnimator.addListener(new AnimationStartListener() {
+        resetShowTransitionAnimator.addListener(new AnimatorStartListener() {
             @Override
             public void onAnimationStart(Animator animation) {
                 resetButton.setVisibility(View.VISIBLE);
@@ -296,37 +266,16 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
             reset();
         } else {
             countdownScaleView.setText(formatMinutesFromMillis(timeRemainingMs));
-        }
-        if (progressAnimator == null) {
             float progressPct = timeRemainingMs / (float) totalTimeMs;
-            startAnimator(progressPct, timeRemainingMs);
+            progressDrawable.setProgress(progressPct);
         }
     }
 
     protected void resetProgressBar() {
-        if (progressAnimator != null) {
-            progressAnimator.cancel();
-        }
         ObjectAnimator resetAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.PROGRESS_PROPERTY,
                 progressDrawable.getProgress(), 1f);
         resetAnimator.setDuration(RESET_ANIMATION_DURATION);
-        resetAnimator.addListener(new AnimationEndListener() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                progressAnimator = null;
-            }
-        });
         resetAnimator.start();
-    }
-
-    protected void startAnimator(float progressPct, long duration) {
-        // Drawable goes backwards, so we count down from 1 -> 0
-        progressDrawable.setProgress(progressPct);
-        progressAnimator = ObjectAnimator.ofFloat(progressDrawable, CircularProgressDrawable.PROGRESS_PROPERTY,
-                progressPct, 0f);
-        progressAnimator.setDuration(duration);
-        progressAnimator.setInterpolator(new LinearInterpolator());
-        progressAnimator.start();
     }
 
     @OnClick(R.id.consumables_countdown_image)
