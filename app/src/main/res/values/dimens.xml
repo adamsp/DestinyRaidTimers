@@ -1,10 +1,9 @@
 <resources>
-    <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="crota_progress_width">8dp</dimen>
 
     <item name="crota_position_alpha_disabled" type="dimen" format="float">0.2</item>
     <item name="crota_position_alpha_enabled" type="dimen" format="float">1.0</item>
     <item name="crota_position_alpha_next" type="dimen" format="float">0.85</item>
+
+    <dimen name="consumables_progress_width">@dimen/crota_progress_width</dimen>
 </resources>

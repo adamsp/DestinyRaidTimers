@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers;
+package nz.net.speakman.destinyraidtimers.consumables;
 
 import com.squareup.otto.Bus;
 
@@ -22,27 +22,32 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import nz.net.speakman.destinyraidtimers.consumables.ConsumablesModule;
-import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
+import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimer;
+import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimer;
+import nz.net.speakman.destinyraidtimers.consumables.views.GlimmerCountdownView;
+import nz.net.speakman.destinyraidtimers.consumables.views.TelemetryCountdownView;
 
 /**
- * Created by Adam on 15-02-15.
+ * Created by Adam on 15-03-28.
  */
 @Module(
         complete = false,
         injects = {
-                MainActivity.class,
-                RaidApplication.class
-        },
-        includes = {
-                CrotaModule.class,
-                ConsumablesModule.class
+                ConsumablesActivity.class,
+                GlimmerCountdownView.class,
+                TelemetryCountdownView.class
         }
 )
-public class BaseRaidModule {
+public class ConsumablesModule {
     @Singleton
     @Provides
-    Bus providesEventBus() {
-        return new Bus();
+    GlimmerTimer provideGlimmerTimer(Bus bus) {
+        return new GlimmerTimer(bus);
+    }
+
+    @Singleton
+    @Provides
+    TelemetryTimer provideTelemetryTimer(Bus bus) {
+        return new TelemetryTimer(bus);
     }
 }

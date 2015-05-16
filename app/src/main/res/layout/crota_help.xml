@@ -57,7 +57,7 @@
             <ImageView
                 style="@style/CrotaHelpImage"
                 android:padding="16dp"
-                android:src="@drawable/crota_timer_button_reset"/>
+                android:src="@drawable/timer_button_reset"/>
             <TextView
                 style="@style/CrotaHelpText"
                 android:text="@string/crota_help_reset"/>

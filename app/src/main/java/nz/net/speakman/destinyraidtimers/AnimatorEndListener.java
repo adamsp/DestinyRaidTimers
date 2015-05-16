@@ -16,33 +16,23 @@
 
 package nz.net.speakman.destinyraidtimers;
 
-import com.squareup.otto.Bus;
-
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
-import nz.net.speakman.destinyraidtimers.consumables.ConsumablesModule;
-import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
+import android.animation.Animator;
 
 /**
- * Created by Adam on 15-02-15.
+ * A stubbed AnimatorListener that requires only the onAnimationEnd method to be implemented.
+ * Created by Adam on 15-05-14.
  */
-@Module(
-        complete = false,
-        injects = {
-                MainActivity.class,
-                RaidApplication.class
-        },
-        includes = {
-                CrotaModule.class,
-                ConsumablesModule.class
-        }
-)
-public class BaseRaidModule {
-    @Singleton
-    @Provides
-    Bus providesEventBus() {
-        return new Bus();
+public abstract  class AnimatorEndListener implements Animator.AnimatorListener {
+
+    @Override
+    public void onAnimationStart(Animator animation) {
+    }
+
+    @Override
+    public void onAnimationRepeat(Animator animation) {
+    }
+
+    @Override
+    public void onAnimationCancel(Animator animation) {
     }
 }
