@@ -29,6 +29,8 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import nz.net.speakman.destinyraidtimers.consumables.ConsumablesActivity;
 import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimerUpdateEvent;
@@ -42,6 +44,9 @@ public class MainActivity extends BaseRaidActivity {
 
     @InjectView(R.id.activity_main_toolbar)
     Toolbar toolbar;
+
+    @InjectView(R.id.activity_main_selection_consumables_card)
+    ViewGroup consumablesCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +98,6 @@ public class MainActivity extends BaseRaidActivity {
     }
 
     void showMessage(@StringRes int message) {
-        // TODO Pick a library to show the message!
+        Crouton.showText(this, message, Style.INFO, consumablesCard);
     }
 }
