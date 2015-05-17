@@ -23,6 +23,8 @@ import com.squareup.otto.Bus;
 
 import javax.inject.Inject;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+
 /**
  * Created by Adam on 15-03-07.
  */
@@ -47,5 +49,11 @@ public class BaseRaidActivity extends ActionBarActivity {
     public void onPause(){
         super.onPause();
         bus.unregister(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Crouton.cancelAllCroutons();
     }
 }

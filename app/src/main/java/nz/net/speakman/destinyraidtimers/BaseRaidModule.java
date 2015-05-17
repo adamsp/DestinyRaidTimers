@@ -32,7 +32,8 @@ import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
         complete = false,
         injects = {
                 MainActivity.class,
-                RaidApplication.class
+                RaidApplication.class,
+                NotifyService.class
         },
         includes = {
                 CrotaModule.class,
@@ -44,5 +45,11 @@ public class BaseRaidModule {
     @Provides
     Bus providesEventBus() {
         return new Bus();
+    }
+
+    @Singleton
+    @Provides
+    Preferences providePreferences() {
+        return new Preferences(RaidApplication.getApplication());
     }
 }

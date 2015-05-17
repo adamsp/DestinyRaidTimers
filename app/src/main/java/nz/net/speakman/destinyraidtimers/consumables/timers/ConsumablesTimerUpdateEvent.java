@@ -29,4 +29,8 @@ public abstract class ConsumablesTimerUpdateEvent {
     public void setMillisRemaining(long millisRemaining) {
         this.millisRemaining = millisRemaining;
     }
+
+    public boolean timerIsFinished() {
+        return millisRemaining == 0;
+    }
 }
