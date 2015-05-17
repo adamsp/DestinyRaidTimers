@@ -86,6 +86,9 @@ public class MainActivity extends BaseRaidActivity {
                 item.setChecked(!item.isChecked()); // Toggle the checkbox
                 preferences.setVibrationEnabled(item.isChecked()); // Save the new value
                 return true;
+            case R.id.action_main_change_log:
+                ChangeLogDialog.displayChangeLog(getSupportFragmentManager());
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
