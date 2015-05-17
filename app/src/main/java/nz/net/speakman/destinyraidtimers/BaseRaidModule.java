@@ -32,7 +32,8 @@ import nz.net.speakman.destinyraidtimers.crota.CrotaModule;
         complete = false,
         injects = {
                 MainActivity.class,
-                RaidApplication.class
+                RaidApplication.class,
+                NotifyService.class
         },
         includes = {
                 CrotaModule.class,

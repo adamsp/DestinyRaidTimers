@@ -17,6 +17,7 @@
 package nz.net.speakman.destinyraidtimers;
 
 import android.app.Application;
+import android.content.Intent;
 
 import dagger.ObjectGraph;
 import nz.net.speakman.destinyraidtimers.analytics.Analytics;
@@ -39,6 +40,7 @@ public class RaidApplication extends Application {
         mContext = this;
         graph = ObjectGraph.create(new BaseRaidModule());
         inject(this);
+        startService(new Intent(this, NotifyService.class));
     }
 
     public static RaidApplication getApplication() {

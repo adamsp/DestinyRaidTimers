@@ -23,6 +23,8 @@
         <activity
             android:name=".consumables.ConsumablesActivity"
             android:theme="@style/ConsumablesTheme"/>
+
+        <service android:name=".NotifyService"/>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
