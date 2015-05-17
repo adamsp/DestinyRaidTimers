@@ -29,6 +29,7 @@ import com.squareup.otto.Subscribe;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import nz.net.speakman.destinyraidtimers.consumables.ConsumablesActivity;
@@ -98,6 +99,9 @@ public class MainActivity extends BaseRaidActivity {
     }
 
     void showMessage(@StringRes int message) {
-        Crouton.showText(this, message, Style.INFO, consumablesCard);
+        Configuration config = new Configuration.Builder().setDuration(Configuration.DURATION_LONG).build();
+        Crouton crouton = Crouton.makeText(this, message, Style.INFO, consumablesCard);
+        crouton.setConfiguration(config);
+        crouton.show();
     }
 }

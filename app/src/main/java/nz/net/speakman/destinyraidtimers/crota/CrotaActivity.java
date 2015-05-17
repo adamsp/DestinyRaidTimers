@@ -18,6 +18,7 @@ package nz.net.speakman.destinyraidtimers.crota;
 
 import android.animation.ObjectAnimator;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,8 +36,13 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import de.keyboardsurfer.android.widget.crouton.Configuration;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import nz.net.speakman.destinyraidtimers.BaseRaidActivity;
 import nz.net.speakman.destinyraidtimers.R;
+import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.crota.views.CrotaMovementCountdownView;
 import nz.net.speakman.destinyraidtimers.crota.views.CrotaPositionView;
 
@@ -210,5 +216,26 @@ public class CrotaActivity extends BaseRaidActivity {
                 0, enrageCountdownContainer.getMeasuredHeight())
                 .setDuration(500).start();
         enrageCountdown.setText(formatMinutesFromMillis(0));
+    }
+
+    @Subscribe
+    public void onGlimmerTimerUpdateEvent(GlimmerTimerUpdateEvent event) {
+        if (event.timerIsFinished()) {
+            showMessage(R.string.consumable_timer_glimmer_finished);
+        }
+    }
+
+    @Subscribe
+    public void onTelemetryTimerUpdateEvent(TelemetryTimerUpdateEvent event) {
+        if (event.timerIsFinished()) {
+            showMessage(R.string.consumable_timer_telemetry_finished);
+        }
+    }
+
+    void showMessage(@StringRes int message) {
+        Configuration config = new Configuration.Builder().setDuration(Configuration.DURATION_LONG).build();
+        Crouton crouton = Crouton.makeText(this, message, Style.INFO);
+        crouton.setConfiguration(config);
+        crouton.show();
     }
 }
