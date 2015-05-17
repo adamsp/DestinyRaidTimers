@@ -22,4 +22,12 @@
           android:title="@string/menu_about"
           android:icon="@drawable/ic_action_about"
           app:showAsAction="never"/>
+    <item android:id="@+id/action_main_settings_sound"
+          android:title="Sounds"
+          android:checkable="true"
+          app:showAsAction="never"/>
+    <item android:id="@+id/action_main_settings_vibration"
+          android:title="Vibration"
+          android:checkable="true"
+          app:showAsAction="never"/>
 </menu>

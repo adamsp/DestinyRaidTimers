@@ -42,6 +42,9 @@ public class NotifyService extends Service {
     @Inject
     protected Bus bus;
 
+    @Inject
+    protected Preferences preferences;
+
     @Override
     public IBinder onBind(Intent intent) {
         return null;
@@ -64,7 +67,7 @@ public class NotifyService extends Service {
     public void onGlimmerTimerUpdateEvent(GlimmerTimerUpdateEvent event) {
         if (event.timerIsFinished()) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setDefaults(getNotificationDefaults())
                     .setVibrate(new long[]{1000})
                     .setSmallIcon(R.drawable.consumable_glimmer)
                     .setContentTitle(getString(R.string.notification_title_consumable_expired))
@@ -78,7 +81,7 @@ public class NotifyService extends Service {
     public void onTelemetryTimerUpdateEvent(TelemetryTimerUpdateEvent event) {
         if (event.timerIsFinished()) {
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setDefaults(getNotificationDefaults())
                     .setVibrate(new long[]{1000})
                     .setSmallIcon(R.drawable.consumable_telemetry)
                     .setContentTitle(getString(R.string.notification_title_consumable_expired))
@@ -86,5 +89,16 @@ public class NotifyService extends Service {
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(NOTIFICATION_ID_TELEMTRY_CONSUMABLE, builder.build());
         }
+    }
+
+    private int getNotificationDefaults() {
+        int defaults = NotificationCompat.DEFAULT_LIGHTS;
+        if (preferences.soundsEnabled()) {
+            defaults |= NotificationCompat.DEFAULT_SOUND;
+        }
+        if (preferences.vibrationEnabled()) {
+            defaults |= NotificationCompat.DEFAULT_VIBRATE;
+        }
+        return defaults;
     }
 }

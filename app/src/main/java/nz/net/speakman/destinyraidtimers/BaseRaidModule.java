@@ -46,4 +46,10 @@ public class BaseRaidModule {
     Bus providesEventBus() {
         return new Bus();
     }
+
+    @Singleton
+    @Provides
+    Preferences providePreferences() {
+        return new Preferences(RaidApplication.getApplication());
+    }
 }

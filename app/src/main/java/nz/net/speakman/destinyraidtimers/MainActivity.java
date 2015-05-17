@@ -26,6 +26,8 @@ import android.view.ViewGroup;
 
 import com.squareup.otto.Subscribe;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -49,6 +51,9 @@ public class MainActivity extends BaseRaidActivity {
     @InjectView(R.id.activity_main_selection_consumables_card)
     ViewGroup consumablesCard;
 
+    @Inject
+    Preferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,15 +66,27 @@ public class MainActivity extends BaseRaidActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
+        // TODO Is there a better way to get the menu items?
+        menu.getItem(1).setChecked(preferences.soundsEnabled());
+        menu.getItem(2).setChecked(preferences.vibrationEnabled());
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_main_about) {
-            new CrotaHelpDialog().show(getSupportFragmentManager(), DIALOG_TAG);
-            return true;
+        switch(id) {
+            case R.id.action_main_about:
+                new CrotaHelpDialog().show(getSupportFragmentManager(), DIALOG_TAG);
+                return true;
+            case R.id.action_main_settings_sound:
+                item.setChecked(!item.isChecked()); // Toggle the checkbox
+                preferences.setSoundsEnabled(item.isChecked()); // Save the new value
+                return true;
+            case R.id.action_main_settings_vibration:
+                item.setChecked(!item.isChecked()); // Toggle the checkbox
+                preferences.setVibrationEnabled(item.isChecked()); // Save the new value
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
