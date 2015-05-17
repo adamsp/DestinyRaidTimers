@@ -16,43 +16,31 @@
 
 package nz.net.speakman.destinyraidtimers;
 
+import android.app.NotificationManager;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
 import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimerUpdateEvent;
-import timber.log.Timber;
 
 /**
  * Created by Adam on 15-05-17.
  */
-public class NotifyService extends Service implements MediaPlayer.OnPreparedListener {
+public class NotifyService extends Service {
 
-    private MediaPlayer mediaPlayer;
-    private boolean prepared;
+    private static final int NOTIFICATION_ID_GLIMMER_CONSUMABLE = 0;
+    private static final int NOTIFICATION_ID_TELEMTRY_CONSUMABLE = 1;
 
     @Inject
     protected Bus bus;
-
-    private MediaPlayer.OnCompletionListener onCompletedPlayAgain = new MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mp) {
-            mp.setOnCompletionListener(null);
-            playNotificationSound();
-        }
-    };
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -64,23 +52,6 @@ public class NotifyService extends Service implements MediaPlayer.OnPreparedList
         super.onCreate();
         ((RaidApplication)getApplicationContext()).inject(this);
         bus.register(this);
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            if (notification == null) {
-                Timber.w("No default notification sound is available.");
-                return;
-            }
-            mediaPlayer = new MediaPlayer();
-            // Using the Notification stream for non-notifications is a) probably bad practice and
-            // b) doesn't even work if you have an Android Wear device attached and the phone is muted.
-            mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
-            mediaPlayer.setDataSource(getApplicationContext(), notification);
-            mediaPlayer.setOnPreparedListener(this);
-            mediaPlayer.prepareAsync();
-        } catch (IOException e) {
-            Timber.e(e, "Failure setting up media player.");
-            stopSelf();
-        }
     }
 
     @Override
@@ -89,36 +60,31 @@ public class NotifyService extends Service implements MediaPlayer.OnPreparedList
         bus.unregister(this);
     }
 
-    @Override
-    public void onPrepared(MediaPlayer mp) {
-        prepared = true;
-    }
-
     @Subscribe
     public void onGlimmerTimerUpdateEvent(GlimmerTimerUpdateEvent event) {
         if (event.timerIsFinished()) {
-            playNotificationSound();
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setVibrate(new long[]{1000})
+                    .setSmallIcon(R.drawable.consumable_glimmer)
+                    .setContentTitle(getString(R.string.notification_title_consumable_expired))
+                    .setContentText(getString(R.string.notification_text_consumable_glimmer_expired));
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_ID_GLIMMER_CONSUMABLE, builder.build());
         }
     }
 
     @Subscribe
     public void onTelemetryTimerUpdateEvent(TelemetryTimerUpdateEvent event) {
         if (event.timerIsFinished()) {
-            playNotificationSound();
-        }
-    }
-
-    /**
-     * Plays the notification sound. If the sound is currently playing, queues another playback (only
-     * queues one extra playback at a time).
-     */
-    private void playNotificationSound() {
-        if (!prepared) return;
-
-        if (mediaPlayer.isPlaying()) {
-            mediaPlayer.setOnCompletionListener(onCompletedPlayAgain);
-        } else {
-            mediaPlayer.start();
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                    .setDefaults(NotificationCompat.DEFAULT_ALL)
+                    .setVibrate(new long[]{1000})
+                    .setSmallIcon(R.drawable.consumable_telemetry)
+                    .setContentTitle(getString(R.string.notification_title_consumable_expired))
+                    .setContentText(getString(R.string.notification_text_consumable_telemetry_expired));
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_ID_TELEMTRY_CONSUMABLE, builder.build());
         }
     }
 }

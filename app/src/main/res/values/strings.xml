@@ -26,4 +26,8 @@
     <string name="consumable_timer_glimmer_finished">Glimmer consumable has run out</string>
     <string name="consumable_timer_telemetry_finished">Weapon telemetry has run out</string>
 
+    <string name="notification_title_consumable_expired">Consumable expired</string>
+    <string name="notification_text_consumable_glimmer_expired">Your Glimmer consumable has run out!</string>
+    <string name="notification_text_consumable_telemetry_expired">Your weapon telemetry has run out!</string>
+
 </resources>
