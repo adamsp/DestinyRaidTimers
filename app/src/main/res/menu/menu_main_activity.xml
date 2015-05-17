@@ -22,6 +22,9 @@
           android:title="@string/menu_about"
           android:icon="@drawable/ic_action_about"
           app:showAsAction="never"/>
+    <item android:id="@+id/action_main_change_log"
+          android:title="@string/changelog_title"
+          app:showAsAction="never"/>
     <item android:id="@+id/action_main_settings_sound"
           android:title="Sounds"
           android:checkable="true"

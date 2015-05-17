@@ -23,6 +23,8 @@
     </string>
     <string name="app_about_licenses"><u>Open source licenses</u></string>
 
+    <string name="changelog_title">Change Log</string>
+
     <string name="consumable_timer_glimmer_finished">Glimmer consumable has run out</string>
     <string name="consumable_timer_telemetry_finished">Weapon telemetry has run out</string>
 
