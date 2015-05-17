@@ -18,14 +18,20 @@ package nz.net.speakman.destinyraidtimers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.ViewGroup;
+
+import com.squareup.otto.Subscribe;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import nz.net.speakman.destinyraidtimers.consumables.ConsumablesActivity;
+import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimerUpdateEvent;
+import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.crota.CrotaActivity;
 import nz.net.speakman.destinyraidtimers.crota.CrotaHelpDialog;
 
@@ -70,5 +76,23 @@ public class MainActivity extends BaseRaidActivity {
     @OnClick(R.id.activity_main_selection_consumables_card)
     void onConsumablesSelection() {
         startActivity(new Intent(this, ConsumablesActivity.class));
+    }
+
+    @Subscribe
+    public void onGlimmerTimerUpdateEvent(GlimmerTimerUpdateEvent event) {
+        if (event.timerIsFinished()) {
+            showMessage(R.string.consumable_timer_glimmer_finished);
+        }
+    }
+
+    @Subscribe
+    public void onTelemetryTimerUpdateEvent(TelemetryTimerUpdateEvent event) {
+        if (event.timerIsFinished()) {
+            showMessage(R.string.consumable_timer_telemetry_finished);
+        }
+    }
+
+    void showMessage(@StringRes int message) {
+        // TODO Pick a library to show the message!
     }
 }
