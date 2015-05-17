@@ -66,7 +66,6 @@ public class MainActivity extends BaseRaidActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main_activity, menu);
-        // TODO Is there a better way to get the menu items?
         menu.getItem(1).setChecked(preferences.soundsEnabled());
         menu.getItem(2).setChecked(preferences.vibrationEnabled());
         return true;

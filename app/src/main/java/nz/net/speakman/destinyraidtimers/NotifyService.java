@@ -16,18 +16,24 @@
 
 package nz.net.speakman.destinyraidtimers;
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 import javax.inject.Inject;
 
+import nz.net.speakman.destinyraidtimers.consumables.ConsumablesActivity;
 import nz.net.speakman.destinyraidtimers.consumables.timers.GlimmerTimerUpdateEvent;
 import nz.net.speakman.destinyraidtimers.consumables.timers.TelemetryTimerUpdateEvent;
 
@@ -66,28 +72,22 @@ public class NotifyService extends Service {
     @Subscribe
     public void onGlimmerTimerUpdateEvent(GlimmerTimerUpdateEvent event) {
         if (event.timerIsFinished()) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setDefaults(getNotificationDefaults())
-                    .setVibrate(new long[]{1000})
-                    .setSmallIcon(R.drawable.consumable_glimmer)
-                    .setContentTitle(getString(R.string.notification_title_consumable_expired))
-                    .setContentText(getString(R.string.notification_text_consumable_glimmer_expired));
+            Notification notif = getConsumableNotification(R.string.notification_title_consumable_expired,
+                    R.string.notification_text_consumable_glimmer_expired,
+                    R.drawable.consumable_glimmer);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(NOTIFICATION_ID_GLIMMER_CONSUMABLE, builder.build());
+            notificationManager.notify(NOTIFICATION_ID_GLIMMER_CONSUMABLE, notif);
         }
     }
 
     @Subscribe
     public void onTelemetryTimerUpdateEvent(TelemetryTimerUpdateEvent event) {
         if (event.timerIsFinished()) {
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
-                    .setDefaults(getNotificationDefaults())
-                    .setVibrate(new long[]{1000})
-                    .setSmallIcon(R.drawable.consumable_telemetry)
-                    .setContentTitle(getString(R.string.notification_title_consumable_expired))
-                    .setContentText(getString(R.string.notification_text_consumable_telemetry_expired));
+            Notification notif = getConsumableNotification(R.string.notification_title_consumable_expired,
+                    R.string.notification_text_consumable_telemetry_expired,
+                    R.drawable.consumable_telemetry);
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(NOTIFICATION_ID_TELEMTRY_CONSUMABLE, builder.build());
+            notificationManager.notify(NOTIFICATION_ID_TELEMTRY_CONSUMABLE, notif);
         }
     }
 
@@ -100,5 +100,25 @@ public class NotifyService extends Service {
             defaults |= NotificationCompat.DEFAULT_VIBRATE;
         }
         return defaults;
+    }
+
+    private Notification getConsumableNotification(@StringRes int title, @StringRes int text, @DrawableRes int icon) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setContentIntent(getConsumablesIntent())
+                .setDefaults(getNotificationDefaults())
+                .setAutoCancel(true)
+                .setVibrate(new long[]{1000})
+                .setSmallIcon(icon)
+                .setContentTitle(getString(title))
+                .setContentText(getString(text));
+        return builder.build();
+    }
+
+    private PendingIntent getConsumablesIntent() {
+        Intent consumablesIntent = new Intent(this, ConsumablesActivity.class);
+        TaskStackBuilder builder = TaskStackBuilder.create(this);
+        builder.addParentStack(MainActivity.class);
+        builder.addNextIntent(consumablesIntent);
+        return builder.getPendingIntent(0, 0);
     }
 }

@@ -22,7 +22,8 @@
             android:theme="@style/CrotaTheme"/>
         <activity
             android:name=".consumables.ConsumablesActivity"
-            android:theme="@style/ConsumablesTheme"/>
+            android:theme="@style/ConsumablesTheme"
+            android:launchMode="singleTop"/>
 
         <service android:name=".NotifyService"/>
     </application>
