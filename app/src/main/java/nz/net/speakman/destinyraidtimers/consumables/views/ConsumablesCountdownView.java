@@ -165,8 +165,15 @@ public abstract class ConsumablesCountdownView extends RelativeLayout {
         });
         countdownScaleView.setText(getDefaultText());
         countdownScaleView.setImage(resources.getDrawable(getConsumableIconResource()));
-        initAnimationsIfNeeded();
         bus.register(this);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        // Have to set animations up after first measure pass, since we need to figure out the
+        // location of the buttons in order to perform translation animations.
+        initAnimationsIfNeeded();
     }
 
     private void initAnimationsIfNeeded() {
