@@ -23,8 +23,8 @@ android {
         applicationId "nz.net.speakman.destinyraidtimers"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 5
-        versionName "1.1-beta"
+        versionCode 6
+        versionName "1.1"
     }
 
     signingConfigs {
