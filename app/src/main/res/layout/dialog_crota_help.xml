@@ -62,18 +62,6 @@
                 style="@style/CrotaHelpText"
                 android:text="@string/crota_help_reset"/>
         </LinearLayout>
-
-        <TextView
-            style="@style/CrotaHelpText"
-            android:id="@+id/app_about_description"
-            android:text="@string/app_about_description"/>
-
-        <TextView
-            style="@style/CrotaHelpText"
-            android:id="@+id/app_about_licenses"
-            android:layout_gravity="center"
-            android:text="@string/app_about_licenses"/>
-
     </LinearLayout>
 
 </ScrollView>

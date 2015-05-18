@@ -14,29 +14,39 @@
  * limitations under the License.
  */
 
-package nz.net.speakman.destinyraidtimers.crota;
+package nz.net.speakman.destinyraidtimers;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
-
-import nz.net.speakman.destinyraidtimers.R;
+import android.widget.TextView;
 
 /**
- * Created by Adam on 15-02-22.
+ * Created by Adam on 15-05-17.
  */
-public class CrotaHelpDialog extends DialogFragment {
+public class AboutAppDialog extends DialogFragment {
+    @NonNull
     @SuppressLint("InflateParams")
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_crota_help, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_about_app, null);
+        TextView description = (TextView) view.findViewById(R.id.app_about_description);
+        description.setMovementMethod(LinkMovementMethod.getInstance());
+        view.findViewById(R.id.app_about_licenses).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LicensesFragment.displayLicensesFragment(getFragmentManager());
+            }
+        });
         builder.setView(view)
-                .setTitle(R.string.crota_help_title)
+                .setTitle(R.string.about_app_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
