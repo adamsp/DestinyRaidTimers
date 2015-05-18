@@ -34,7 +34,7 @@ public class CrotaHelpDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        View view = getActivity().getLayoutInflater().inflate(R.layout.crota_help, null);
+        View view = getActivity().getLayoutInflater().inflate(R.layout.dialog_crota_help, null);
         builder.setView(view)
                 .setTitle(R.string.crota_help_title)
                 .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
