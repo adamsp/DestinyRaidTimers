@@ -18,10 +18,12 @@
     <string name="crota_help_description">Wondering when Crota is going to move? Is he going left or right next? What are next weeks lottery numbers?
         If you\'re curious about the answers to these questions and more, Destiny Raid Timers is here to help.</string>
 
-    <string name="app_about_description">
-        This app is free and <a href="https://github.com/adamsp/DestinyRaidTimers">open-source</a>. Contributions are welcome.
+    <string name="about_app_title">Raid Timers for Destiny</string>
+    <string name="about_app_description">This app is free and <a href="https://github.com/adamsp/DestinyRaidTimers">open-source</a>. Contributions are welcome.
     </string>
-    <string name="app_about_licenses"><u>Open source licenses</u></string>
+    <string name="about_app_licenses"><u>Open source licenses</u></string>
+    <string name="about_app_crota">Crota movement and enrage timers.</string>
+    <string name="about_app_consumable">Keep track of the countdown on your glimmer consumables and weapon telemetries.</string>
 
     <string name="changelog_title">Change Log</string>
 

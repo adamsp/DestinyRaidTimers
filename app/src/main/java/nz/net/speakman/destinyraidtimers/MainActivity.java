@@ -76,7 +76,7 @@ public class MainActivity extends BaseRaidActivity {
         int id = item.getItemId();
         switch(id) {
             case R.id.action_main_about:
-                new CrotaHelpDialog().show(getSupportFragmentManager(), DIALOG_TAG);
+                new AboutAppDialog().show(getSupportFragmentManager(), DIALOG_TAG);
                 return true;
             case R.id.action_main_settings_sound:
                 item.setChecked(!item.isChecked()); // Toggle the checkbox
